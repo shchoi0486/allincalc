@@ -76,7 +76,8 @@ export const calculatorCategories = [
         id: 'unit-converters',
         name: '단위 변환',
         calculators: [
-          { id: 'conversion-page', name: '통합 단위 변환기', href: '/calculators/conversion' },
+          { id: 'unit-converter', name: '통합 단위 변환기', href: '/calculators/conversion/unit-converter' },
+          { id: 'conversion-page', name: '빠른 단위 변환', href: '/calculators/conversion' },
           { id: 'data-size-converter', name: '데이터 크기 변환', href: '/calculators/conversion/data-size-converter' },
           { id: 'distance-converter', name: '거리 변환', href: '/calculators/conversion/distance-converter' },
           { id: 'speed-converter', name: '속도 변환', href: '/calculators/conversion/speed-converter' },
