@@ -160,68 +160,92 @@ const RandomStringGenerator: React.FC = () => {
     </div>
   );
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
-        <p className="text-lg">랜덤 문자열 생성기는 보안 토큰, 비밀번호, API 키 등 다양한 목적으로 사용할 수 있는 무작위 문자열을 즉시 생성하는 도구입니다.</p>
-        <p>대문자, 소문자, 숫자, 특수문자 중 필요한 문자 유형을 선택하고 원하는 길이와 개수를 설정하면 안전한 난수 생성 알고리즘(Crypto API)을 사용하여 고품질의 랜덤 문자열을 생성합니다.</p>
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="font-semibold text-md mb-2">주요 기능:</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>커스터마이징:</strong> 문자열 길이와 문자 유형을 자유롭게 선택</li>
-            <li><strong>대량 생성:</strong> 최대 50개의 문자열을 한 번에 생성</li>
-            <li><strong>즉시 복사:</strong> 개별 또는 전체 문자열을 클립보드에 복사</li>
-            <li><strong>보안 난수:</strong> 브라우저 Crypto API를 사용한 안전한 난수 생성</li>
-          </ul>
-        </div>
+        <p>
+          <strong>랜덤 문자열 생성기</strong>는 보안 토큰, 비밀번호, API 키, 임시 ID 등에 사용할 무작위 문자열을 즉시 만들어 주는 도구입니다. 대문자·소문자·숫자·특수문자 중 필요한 문자 유형을 선택하고 길이와 개수를 설정하면, 암호학적으로 안전한 난수 생성 알고리즘으로 고품질 문자열을 생성합니다.
+        </p>
+        <p>
+          회원가입 임시 비밀번호 발급, 세션·인증 토큰 생성, 테스트용 더미 데이터 작성, 충돌 없는 파일명 생성 등 개발과 운영 전반에서 활용됩니다. 특히 보안이 중요한 키 값은 예측 불가능한 난수가 필수적입니다.
+        </p>
+        <p>
+          개발자와 서비스 운영자에게는 필수 유틸리티로, 일반 사용자에게는 안전한 비밀번호를 만드는 도구로 유용합니다. 생성된 문자열은 클립보드로 바로 복사할 수 있어 편리합니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          이 도구는 브라우저의 Web Crypto API(crypto.getRandomValues)를 사용하므로 일반 난수보다 예측이 어렵습니다. 다만 생성된 값은 화면에만 표시되고 저장되지 않으므로, 중요한 키는 별도 보안 장소에 보관하세요.
+        </p>
       </div>
     ),
     calculationFormula: (
       <div className="space-y-6">
         <div>
-          <h3 className="font-semibold text-xl mb-2 border-b-2 border-gray-200 pb-2">랜덤 문자열 생성 알고리즘</h3>
-          <p className="mb-4">이 도구는 <strong>Web Crypto API의 crypto.getRandomValues()</strong>를 사용하여 크립토그래픽적으로 안전한 난수를 생성합니다.</p>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-lg mb-2">1. 문자셋(Charset) 구성</h3>
-          <p className="mb-2">선택된 문자 유형에 따라 사용 가능한 문자 집합을 구성합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"<br/>lowercase: "abcdefghijklmnopqrstuvwxyz"<br/>numbers: "0123456789"<br/>symbols: "!@#$%^&*()_+-=[]{}|;:,.&lt;&gt;?"</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">문자셋 구성</h4>
+          <p>선택한 문자 유형에 따라 사용 가능한 문자 집합을 만듭니다.</p>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-sm">uppercase + lowercase + numbers + symbols</p>
           </div>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">2. 난수 생성 및 매핑</h3>
-          <p className="mb-2">crypto.getRandomValues()로 생성한 무작위 정수를 문자셋 길이로 나눈 나머지를 인덱스로 사용합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">
-              const array = new Uint32Array(length);<br/>
-              crypto.getRandomValues(array);<br/>
-              result += charset[array[i] % charset.length];
-            </code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">가능한 조합 수</h4>
+          <p>길이 L, 문자셋 크기 N일 때 가능한 문자열의 총수는 다음과 같습니다.</p>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-lg font-bold">조합 수 = N^L</p>
           </div>
-          <p className="mt-2">이 방식은 균일 분포(uniform distribution)을 보장하여 각 문자가 동일한 확률로 선택됩니다.</p>
+          <p className="text-sm text-muted-foreground">예: 문자 62개, 길이 16 → 62^16 ≈ 4.7×10²⁸개</p>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">난수 매핑</h4>
+          <p>crypto.getRandomValues로 만든 무작위 정수를 문자셋 길이로 나눈 나머지를 인덱스로 사용합니다.</p>
+          <div className="my-2 p-3 bg-muted rounded-lg">
+            <p className="font-mono text-sm text-center">result += charset[random % charset.length]</p>
+          </div>
+          <p>이 방식은 각 문자가 동일한 확률로 선택되는 균일 분포를 보장합니다.</p>
         </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-6">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">보안 강화를 위한 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>비밀번호:</strong> 최소 12자 이상, 모든 문자 유형을 활성화하는 것이 좋습니다.</li>
-            <li><strong>API 키:</strong> 특수문자를 포함하면 예상치 못한 이스케이프 문제가 발생할 수 있으므로 숫자+영문 조합을 추천합니다.</li>
-            <li><strong>토큰 생성:</strong> 세션 토큰이나 인증 토큰은 32자 이상의 길이를 권장합니다.</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">비밀번호 길이</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>중요 계정은 최소 12자, 권장 16자 이상을 사용하세요.</li>
+            <li>모든 문자 유형을 활성화할수록 강도가 올라갑니다.</li>
           </ul>
         </div>
-        <div className="p-4 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20">
-          <h3 className="font-semibold text-lg mb-2">활용 예시</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>임시 비밀번호:</strong> 회원가입 시 임시 비밀번호 발급</li>
-            <li><strong>약속 식별자:</strong> 고유한 ID 생성 (UUID 대안)</li>
-            <li><strong>파일명 생성:</strong> 충돌 없는 고유 파일명 생성</li>
-            <li><strong>데이터 마스킹:</strong> 테스트용 더미 데이터 생성</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">API 키 생성</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>특수문자는 이스케이프 문제가 생길 수 있으므로 숫자+영문 조합을 추천합니다.</li>
+            <li>세션·인증 토큰은 32자 이상을 권장합니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">재사용 금지</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>같은 문자열을 여러 곳에 재사용하지 마세요.</li>
+            <li>유출 의심 시 즉시 새 것으로 교체하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">안전한 보관</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>생성값은 저장되지 않으므로 비밀번호 관리자를 이용하세요.</li>
+            <li>화면 캡처나 로그에 남지 않도록 주의하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">테스트 데이터</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>더미 데이터와 파일명 생성에 대량 생성을 활용하세요.</li>
+            <li>개수는 한 번에 최대 50개까지 가능합니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">복잡도 조절</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>사용처에 따라 특수문자 포함 여부를 조절하세요.</li>
+            <li>가독성이 필요하면 숫자+영문 조합이 적당합니다.</li>
           </ul>
         </div>
       </div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { NextPage } from 'next';
@@ -234,7 +234,7 @@ const InstallmentSavingsMonthlyCompoundInterestCalculator: NextPage = () => {
     calculationFormula: (
       <div className="text-base leading-relaxed space-y-8">
         <div>
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3">📈 복리, 이자가 이자를 낳는 마법</h3>
+          <h3 className="text-xl font-bold text-foreground mb-3">📈 복리, 이자가 이자를 낳는 마법</h3>
           <p>
             복리(Compound Interest)는 '이자에 대한 이자'가 붙는다는 점에서 단리(Simple Interest)와 근본적인 차이를 가집니다. 
             단리가 원금에 대해서만 꾸준히 동일한 이자를 지급하는 방식이라면, 복리는 발생한 이자를 원금에 포함시켜(원금화하여) 다음 기간의 이자를 계산합니다. 
@@ -242,63 +242,69 @@ const InstallmentSavingsMonthlyCompoundInterestCalculator: NextPage = () => {
           </p>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3">🧮 월복리 적금 만기액 계산 공식 완전 정복</h3>
+          <h3 className="text-xl font-bold text-foreground mb-3">🧮 월복리 적금 만기액 계산 공식 완전 정복</h3>
           <p className="mb-4">
             월복리 적금의 최종 수령액은 매월 언제 납입하는지에 따라 달라집니다. 하루라도 먼저 넣는 것이 이득이라는 사실을 수식으로 확인해 보세요.
           </p>
-          <div className="p-5 rounded-lg bg-gray-100 dark:bg-gray-800 border-l-4 border-blue-500">
-            <h4 className="font-bold text-lg text-blue-600 dark:text-blue-400">1. 월초 납입 (기수불, Annuity Due)</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">1. 월초 납입 (기수불, Annuity Due)</h4>
             <p className="mt-2 mb-3 text-sm">매월 1일 등 초반에 납입하는 경우입니다. 납입금이 한 달치 이자를 온전히 다 받기 때문에 월말 납입보다 유리합니다.</p>
-            <p className="font-mono p-4 bg-white dark:bg-gray-900 rounded-md text-sm break-words">
+            <p className="font-mono p-4 bg-card rounded-md text-sm break-words">
               S = A × (1 + r) × [ ( (1 + r)ⁿ - 1 ) / r ]
             </p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-100 dark:bg-gray-800 border-l-4 border-green-500 mt-6">
-            <h4 className="font-bold text-lg text-green-600 dark:text-green-400">2. 월말 납입 (기말불, Ordinary Annuity)</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary mt-6">
+            <h4 className="font-bold text-lg text-primary">2. 월말 납입 (기말불, Ordinary Annuity)</h4>
             <p className="mt-2 mb-3 text-sm">매월 31일 등 마지막 날에 납입하는 경우입니다. 월초 납입 공식에서 이자를 한 번 덜 받는 (1+r) 항이 빠진 것을 볼 수 있습니다.</p>
-            <p className="font-mono p-4 bg-white dark:bg-gray-900 rounded-md text-sm break-words">
+            <p className="font-mono p-4 bg-card rounded-md text-sm break-words">
               S = A × [ ( (1 + r)ⁿ - 1 ) / r ]
             </p>
           </div>
-          <div className="mt-6 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-            <p><strong className="font-semibold text-gray-700 dark:text-gray-300">S</strong>: 만기 시 총 수령액 (원금 + 이자)</p>
-            <p><strong className="font-semibold text-gray-700 dark:text-gray-300">A</strong>: 매월 납입하는 금액 (월 적립금)</p>
-            <p><strong className="font-semibold text-gray-700 dark:text-gray-300">r</strong>: 월 이자율 (연이율 / 12)</p>
-            <p><strong className="font-semibold text-gray-700 dark:text-gray-300">n</strong>: 총 납입 개월 수 (기간)</p>
+          <div className="mt-6 space-y-2 text-sm text-muted-foreground">
+            <p><strong className="font-semibold text-foreground">S</strong>: 만기 시 총 수령액 (원금 + 이자)</p>
+            <p><strong className="font-semibold text-foreground">A</strong>: 매월 납입하는 금액 (월 적립금)</p>
+            <p><strong className="font-semibold text-foreground">r</strong>: 월 이자율 (연이율 / 12)</p>
+            <p><strong className="font-semibold text-foreground">n</strong>: 총 납입 개월 수 (기간)</p>
+          </div>
+          <div className="mt-6 p-4 bg-muted rounded-lg border border-border">
+            <h4 className="font-semibold text-foreground mb-2">계산 예시 (월 10만 원, 12개월, 연 5%, 월초 납입)</h4>
+            <p className="text-sm text-muted-foreground">r = 5% / 12 ≈ 0.0041667</p>
+            <p className="font-mono text-sm text-primary mt-1">S = 100,000 × 1.0041667 × [((1.0041667)^12 − 1) / 0.0041667] ≈ 1,229,980원</p>
+            <p className="text-xs text-muted-foreground mt-1">원금 합계 1,200,000원 대비 이자 약 29,980원 (월말 납입 시 약 1,225,132원)</p>
           </div>
         </div>
       </div>
     ),
     usefulTips: (
       <div className="text-base leading-relaxed space-y-8">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">🚀 2025년, 당신의 적금을 성공으로 이끌 7가지 필승 전략</h2>
+        <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">🚀 2025년, 당신의 적금을 성공으로 이끌 7가지 필승 전략</h2>
         <div className="space-y-6">
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-blue-500">
-            <h4 className="font-bold text-lg text-blue-600 dark:text-blue-400">1. '시간의 마법'을 믿고, 지금 당장 시작하세요.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">1. '시간의 마법'을 믿고, 지금 당장 시작하세요.</h4>
             <p className="mt-2">복리의 가장 친한 친구는 '시간'입니다. 25세에 매월 30만원씩 연 5% 복리 적금을 시작하면 60세에 약 4억 3천만원을 모을 수 있지만, 10년 늦은 35세에 시작하면 약 2억 3천만원에 그칩니다. 10년의 차이가 2억원의 차이를 만듭니다. 소액이라도 괜찮습니다. 중요한 것은 '지금 바로' 시작하는 것입니다.</p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-green-500">
-            <h4 className="font-bold text-lg text-green-600 dark:text-green-400">2. 세금, 모르면 손해! '세금우대'와 '비과세'를 적극 활용하세요.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">2. 세금, 모르면 손해! '세금우대'와 '비과세'를 적극 활용하세요.</h4>
             <p className="mt-2">일반적인 적금 이자에는 <strong>15.4%</strong>의 세금이 붙습니다. 하지만 2025년부터 확대되는 ISA(개인종합자산관리계좌) 등을 활용하면 절세 혜택을 누릴 수 있습니다. 또한, 청년희망적금이나 특정 조건을 만족하는 경우 <strong>9.5%의 저율과세</strong>나 <strong>완전 비과세</strong> 혜택을 받을 수 있는 상품도 있으니, 가입 전 자신의 조건에 맞는 '세테크' 상품을 반드시 확인하세요. 5,000만원 한도의 비과세 종합저축도 잊지 마세요.</p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-yellow-500">
-            <h4 className="font-bold text-lg text-yellow-600 dark:text-yellow-400">3. '월초 납입' 습관, 티끌 모아 태산을 만듭니다.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">3. '월초 납입' 습관, 티끌 모아 태산을 만듭니다.</h4>
             <p className="mt-2">급여일이 25일이라면, 자동이체일을 26일로 설정하는 것보다 다음달 1일로 설정하는 것이 좋습니다. 이 계산기로 직접 시뮬레이션 해보세요. 5년간 매월 50만원을 연 4%로 적금할 경우, 월말 납입 대비 월초 납입 시 약 5만원의 이자를 더 받을 수 있습니다. 작아 보이지만, 이러한 디테일이 모여 부를 이룹니다.</p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-purple-500">
-            <h4 className="font-bold text-lg text-purple-600 dark:text-purple-400">4. '실질금리'를 계산하여 돈의 가치를 지키세요.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">4. '실질금리'를 계산하여 돈의 가치를 지키세요.</h4>
             <p className="mt-2">은행이 제시하는 연 5% 금리는 '명목금리'입니다. 만약 그 해의 물가상승률이 3%라면, 내 돈의 실질적인 구매력은 2%만 증가한 셈입니다. 2025년 경제 전망에서 예상하는 물가상승률(예: 2~3%)을 고려하여, 적어도 그 이상의 금리를 제공하는 상품을 선택하는 것이 자산 가치 하락을 막는 현명한 방법입니다.</p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-red-500">
-            <h4 className="font-bold text-lg text-red-600 dark:text-red-400">5. '만기 유지'는 철칙, '긴급 예비 자금'을 준비하세요.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">5. '만기 유지'는 철칙, '긴급 예비 자금'을 준비하세요.</h4>
             <p className="mt-2">적금을 중도에 해지하면 약정된 복리 이자는커녕, 푼돈 수준의 중도해지이율이 적용됩니다. 갑작스러운 지출 때문에 적금을 깨는 상황을 막기 위해, 최소 3~6개월치 생활비에 해당하는 '긴급 예비 자금'을 별도의 파킹통장 등에 마련해두는 것이 필수입니다.</p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-indigo-500">
-            <h4 className="font-bold text-lg text-indigo-600 dark:text-indigo-400">6. '특판 상품'과 '제2금융권'을 노리세요.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">6. '특판 상품'과 '제2금융권'을 노리세요.</h4>
             <p className="mt-2">시중 은행보다 저축은행, 신협, 새마을금고 등 제2금융권이 일반적으로 더 높은 금리를 제공합니다. <strong>예금자보호법에 따라 1인당, 1개 금융기관 당 원리금 5,000만원까지 보호</strong>되므로, 이 한도 내에서 제2금융권의 고금리 상품을 적극적으로 활용하는 것이 스마트한 전략입니다. 특히 연말이나 연초에 나오는 '특판 적금'은 한도가 금방 소진되니, 금융 앱 알림 등을 통해 정보를 놓치지 마세요.</p>
           </div>
-          <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-pink-500">
-            <h4 className="font-bold text-lg text-pink-600 dark:text-pink-400">7. '72의 법칙'으로 미래를 예측하세요.</h4>
+          <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+            <h4 className="font-bold text-lg text-primary">7. '72의 법칙'으로 미래를 예측하세요.</h4>
             <p className="mt-2">'72의 법칙'은 복리 이자로 원금이 2배가 되는 데 걸리는 시간을 어림짐작하는 유용한 공식입니다. <strong>'72 ÷ 연이율(%)'</strong>을 계산하면 됩니다. 예를 들어, 연 6% 복리 상품이라면 원금이 2배가 되는 데 약 12년(72 ÷ 6)이 걸립니다. 이 법칙을 이용해 여러 상품의 잠재력을 빠르게 비교하고 장기적인 재무 계획을 세워보세요.</p>
           </div>
         </div>

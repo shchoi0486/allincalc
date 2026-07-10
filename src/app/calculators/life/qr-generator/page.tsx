@@ -164,33 +164,54 @@ const QRGenerator: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">QR 코드 생성기는 텍스트, URL, 연락처 정보 등을 QR 코드로 변환하여 빠르게 공유할 수 있는 도구입니다.</p>
-        <p>스마트폰 카메라로 스캔하면 바로 연결되는 QR 코드를 생성할 수 있으며, 생성된 QR 코드는 PNG 파일로 다운로드하여 인물, 명함, 포스터 등에 활용할 수 있습니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          텍스트와 URL을 QR 코드로 변환하여 빠르게 공유하세요!
+        </p>
+        <p>
+          QR 코드 생성기는 텍스트, URL, 연락처 정보 등을 QR 코드로 변환하여 스마트폰 카메라로 스캔하면 바로 연결되는
+          편리한 공유 도구입니다. 웹사이트 링크, 와이파이 비밀번호, 메시지 등 다양한 정보를 하나의 이미지로 담을 수 있습니다.
+        </p>
+        <p>
+          생성된 QR 코드는 PNG 파일로 다운로드하여 명함, 포스터, 메뉴판, 전단지 등에 활용할 수 있습니다.
+          별도의 로그인이나 설치 없이 웹 브라우저에서 즉시 사용할 수 있어 개인과 비즈니스 모두에게 유용합니다.
+        </p>
+        <p>
+          자영업자, 마케터, 교사, 이벤트 기획자뿐 아니라 일상에서 QR 코드를 자주 활용하는 모든 분들에게
+          간편하고 빠른 QR 코드 생성 서비스를 제공합니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
-          <h3 className="font-semibold text-lg mb-2">QR 코드 구조</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>Finder Pattern:</strong> 3개의 코너에 위치한 큰 정사각형 패턴으로 스캐너가 QR 코드의 위치를 인식합니다</li>
-            <li><strong>Timing Pattern:</strong> Finder 패턴 사이의 점선으로 모듈 크기를 결정합니다</li>
-            <li><strong>Data Modules:</strong> 실제 데이터가 인코딩된 영역</li>
-            <li><strong>Error Correction:</strong> QR 코드가 부분적으로 손상되어도 복구 가능한 중복 데이터</li>
+          <h3 className="font-semibold text-lg mb-2">QR 코드의 구조와 작동 원리</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>Finder Pattern:</strong> 3개의 코너에 위치한 큰 정사각형 패턴으로 스캐너가 QR 코드의 위치와 방향을 인식합니다.</li>
+            <li><strong>Timing Pattern:</strong> Finder 패턴 사이의 점선으로 모듈 크기를 결정하는 기준선 역할을 합니다.</li>
+            <li><strong>Data Modules:</strong> 실제 데이터가 인코딩된 영역으로, 텍스트나 URL 정보가 담깁니다.</li>
+            <li><strong>Error Correction:</strong> QR 코드가 부분적으로 손상되어도 복구 가능한 중복 데이터가 포함되어 있어 안정적입니다.</li>
           </ul>
+        </div>
+        <div>
+          <h3 className="font-semibold text-lg mb-2">생성 과정</h3>
+          <p className="text-muted-foreground">
+            입력된 텍스트를 데이터로 변환하고, 인코딩된 데이터를 모듈 행렬에 배치한 뒤,
+            Finder 패턴과 Timing 패턴을 추가하여 최종적인 QR 코드 이미지를 렌더링합니다.
+          </p>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">QR 코드 활용 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>URL 공유:</strong> 웹사이트 링크를 QR 코드로 만들어 명함이나 포스터에 인쇄</li>
-            <li><strong>와이파이 연결:</strong> Wi-Fi 비밀번호를 QR 코드로 만들어 손님에게 공유</li>
-            <li><strong>메뉴판:</strong> 식당 메뉴를 QR 코드로 연결하여 종이 절약</li>
-            <li><strong>크기:</strong> QR 코드는 최소 2cm x 2cm 이상으로 인쇄해야 스캔 가능</li>
-            <li><strong>여백:</strong> QR 코드 주변에 충분한 여백(Quiet Zone)을 두어야 정확한 스캔이 가능합니다</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">QR 코드 활용 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>URL 공유:</strong> 웹사이트 링크를 QR 코드로 만들어 명함이나 포스터에 인쇄하면 방문자가 즉시 접속할 수 있습니다.</li>
+            <li><strong>와이파이 연결:</strong> Wi-Fi 네트워크 정보를 QR 코드로 만들어 손님에게 공유하면 비밀번호 입력 없이 연결됩니다.</li>
+            <li><strong>메뉴판/카탈로그:</strong> 식당 메뉴나 제품 카탈로그를 QR 코드로 연결하여 종이를 절약하고 실시간 업데이트가 가능합니다.</li>
+            <li><strong>인쇄물 최소 크기:</strong> QR 코드는 최소 2cm x 2cm 이상으로 인쇄해야 정확한 스캔이 가능합니다.</li>
+            <li><strong>여백(Quiet Zone) 유지:</strong> QR 코드 주변에 충분한 여백을 두어야 스캐너가 정확하게 인식합니다.</li>
+            <li><strong>색상 대비:</strong> QR 코드는 어두운색 바탕에 밝은색 모듈이 일반적이며, 반전된 색상은 스캔이 어려울 수 있습니다.</li>
           </ul>
         </div>
       </div>

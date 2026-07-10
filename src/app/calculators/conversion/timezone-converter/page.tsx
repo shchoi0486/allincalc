@@ -128,12 +128,16 @@ export default function TimezoneConverter() {
     calculatorDescription: (
       <div className="space-y-4">
         <p>
-          <strong>시간대 변환기</strong>는 전 세계 주요 시간대 간의 시간 변환을 제공하는 도구입니다. 
-          UTC, 미국 동부/서부, 유럽 런던, 아시아 도쿄/서울/상하이 시간대 간의 시간 변환을 빠르게 수행할 수 있습니다.
+          <strong>시간대 변환기</strong>는 전 세계 주요 시간대 간의 시간 변환을 제공하는 필수적인 도구입니다. UTC, 미국 동부/서부, 유럽 런던, 아시아 도쿄/서울/상하이 시간대를 지원하며, 날짜와 시간을 입력하면 다른 시간대로의 변환 결과를 즉시 확인할 수 있습니다.
         </p>
         <p>
-          국제회의, 해외여행, 원격근무 등 시간대 변환이 필요할 때 활용할 수 있으며, 
-          날짜와 시간을 입력하면 선택한 기준 시간대의 시간이 다른 시간대로 변환된 결과를 보여줍니다.
+          국제 비즈니스 미팅, 해외 여행, 원격 근무, 온라인 게임 등에서 시간대 변환이 필요할 때 활용할 수 있습니다. 특히 여러 국가에 흩어진 팀원들과의 협업 시 회의 시간을 조율하는 데 필수적인 도구입니다.
+        </p>
+        <p>
+          이 변환기는 각 시간대의 UTC 오프셋을 기반으로 정확한 변환을 수행합니다. 시간대 선택 후 날짜와 시간을 입력하면 선택한 모든 시간대에서의 해당 시간을 동시에 보여주어, 어떤 시간대가 적절한지 한눈에 파악할 수 있습니다.
+        </p>
+        <p className="p-4 bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 rounded-r-lg">
+          국제선 비행기 스케줄, 글로벌 금융 시장 거래 시간, 해외 이벤트 중계 등 시간대 변환이 필수적인 상황에서 이 도구를 활용하면 시간 계산으로 인한 실수를 예방할 수 있습니다.
         </p>
       </div>
     ),
@@ -141,7 +145,7 @@ export default function TimezoneConverter() {
       <div className="space-y-4">
         <div>
           <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">시간대 변환 공식</h4>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2">
+          <div className="p-4 bg-muted rounded-lg space-y-2">
             <p className="text-center font-mono text-sm">대상 시간 = 원래 시간 + (대상 시간대 오프셋 - 원래 시간대 오프셋)</p>
             <div className="mt-4 text-sm space-y-1">
               <p className="text-center">시간대 오프셋 (UTC 기준):</p>
@@ -158,39 +162,36 @@ export default function TimezoneConverter() {
           </div>
         </div>
         <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 rounded-r-lg text-sm">
-          <strong>참고:</strong> 이 변환기는 표준 시간대 오프셋을 기준으로 합니다. 
-          서머타임(DST)은 자동으로 적용되지 않으며, 필요 시 수동으로 오프셋을 조정해야 합니다.
+          <strong>참고:</strong> 이 변환기는 표준 시간대 오프셋을 기준으로 합니다. 서머타임(DST)은 자동으로 적용되지 않으며, 필요 시 수동으로 오프셋을 조정해야 합니다.
         </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-4">
         <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">💡 시간대 관련 핵심 정보</h4>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">핵심 개념</h4>
           <ul className="space-y-3">
             <li className="p-3 border rounded-lg">
               <p className="font-semibold text-sm">서머타임(DST) 이해하기</p>
               <p className="text-xs mt-1">
-                많은 국가에서는 여름철에 시계를 1시간 앞당기는 서머타임을 실시합니다. 
-                미국과 유럽은 3월~11월, 호주와 뉴질랜드는 반대 시기에 실시합니다. 
-                한국과 일본은 서머타임을 실시하지 않습니다.
+                많은 국가에서는 여름철에 시계를 1시간 앞당기는 서머타임을 실시합니다. 미국과 유럽은 3월~11월, 호주와 뉴질랜드는 반대 시기에 실시합니다. 한국과 일본은 서머타임을 실시하지 않습니다.
               </p>
             </li>
             <li className="p-3 border rounded-lg">
               <p className="font-semibold text-sm">국제 회의 시간 정하기</p>
               <p className="text-xs mt-1">
-                여러 시간대의 참가자가 있는 회의는 보통 UTC를 기준으로 시간을 정합니다. 
-                아시아-유럽 회의: UTC 08:00~10:00 / 아시아-미국 회의: UTC 17:00~19:00
+                여러 시간대의 참가자가 있는 회의는 보통 UTC를 기준으로 시간을 정합니다. 아시아-유럽 회의: UTC 08:00~10:00 / 아시아-미국 회의: UTC 17:00~19:00
               </p>
             </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">국제선 비행기 시간 계산</p>
-              <p className="text-xs mt-1">
-                출발지와 도착지의 시간대 차이를 고려해야 합니다. 
-                예: 서울(UTC+9) → 뉴욕(UTC-5): 14시간 차이 / 
-                서울 → 도쿄(UTC+9): 시간대 동일
-              </p>
-            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-teal-500 pl-3">활용 사례</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li><strong>국제 비즈니스:</strong> 여러 시간대에 걸친 팀 미팅 시간 조율</li>
+            <li><strong>여행:</strong> 출발지와 도착지의 시간 차이 사전 확인</li>
+            <li><strong>금융:</strong> 뉴욕, 런던, 도쿄 증시 거래 시간 확인</li>
+            <li><strong>온라인 게임:</strong> 글로벌 서버 이벤트 시간 확인</li>
           </ul>
         </div>
       </div>

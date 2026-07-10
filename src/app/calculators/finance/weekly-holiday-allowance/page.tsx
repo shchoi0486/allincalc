@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useMemo } from 'react';
 import CalculatorsLayout from '@/components/calculators/Calculatorslayout';
@@ -118,26 +118,26 @@ const WeeklyHolidayAllowanceCalculator = () => {
       </div>
     ),
     calculationFormula: (
-      <div className="space-y-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
+      <div className="space-y-4 p-4 bg-muted rounded-md">
         <h3 className="text-xl font-bold">내 주휴수당, 어떻게 계산될까?</h3>
         <p>주휴수당은 1주일간의 소정근로시간에 비례하여 계산됩니다. 법정 최대 근로시간인 주 40시간을 기준으로 내가 일한 시간의 비율만큼 수당이 발생한다고 이해하면 쉽습니다.</p>
-        <div className="border-l-4 border-blue-500 pl-4 mt-4">
+        <div className="border-l-4 border-primary pl-4 mt-4">
           <p><strong>계산 공식:</strong></p>
-          <p className="pl-4 mt-1 bg-white dark:bg-gray-700 p-2 rounded font-mono"><code>(1주일 총 소정근로시간 / 40시간) × 8시간 × 시급</code></p>
+          <p className="pl-4 mt-1 bg-card p-2 rounded font-mono"><code>(1주일 총 소정근로시간 / 40시간) × 8시간 × 시급</code></p>
         </div>
         <div className="mt-4">
           <h4 className="font-semibold">계산 예시:</h4>
           <p>예를 들어, 시급 10,000원을 받고 하루 6시간씩 주 4일(총 24시간)을 일하는 근로자의 경우:</p>
-          <p className="pl-4 mt-1 bg-white dark:bg-gray-700 p-2 rounded font-mono"><code>(24시간 / 40시간) × 8시간 × 10,000원 = 48,000원</code></p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">따라서 이 근로자는 1주일 급여(24시간 × 10,000원 = 240,000원) 외에 주휴수당 48,000원을 추가로 받아 총 288,000원을 받게 됩니다.</p>
+          <p className="pl-4 mt-1 bg-card p-2 rounded font-mono"><code>(24시간 / 40시간) × 8시간 × 10,000원 = 48,000원</code></p>
+          <p className="text-sm text-muted-foreground mt-1">따라서 이 근로자는 1주일 급여(24시간 × 10,000원 = 240,000원) 외에 주휴수당 48,000원을 추가로 받아 총 288,000원을 받게 됩니다.</p>
         </div>
-        <p className="text-xs text-gray-500 mt-4">* 참고: 주 40시간 이상 일해도 주휴수당은 최대 8시간분(주 40시간 기준)까지만 지급됩니다.</p>
+        <p className="text-xs text-muted-foreground mt-4">* 참고: 주 40시간 이상 일해도 주휴수당은 최대 8시간분(주 40시간 기준)까지만 지급됩니다.</p>
       </div>
     ),
     usefulTips: (
       <div className="space-y-6">
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">1. 주휴수당 지급 조건 (이 3가지는 꼭 기억하세요!)</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">1. 주휴수당 지급 조건 (이 3가지는 꼭 기억하세요!)</h4>
           <p>주휴수당을 받기 위해서는 아래 세 가지 조건을 모두 충족해야 합니다.</p>
           <ul className="list-decimal pl-5 space-y-2 mt-2">
             <li><strong>주 15시간 이상 근무:</strong> 근로계약서에 명시된 1주일간의 소정근로시간이 15시간 이상이어야 합니다. 연장, 야간, 휴일근로 시간은 포함되지 않습니다.</li>
@@ -146,19 +146,19 @@ const WeeklyHolidayAllowanceCalculator = () => {
           </ul>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">2. 5인 미만 사업장도 주휴수당을 지급해야 하나요?</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">2. 5인 미만 사업장도 주휴수당을 지급해야 하나요?</h4>
           <p><strong>네, 반드시 지급해야 합니다.</strong> 주휴수당은 사업장의 상시 근로자 수와 관계없이 근로기준법이 적용되는 모든 사업장에 해당되는 의무 조항입니다. 5인 미만 사업장이라는 이유로 주휴수당을 지급하지 않는 것은 명백한 임금체불에 해당합니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">3. 월급에 주휴수당이 포함된 경우 (포괄임금제)</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">3. 월급에 주휴수당이 포함된 경우 (포괄임금제)</h4>
           <p>월급제 근로자의 경우, 월급에 주휴수당이 포함된 것으로 간주하는 경우가 많습니다(포괄임금제). 하지만 이 경우에도 근로계약서에 '월급 OOO원에는 주휴수당이 포함되어 있다'는 내용이 명확하게 기재되어 있어야 합니다. 또한, 주휴수당을 포함한 월급을 실제 근로시간으로 나누어 계산한 시급이 최저시급 이상이어야 법적으로 유효합니다. 애매한 문구로 주휴수당 지급을 회피하는 경우, 법적 분쟁의 소지가 될 수 있습니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">4. 초단시간 근로자와 주휴수당</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">4. 초단시간 근로자와 주휴수당</h4>
           <p>4주 평균하여 1주 소정근로시간이 15시간 미만인 근로자를 '초단시간 근로자'라고 합니다. 안타깝게도 초단시간 근로자에게는 근로기준법상 주휴수당, 연차유급휴가, 퇴직금이 적용되지 않습니다. 이는 장기 근속을 유도하고 최소한의 휴식을 보장하려는 법의 취지 때문입니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">5. 주휴수당과 실질 시급 (2025년 최저시급 기준)</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">5. 주휴수당과 실질 시급 (2025년 최저시급 기준)</h4>
           <p>주휴수당을 포함하면 내가 받는 실질적인 시급은 더 높아집니다. 예를 들어 2025년 최저시급이 10,000원이라고 가정하고 주 40시간을 일한다면, 주급은 400,000원이고 주휴수당은 80,000원입니다. 총 480,000원을 40시간으로 나누면 실질 시급은 12,000원이 되는 셈입니다. 이는 구직 시 급여 조건을 비교하거나 연봉 협상을 할 때 유용하게 활용할 수 있는 개념입니다.</p>
         </div>
       </div>

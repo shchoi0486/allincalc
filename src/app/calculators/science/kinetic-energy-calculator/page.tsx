@@ -148,105 +148,105 @@ const KineticEnergyCalculator = () => {
     </div>
   );
 
-  const infoSection = {
-    calculatorDescription: (
-      <div className="space-y-4">
+const infoSection = {
+  calculatorDescription: (
+    <div className="space-y-4">
+      <p>
+        <strong>운동 에너지(Kinetic Energy) 계산기</strong>는 물체가 운동함으로써 가지게 되는 에너지를 정확하게 계산하는 물리학 도구입니다. 정지해 있는 물체는 운동 에너지가 0이지만, 움직이기 시작하는 순간부터 운동 에너지를갖게되며, 이 에너지는 물체의 질량과 속도에 의해 결정됩니다.
+      </p>
+      <p>
+        <strong>운동 에너지의 핵심 특징</strong>은 속도의 제곱에 비례한다는 것입니다. 속도가 2배 빨라지면 운동 에너지는 4배, 3배 빨라지면 9배로 기하급수적으로 증가합니다. 이것이 과속 운전이 위험한 이유이며, 충돌 시 파괴력이 커지는 원리입니다.
+      </p>
+      <p>
+        본 계산기는 두 가지 주요 유형의 운동 에너지를 계산할 수 있도록 설계되었습니다. <strong>병진 운동 에너지</strong>는 물체가 한 지점에서 다른 지점으로 이동할 때의 에너지이며, <strong>회전 운동 에너지</strong>는 물체가 특정 축을 중심으로 회전할 때의 에너지입니다.
+      </p>
+      <p className="p-4 bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 rounded-r-lg">
+        이 계산기는 학생들에게 에너지 보존 법칙을 이해시키는 교육 도구로서, 엔지니어들에게는 기계 시스템 설계, 차량 충돌 분석, 스포츠 과학 연구 등에서 정확한 에너지 데이터를 제공하는 실용적인 도구로 활용됩니다.
+      </p>
+    </div>
+  ),
+  calculationFormula: (
+    <div className="space-y-6">
+      <div>
+        <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">선형(병진) 운동 에너지 계산 공식</h4>
+        <div className="p-4 bg-muted rounded-lg">
+          <p className="text-center font-mono text-lg">KE = ½ × m × v²</p>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm">
+          <li><strong className="font-semibold">KE</strong>: 운동 에너지, 단위는 줄(Joule, J)</li>
+          <li><strong className="font-semibold">m</strong>: 물체의 질량, 단위는 킬로그램(kg)</li>
+          <li><strong className="font-semibold">v</strong>: 물체의 속도, 단위는 미터 매 초(m/s)</li>
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-bold text-lg mb-2 border-l-4 border-purple-500 pl-3">회전 운동 에너지 계산 공식</h4>
+        <div className="p-4 bg-muted rounded-lg">
+          <p className="text-center font-mono text-lg">KE = ½ × I × ω²</p>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm">
+          <li><strong className="font-semibold">I</strong>: 관성 모멘트, 단위는 kg·m²</li>
+          <li><strong className="font-semibold">ω</strong>: 각속도, 단위는 라디안 매 초(rad/s)</li>
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">계산 예시</h4>
+        <p>질량 2kg인 공이 10m/s로 움직일 때의 운동 에너지는?</p>
+        <div className="my-2 p-3 bg-muted rounded-lg">
+          <p className="font-mono text-sm text-center">KE = ½ × 2kg × (10m/s)² = 100J</p>
+        </div>
+        <p>따라서 운동 에너지는 100줄(J)입니다.</p>
+      </div>
+    </div>
+  ),
+  usefulTips: (
+    <div className="space-y-6">
+      <div>
+        <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">일-에너지 정리</h4>
         <p>
-          <strong>운동 에너지(Kinetic Energy)</strong>는 이름에서 알 수 있듯이, 물체가 <strong>운동</strong>함으로써 가지게 되는 에너지입니다. 정지해 있는 물체는 운동 에너지가 0이지만, 움직이기 시작하는 순간부터 운동 에너지를 갖게 됩니다. 이 에너지는 물체의 <strong>질량(mass)</strong>이 클수록, 그리고 <strong>속도(velocity)</strong>가 빠를수록 커집니다.
+          물체에 가해진 총 일의 양은 물체의 운동 에너지 변화량과 같습니다. 양의 일을 하면 운동 에너지가 증가하고, 음의 일을 하면 감소합니다.
         </p>
-        <p className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          특히 중요한 점은 운동 에너지가 속도의 <strong>제곱</strong>에 비례한다는 것입니다. 즉, 속도가 2배 빨라지면 운동 에너지는 4배, 속도가 3배 빨라지면 9배로 기하급수적으로 증가합니다. 이것이 바로 과속 운전이 그토록 위험한 이유입니다.
+      </div>
+      <div>
+        <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">실생활 적용 사례</h4>
+        <ul className="space-y-3">
+          <li className="p-3 border rounded-lg">
+            <p className="font-semibold text-sm">교통 및 안전</p>
+            <p className="text-xs mt-1">
+              속도가 2배가 되면 운동 에너지는 4배가 됩니다. 제동 거리와 충돌 파괴력이 4배로 늘어나며, 이는 안전 테스트의 기초가 됩니다.
+            </p>
+          </li>
+          <li className="p-3 border rounded-lg">
+            <p className="font-semibold text-sm">스포츠 과학</p>
+            <p className="text-xs mt-1">
+              골프 스윙, 테니스 서브, 축구 킥 모두 운동 에너지의 원리를 활용하며, 효율적인 에너지 전달이 경기력 향상의 핵심입니다.
+            </p>
+          </li>
+          <li className="p-3 border rounded-lg">
+            <p className="font-semibold text-sm">재생 에너지</p>
+            <p className="text-xs mt-1">
+              풍력, 수력, 파력 발전기는 자연의 운동 에너지를 전기 에너지로 변환하는 기술입니다.
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div className="p-4 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 text-red-800 dark:text-red-200 rounded-r-lg">
+        <p className="font-bold text-sm">⚠️ 상대성 이론</p>
+        <p className="text-xs mt-1">
+          본 공식(KE = ½mv²)은 고전 역학의 공식으로, 속도가 빛의 속도에 비해 매우 느릴 때 유효합니다. 상대론적 속도에서는 아인슈타인의 특수 상대성 이론을 사용해야 합니다.
         </p>
-        <p>
-          본 계산기는 두 가지 주요 유형의 운동 에너지를 계산할 수 있도록 설계되었습니다.
-        </p>
-        <div>
-          <h4 className="font-bold text-lg mb-2">1. 병진 운동 에너지 (Translational Kinetic Energy)</h4>
-          <p>
-            물체가 한 지점에서 다른 지점으로 직선 또는 곡선 경로를 따라 <strong>이동</strong>할 때의 에너지입니다. 우리가 일상생활에서 '운동 에너지'라고 말할 때 대부분 이 병진 운동 에너지를 의미합니다. 예를 들어, 달리는 자동차, 날아가는 공, 걷고 있는 사람 모두 병진 운동 에너지를 가지고 있습니다.
-          </p>
-        </div>
-        <div>
-          <h4 className="font-bold text-lg mb-2">2. 회전 운동 에너지 (Rotational Kinetic Energy)</h4>
-          <p>
-            물체가 특정 축을 중심으로 <strong>회전</strong>할 때의 에너지입니다. 팽이가 돌 때, 지구의 자전, 혹은 자동차 바퀴의 회전 등이 여기에 해당합니다. 회전 운동 에너지는 물체의 회전 속도(각속도)와 회전에 대한 저항을 나타내는 '관성 모멘트'에 의해 결정됩니다.
-          </p>
-        </div>
       </div>
-    ),
-    calculationFormula: (
-      <div className="space-y-6">
-        <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">선형(병진) 운동 에너지 계산 공식</h4>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <p className="text-center font-mono text-lg">KE = ½ × m × v²</p>
-          </div>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><strong className="font-semibold">KE (Kinetic Energy)</strong>: 운동 에너지, 국제 표준 단위는 <strong>줄(Joule)</strong>입니다. 1J은 1뉴턴(N)의 힘으로 물체를 1미터(m) 이동시켰을 때 하는 일의 양과 같습니다.</li>
-            <li><strong className="font-semibold">m (mass)</strong>: 물체의 질량, 단위는 <strong>킬로그램(kg)</strong>입니다.</li>
-            <li><strong className="font-semibold">v (velocity)</strong>: 물체의 속도, 단위는 <strong>미터 매 초(m/s)</strong>입니다.</li>
-          </ul>
-        </div>
-        <hr />
-        <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-purple-500 pl-3">회전 운동 에너지 계산 공식</h4>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <p className="text-center font-mono text-lg">KE = ½ × I × ω²</p>
-          </div>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><strong className="font-semibold">KE (Kinetic Energy)</strong>: 회전 운동 에너지, 단위는 마찬가지로 <strong>줄(Joule)</strong>입니다.</li>
-            <li><strong className="font-semibold">I (Moment of Inertia)</strong>: 관성 모멘트, 단위는 <strong>kg·m²</strong>입니다. 물체가 회전 운동의 변화에 얼마나 저항하는지를 나타내는 척도입니다. 질량이 클수록, 그리고 질량이 회전축에서 멀리 분포할수록 관성 모멘트가 커집니다. (예: 피겨 스케이팅 선수가 팔을 펴면 회전 속도가 느려지고, 팔을 오므리면 빨라지는 원리)</li>
-            <li><strong className="font-semibold">ω (omega, Angular Velocity)</strong>: 각속도, 단위는 <strong>라디안 매 초(rad/s)</strong>입니다. 물체가 단위 시간당 얼마나 많은 각도를 회전하는지를 나타냅니다.</li>
-          </ul>
-        </div>
+      <div>
+        <h4 className="font-bold text-lg mb-2 border-l-4 border-teal-500 pl-3">에너지 보존 법칙</h4>
+        <p>에너지는 형태가 변할 뿐 창조되거나 소멸되지 않습니다.</p>
+        <ul className="list-disc list-inside space-y-2 mt-2">
+          <li><strong>위치 → 운동:</strong> 낙하하는 물체의 위치 에너지가 운동 에너지로 변환</li>
+          <li><strong>운동 → 열:</strong> 마찰에 의한 운동 에너지의 열에너지 변환</li>
+          <li><strong>운동 → 탄성:</strong> 스프링에 의해 저장되는 운동 에너지</li>
+        </ul>
       </div>
-    ),
-    usefulTips: (
-      <div className="space-y-6">
-        <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">💡 일-에너지 정리 (Work-Energy Theorem)</h4>
-          <p>
-            물리학의 핵심 원리 중 하나로, <strong>"물체에 가해진 총 일(net work)의 양은 물체의 운동 에너지 변화량과 같다"</strong>는 정리입니다. 즉, 외부에서 물체에 양(+)의 일을 해주면 운동 에너지가 증가(속도가 빨라짐)하고, 음(-)의 일을 해주면(마찰력 등) 운동 에너지가 감소(속도가 느려짐)합니다. 자동차 브레이크는 마찰력을 이용해 운동 에너지를 열에너지로 변환하여 차를 멈추게 하는 대표적인 예입니다.
-          </p>
-        </div>
-        <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">🚀 실생활 속 운동 에너지 활용 사례</h4>
-          <ul className="space-y-4">
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">🚗 교통 및 안전</p>
-              <p className="text-xs mt-1">
-                자동차의 속도가 2배가 되면 운동 에너지는 4배가 됩니다. 이는 제동 거리가 4배로 늘어나고, 충돌 시 파괴력도 4배가 됨을 의미합니다. 자동차 안전 테스트(충돌 테스트)는 바로 이 운동 에너지를 어떻게 효과적으로 흡수하여 탑승자를 보호하는지를 평가하는 과정입니다.
-              </p>
-            </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">⚾ 스포츠 과학</p>
-              <p className="text-xs mt-1">
-                야구 투수가 와인드업 동작을 통해 몸 전체를 사용하여 공에 운동 에너지를 최대로 전달하는 것처럼, 대부분의 스포츠는 운동 에너지의 효율적인 전달과 관련이 깊습니다. 골프 스윙, 테니스 서브, 축구 킥 모두 운동 에너지의 원리를 활용합니다.
-              </p>
-            </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">💨 재생 에너지</p>
-              <p className="text-xs mt-1">
-                풍력 발전기는 바람의 운동 에너지를, 수력 발전기는 낙하하는 물의 위치 에너지가 변환된 운동 에너지를, 파력 발전기는 파도의 운동 에너지를 포착하여 전기 에너지로 변환합니다. 이는 자연의 운동 에너지를 인류에게 유용한 에너지 형태로 바꾸는 기술입니다.
-              </p>
-            </li>
-             <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">🌌 천문학 및 우주 탐사</p>
-              <p className="text-xs mt-1">
-                소행성이나 혜성이 지구에 충돌할 때의 파괴력은 그 천체의 거대한 질량과 속도가 만들어내는 엄청난 운동 에너지 때문입니다. 반대로 우주 탐사선이 다른 행성의 중력을 이용해 속도를 높이는 '중력 도움(Slingshot)' 기술 또한 행성의 운동 에너지를 일부 활용하는 것입니다.
-              </p>
-            </li>
-          </ul>
-        </div>
-        <div className="p-4 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 text-red-800 dark:text-red-200 rounded-r-lg">
-          <p className="font-bold text-sm">⚠️ 상대성 이론에 대하여</p>
-          <p className="text-xs mt-1">
-            본 계산기에서 사용하는 공식(KE = ½mv²)은 물체의 속도가 빛의 속도에 비해 매우 느릴 때 유효한 고전 역학의 공식입니다. 물체의 속도가 빛의 속도에 가까워지면(상대론적 속도), 질량이 증가하는 효과 등을 고려한 아인슈타인의 특수 상대성 이론에 따른 다른 공식을 사용해야 합니다.
-          </p>
-        </div>
-      </div>
-    )
-  };
+    </div>
+  )
+};
 
   return (
     <CalculatorsLayout

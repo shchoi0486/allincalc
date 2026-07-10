@@ -11,6 +11,11 @@ interface CalculatorLayoutProps {
   children: ReactNode;
   visualizationComponent: ReactNode;
   resultComponent: ReactNode;
+  infoSection?: {
+    calculatorDescription: ReactNode;
+    calculationFormula: ReactNode;
+    usefulTips: ReactNode;
+  };
 }
 
 export default function CalculatorLayout({
@@ -20,6 +25,7 @@ export default function CalculatorLayout({
   children,
   visualizationComponent,
   resultComponent,
+  infoSection,
 }: CalculatorLayoutProps) {
   const router = useRouter();
 
@@ -60,6 +66,30 @@ export default function CalculatorLayout({
             {resultComponent}
         </div>
       </div>
+
+      {/* 정보 섹션 */}
+      {infoSection && (
+        <div className="mt-8 space-y-8">
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-foreground">계산기 설명</h3>
+            <div className="text-muted-foreground">
+              {infoSection.calculatorDescription}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-foreground">계산 공식</h3>
+            <div className="text-muted-foreground">
+              {infoSection.calculationFormula}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-foreground">유용한 팁</h3>
+            <div className="text-muted-foreground">
+              {infoSection.usefulTips}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

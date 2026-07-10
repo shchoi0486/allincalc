@@ -184,33 +184,54 @@ const TextDifference: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">텍스트 비교 도구는 두 텍스트 간의 차이점을 한 줄 단위로 비교하고 하이라이트하여 보여주는 도구입니다.</p>
-        <p>코드 리뷰, 문서 수정 이력 확인, 번역 비교 등 다양한 상황에서 원본과 변경본의 차이점을 빠르게 파악할 수 있습니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          두 텍스트의 차이점을 한 줄 단위로 비교하고 하이라이트하세요!
+        </p>
+        <p>
+          텍스트 비교 도구는 두 텍스트 간의 차이점을 한 줄 단위로 정확하게 비교하고
+          추가, 삭제, 변경 사항을 색상으로 직관적으로 보여주는 강력한 분석 도구입니다.
+        </p>
+        <p>
+          코드 리뷰에서 소스코드 변경 이력을 빠르게 확인하거나, 계약서·제안서 등 문서 수정 사항을 검토하거나,
+          원문과 번역문을 대조하여 오역을 발견하는 등 다양한 상황에서 원본과 변경본의 차이점을 신속하게 파악할 수 있습니다.
+        </p>
+        <p>
+          추가된 줄, 삭제된 줄, 동일한 줄의 통계를 함께 제공하여 변경 규모를 한눈에 파악할 수 있으며,
+          개발자, 번역가, 문서 관리자, 학생 등 텍스트 비교가 필요한 모든 사용자에게 유용합니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">텍스트 비교 알고리즘</h3>
-          <p className="mb-2">각 줄을 순서대로 비교하여 동일 여부를 판단합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2">
+          <p className="mb-2 text-muted-foreground">
+            각 줄을 순서대로 비교하여 동일 여부를 판단합니다. 두 텍스트의 줄 수가 다를 경우
+            더 긴 쪽을 기준으로 빠진 부분을 감지합니다.
+          </p>
+          <div className="p-4 bg-muted rounded-lg space-y-2">
             <code className="text-sm">for (let i = 0; i &lt; maxLines; i++) {'{'}</code><br/>
-            <code className="text-sm">&nbsp;&nbsp;if (line1 === line2) → 동일</code><br/>
-            <code className="text-sm">&nbsp;&nbsp;else → 변경 감지</code><br/>
+            <code className="text-sm">&nbsp;&nbsp;if (line1 === line2) → 동일 (변경 없음)</code><br/>
+            <code className="text-sm">&nbsp;&nbsp;else → 변경 감지 (추가 또는 삭제)</code><br/>
             <code className="text-sm">{'}'}</code>
           </div>
+          <p className="mt-2 text-muted-foreground">
+            비교 결과는 추가(초록색), 삭제(빨간색 + 줄긋기), 동일(변경 없음)으로 구분되며,
+            통계 카드에서 추가/삭제/동일 줄 수를 한눈에 확인할 수 있습니다.
+          </p>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">텍스트 비교 활용 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>코드 리뷰:</strong> 소스코드 변경 이력을 빠르게 확인</li>
-            <li><strong>문서 비교:</strong> 계약서, 제안서 등 문서 수정 사항 확인</li>
-            <li><strong>번역 검토:</strong> 원문과 번역문을 대조하여 오역 확인</li>
-            <li><strong>이력 관리:</strong> 여러 버전의 텍스트 차이를 체계적으로 관리</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">텍스트 비교 활용 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>코드 리뷰:</strong> Git 커밋이나 Pull Request에서 소스코드 변경 이력을 빠르게 확인할 때 유용합니다.</li>
+            <li><strong>문서 비교:</strong> 계약서, 제안서, 논문 등 여러 버전의 문서 수정 사항을 체계적으로 관리할 수 있습니다.</li>
+            <li><strong>번역 검토:</strong> 원문과 번역문을 나란히 대조하여 의도치 않은 번역 누락이나 오역을 빠르게 발견할 수 있습니다.</li>
+            <li><strong>이력 관리:</strong> 여러 버전의 텍스트 차이를 한눈에 파악하여 변경 이력을 체계적으로 관리하세요.</li>
+            <li><strong>이메일/공문 검토:</strong> 수정 전후의 메일이나 공문을 비교하여 변경 사항을 빠르게 확인하세요.</li>
           </ul>
         </div>
       </div>

@@ -101,12 +101,16 @@ export default function DataSizeConverter() {
     calculatorDescription: (
       <div className="space-y-4">
         <p>
-          <strong>데이터 크기 변환기</strong>는 컴퓨터에서 사용되는 다양한 데이터 저장 단위 간의 변환을 돕는 도구입니다. 
-          바이트(Byte), 킬로바이트(KB), 메가바이트(MB), 기가바이트(GB), 테라바이트(TB), 페타바이트(PB) 간의 정확한 변환 결과를 한 번에 확인할 수 있습니다.
+          <strong>데이터 크기 변환기</strong>는 컴퓨터에서 사용되는 다양한 데이터 저장 단위 간의 변환을 돕는 필수적인 도구입니다. 바이트(Byte), 킬로바이트(KB), 메가바이트(MB), 기가바이트(GB), 테라바이트(TB), 페타바이트(PB) 간의 정확한 변환 결과를 한 번에 확인할 수 있습니다.
         </p>
         <p>
-          데이터 처리량, 파일 크기, 저장 공간 등을 계산할 때 여러 단위를 빠르게 비교하고 변환할 수 있어 
-          웹 개발, 데이터 분석, 시스템 관리 등 다양한 분야에서 활용됩니다.
+          데이터 처리량, 파일 크기, 저장 공간 등을 계산할 때 여러 단위를 빠르게 비교하고 변환할 수 있어 웹 개발, 데이터 분석, 시스템 관리, 클라우드 컴퓨팅 등 다양한 분야에서 활용됩니다.
+        </p>
+        <p>
+          디지털 세계에서 데이터의 양은 기하급수적으로 증가하고 있습니다. 1KB의 텍스트 파일부터 수 PB에 달하는 데이터센터의 저장 용량까지, 정확한 단위 변환은 IT 인프라 계획과 비용 산정에 핵심적인 역할을 합니다.
+        </p>
+        <p className="p-4 bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 rounded-r-lg">
+          이 변환기는 이진(Binary) 기준(1KB = 1,024 Byte)을 사용하며, 입력된 값에 대해 모든 단위로의 변환 결과를 동시에 보여줍니다. 저장 장치 구매, 클라우드 서비스 선택, 대용량 파일 전송 등 다양한 상황에서 즉시 활용할 수 있습니다.
         </p>
       </div>
     ),
@@ -114,7 +118,7 @@ export default function DataSizeConverter() {
       <div className="space-y-4">
         <div>
           <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">데이터 크기 단위 변환 공식</h4>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <div className="p-4 bg-muted rounded-lg">
             <p className="text-center font-mono text-lg">1 KB = 1,024 Byte</p>
             <p className="text-center font-mono text-lg mt-2">1 MB = 1,024 KB = 1,048,576 Byte</p>
             <p className="text-center font-mono text-lg mt-2">1 GB = 1,024 MB = 1,073,741,824 Byte</p>
@@ -123,35 +127,45 @@ export default function DataSizeConverter() {
           </div>
         </div>
         <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 rounded-r-lg text-sm">
-          <strong>참고:</strong> 이 변환기는 이진(Binary, 2^10 = 1,024) 기준을 사용합니다. 
-          일부 시스템이나 저장 장치 제조사에서는 십진(Decimal, 10^3 = 1,000) 기준을 사용할 수 있습니다.
+          <strong>참고:</strong> 이 변환기는 이진(Binary, 2^10 = 1,024) 기준을 사용합니다. 일부 시스템이나 저장 장치 제조사에서는 십진(Decimal, 10^3 = 1,000) 기준을 사용할 수 있습니다. 예: 1GB HDD = 1,000,000,000 Byte
         </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-4">
         <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">💡 데이터 단위 활용 팁</h4>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">핵심 개념</h4>
           <ul className="space-y-3">
             <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">파일 크기 비교</p>
+              <p className="font-semibold text-sm">이진(Binary) vs 십진(Decimal)</p>
               <p className="text-xs mt-1">
-                일반적인 웹페이지(HTML + 이미지): 약 2~5MB / 고화질 영화(1080p): 약 4~8GB / 4K 영화: 약 15~50GB
+                컴퓨터는 이진법을 사용하므로 1KB = 1,024 Byte입니다. 그러나 하드 디스크 제조사는 1KB = 1,000 Byte(십진)를 사용하여 실제 저장 용량이 표시 용량보다 작게 느껴질 수 있습니다.
               </p>
             </li>
             <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">저장 장치 용량</p>
+              <p className="font-semibold text-sm">파일 크기 참고</p>
               <p className="text-xs mt-1">
-                일반 USB: 32~256GB / SSD: 256GB~4TB / HDD: 1~20TB / 클라우드: 수 TB~PB 단위
+                웹페이지: 약 2~5MB / 고화질 영화(1080p): 약 4~8GB / 4K 영화: 약 15~50GB / 1시간 4K 영상: 약 20GB
               </p>
             </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">인터넷 속도와 데이터</p>
-              <p className="text-xs mt-1">
-                100Mbps 인터넷으로 1GB 파일을 다운로드하는 데 약 1분 20초 소요됩니다. 
-                1TB는 대략 1,000시간의 MP3 음악 또는 약 250시간의 HD 영상에 해당합니다.
-              </p>
-            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-teal-500 pl-3">저장 장치 용량 참고</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li><strong>USB:</strong> 32~256GB</li>
+            <li><strong>SSD:</strong> 256GB~4TB</li>
+            <li><strong>HDD:</strong> 1~20TB</li>
+            <li><strong>클라우드:</strong> 수 TB~PB 단위</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-teal-500 pl-3">활용 사례</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li><strong>웹 개발:</strong> 이미지 최적화, 리소스 압축 용량 계산</li>
+            <li><strong>데이터베이스:</strong> 백업 용량, 저장소 확장 계획</li>
+            <li><strong>클라우드:</strong> 저장 서비스 요금제 선택</li>
+            <li><strong>백업:</strong> 필요한 백업 스토리지 용량 산정</li>
           </ul>
         </div>
       </div>

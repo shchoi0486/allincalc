@@ -207,35 +207,62 @@ const CountdownTimer: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">카운트다운 타이머는 특정 시간만큼 시간을 재고 시간 경과를 시각적으로 보여주는 도구입니다.</p>
-        <p>운동, 공부, 요리 등 다양한 활동에서 시간을 효율적으로 관리할 수 있으며, 시간 종료 시 알림 소리로 알려줍니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          시간을 설정하고 카운트다운으로 효율적으로 시간을 관리하세요!
+        </p>
+        <p>
+          카운트다운 타이머는 특정 시간만큼 시간을 재고 경과를 시각적으로 보여주는 실용적인 도구입니다.
+          운동, 공부, 요리, 발표 등 다양한 활동에서 시간을 효율적으로 관리할 수 있으며,
+          시간 종료 시 알림 소리로 알려줍니다.
+        </p>
+        <p>
+          시, 분, 초 단위로 자유롭게 시간을 설정할 수 있고, 진행 상황은 프로그레스 바로 직관적으로 확인할 수 있습니다.
+          남은 시간이 10초 이하로 줄어들면 색상이 변경되어 긴장감 있는 마무리를 도와줍니다.
+        </p>
+        <p>
+          포모도로 기법 실천, 운동 인터벌 트레이닝, 요리 타이밍, 발표 시간 관리 등
+          시간이 중요한 모든 상황에서 유용하게 활용할 수 있습니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">타이머 동작 원리</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <div className="p-4 bg-muted rounded-lg">
             <code className="text-sm">setInterval(() => remaining--, 1000)</code>
           </div>
-          <p className="mt-2">1초마다 남은 시간을 1씩 감소시키며, 0이 되면 타이머를 종료하고 알림을 발생시킵니다.</p>
+          <p className="mt-2 text-muted-foreground">
+            1초마다 남은 시간을 1씩 감소시키며, 0이 되면 타이머를 종료하고 알림을 발생시킵니다.
+            일시정지와 재개가 가능하여 유연한 시간 관리가 가능합니다.
+          </p>
         </div>
         <div>
           <h3 className="font-semibold text-lg mb-2">알림 소리 생성</h3>
-          <p>Web Audio API의 Oscillator를 사용하여 주파수와 지속 시간을 조절하여 알림 소리를 생성합니다.</p>
+          <p className="text-muted-foreground">
+            Web Audio API의 Oscillator를 사용하여 주파수와 지속 시간을 조절하여 알림 소리를 생성합니다.
+            별도의 오디오 파일 없이도 브라우저에서 직접 알림음을 만들어낼 수 있습니다.
+          </p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-lg mb-2">진행률 계산</h3>
+          <div className="p-4 bg-muted rounded-lg">
+            <code className="text-sm">진행률(%) = (설정 시간 - 남은 시간) / 설정 시간 × 100</code>
+          </div>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">타이머 활용 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>포모도로 기법:</strong> 25분 집중 후 5분 휴식하는 학습/업무 방식</li>
-            <li><strong>운동:</strong> 인터벌 트레이닝, 플랭크 등 시간 기반 운동</li>
-            <li><strong>요리:</strong> 조리 시간을 정확하게 재기</li>
-            <li><strong> 발표:</strong> 발표 시간을 준수하기 위한 타이밍 관리</li>
-            <li><strong> 게임:</strong> 퀴즈 시간 제한, 퍼즐 게임 등</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">타이머 활용 핵심 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>포모도로 기법:</strong> 25분 집중 후 5분 휴식하는 학습/업무 방식으로, 4세트 후 15~30분 긴 휴식을 취합니다.</li>
+            <li><strong>운동 인터벌:</strong> 플랭크, 버피, 스쿼트 등 시간 기반 운동에서 정확한 시간 관리가 가능합니다.</li>
+            <li><strong>요리 타이밍:</strong> 파스타 삶기, 오븐 조리 등 정확한 조리 시간을 재는 데 편리합니다.</li>
+            <li><strong>발표 시간 관리:</strong> 발표 시간을 준수하기 위해 타이머를 설정하면 체계적인 진행이 가능합니다.</li>
+            <li><strong>퀴즈/게임:</strong> 퀴즈 시간 제한, 퍼즐 게임 등에서 긴장감 넘치는 시간 제한을 만들 수 있습니다.</li>
+            <li><strong>명상/요가:</strong> 명상 시간을 정확히 재고 꾸준히 연습하는 데 도움이 됩니다.</li>
           </ul>
         </div>
       </div>

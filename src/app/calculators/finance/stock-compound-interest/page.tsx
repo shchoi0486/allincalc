@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -155,22 +155,22 @@ export default function StockCompoundInterestCalculator() {
       </div>
     ),
     calculationFormula: (
-      <div className="space-y-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
+      <div className="space-y-4 p-4 bg-muted rounded-md">
         <h3 className="text-xl font-bold">복리 계산의 작동 원리</h3>
         <p>본 계산기는 매년 말에 수익이 재투자되고, 연초에 연간 적립금이 추가되는 것을 가정하여 계산합니다. 이는 실제 투자 상황을 보다 정확하게 반영하기 위함입니다.</p>
         <ul className="list-decimal list-inside space-y-2">
           <li>
             <strong>1년차 평가금액:</strong>
-            <p className="pl-4 mt-1 bg-white dark:bg-gray-700 p-2 rounded"><code>(초기 투자금 + (월 추가 투자금 × 12)) × (1 + 연 수익률)</code></p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">첫 해에는 초기 자본과 1년치 적립금이 합쳐진 후, 연말에 수익이 발생합니다.</p>
+            <p className="pl-4 mt-1 bg-card p-2 rounded"><code>(초기 투자금 + (월 추가 투자금 × 12)) × (1 + 연 수익률)</code></p>
+            <p className="text-sm text-muted-foreground mt-1">첫 해에는 초기 자본과 1년치 적립금이 합쳐진 후, 연말에 수익이 발생합니다.</p>
           </li>
           <li>
             <strong>2년차 이후 평가금액:</strong>
-            <p className="pl-4 mt-1 bg-white dark:bg-gray-700 p-2 rounded"><code>(이전 년도 평가금액 + (월 추가 투자금 × 12)) × (1 + 연 수익률)</code></p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">두 번째 해부터는 작년까지의 누적 자산(원금+수익)에 다시 1년치 적립금을 더하고, 그 총액에 대해 다시 수익이 붙는 복리 효과가 본격적으로 나타납니다.</p>
+            <p className="pl-4 mt-1 bg-card p-2 rounded"><code>(이전 년도 평가금액 + (월 추가 투자금 × 12)) × (1 + 연 수익률)</code></p>
+            <p className="text-sm text-muted-foreground mt-1">두 번째 해부터는 작년까지의 누적 자산(원금+수익)에 다시 1년치 적립금을 더하고, 그 총액에 대해 다시 수익이 붙는 복리 효과가 본격적으로 나타납니다.</p>
           </li>
         </ul>
-        <div className="border-l-4 border-blue-500 pl-4 mt-4">
+        <div className="border-l-4 border-primary pl-4 mt-4">
           <p><strong>핵심 변수 해설:</strong></p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li><strong>초기 투자금:</strong> 투자의 씨앗이 되는 돈입니다. 금액이 클수록 복리 효과를 더 빨리, 더 크게 누릴 수 있습니다.</li>
@@ -179,28 +179,34 @@ export default function StockCompoundInterestCalculator() {
             <li><strong>투자 기간:</strong> 복리 효과를 극대화하는 가장 중요한 요소입니다. 시간이 길어질수록 수익이 수익을 낳는 속도가 가속화됩니다.</li>
           </ul>
         </div>
+        <div className="mt-6 p-4 bg-muted rounded-lg border border-border">
+          <h4 className="font-semibold text-foreground mb-2">계산 예시 (초기 100만 원, 월 10만 원, 연 8%, 1년차)</h4>
+          <p className="text-sm text-muted-foreground">1년차 평가금액 = (초기 1,000,000 + 월적립 1,200,000) × (1 + 0.08)</p>
+          <p className="font-mono text-sm text-primary mt-1">= 2,200,000 × 1.08 = 2,376,000원</p>
+          <p className="text-xs text-muted-foreground mt-1">2년차부터는 직전 평가금액에 다시 1년치 적립금을 더한 뒤 8% 수익이 복리로 붙습니다.</p>
+        </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-6">
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">1. 현실적인 수익률 설정의 중요성</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">1. 현실적인 수익률 설정의 중요성</h4>
           <p>높은 수익률은 매력적이지만, 비현실적인 기대는 잘못된 의사결정으로 이어질 수 있습니다. 시장의 역사적 평균 수익률(예: S&P 500 약 10%)을 기준으로 삼고, 보수적인 시나리오(5~7%)와 낙관적인 시나리오(12~15%)를 함께 비교해보는 것이 좋습니다. 이는 시장 변동성에 대한 마음의 준비를 하고, 흔들리지 않고 장기 투자를 이어가는 데 도움이 됩니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">2. '72의 법칙'으로 자산 증식 속도 가늠하기</h4>
-          <p>복잡한 계산 없이 자산이 두 배가 되는 시간을 어림짐작할 수 있는 유용한 공식입니다. <code className="bg-gray-200 dark:bg-gray-700 p-1 rounded">'72 ÷ 연 수익률(%)'</code>을 계산하면 원금이 2배가 되는 대략적인 기간(년)이 나옵니다. 예를 들어, 연 8% 수익률이라면 약 9년(72 ÷ 8)마다 자산이 두 배로 불어나는 셈입니다. 이를 통해 복리의 힘을 직관적으로 이해할 수 있습니다.</p>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">2. '72의 법칙'으로 자산 증식 속도 가늠하기</h4>
+          <p>복잡한 계산 없이 자산이 두 배가 되는 시간을 어림짐작할 수 있는 유용한 공식입니다. <code className="bg-muted p-1 rounded">'72 ÷ 연 수익률(%)'</code>을 계산하면 원금이 2배가 되는 대략적인 기간(년)이 나옵니다. 예를 들어, 연 8% 수익률이라면 약 9년(72 ÷ 8)마다 자산이 두 배로 불어나는 셈입니다. 이를 통해 복리의 힘을 직관적으로 이해할 수 있습니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">3. 적립식 투자(Dollar-Cost Averaging)의 마법</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">3. 적립식 투자(Dollar-Cost Averaging)의 마법</h4>
           <p>매월 정해진 금액을 투자하는 '적립식 투자'는 시장의 타이밍을 예측하려는 위험을 줄여줍니다. 주가가 낮을 때는 더 많은 수량을 매수하고, 높을 때는 더 적은 수량을 매수하게 되어 평균 매수 단가를 낮추는 효과(코스트 에버리징)를 기대할 수 있습니다. 이는 특히 변동성이 큰 주식 시장에서 장기적으로 안정적인 성과를 내는 검증된 전략입니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">4. 세금과 수수료를 잊지 마세요 (2025년 관점)</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">4. 세금과 수수료를 잊지 마세요 (2025년 관점)</h4>
           <p>계산 결과는 세전 수익률 기준입니다. 실제 손에 쥐는 돈은 세금과 수수료를 제외한 금액입니다. 국내 주식의 경우 매도 시 증권거래세가 부과되며, 배당금에는 배당소득세(15.4%)가 붙습니다. 해외 주식은 매도 차익에 대해 양도소득세(22%)가 발생합니다. 2025년부터 금융투자소득세 도입이 예정되어 있었으나 현재 유예 상태이므로, 투자 시점의 최신 세법을 반드시 확인해야 합니다. 연금저축펀드, IRP, ISA 등 절세 계좌를 활용하면 세금 부담을 크게 줄일 수 있으니 적극적으로 알아보는 것을 추천합니다.</p>
         </div>
         <div>
-          <h4 className="font-semibold text-lg border-l-4 border-green-500 pl-3 mb-2">5. 인플레이션을 감안한 실질 수익률</h4>
+          <h4 className="font-semibold text-lg border-l-4 border-primary pl-3 mb-2">5. 인플레이션을 감안한 실질 수익률</h4>
           <p>화폐 가치는 시간이 지남에 따라 하락합니다. 이를 '인플레이션'이라고 합니다. 10%의 수익을 얻었더라도, 같은 기간 물가가 3% 올랐다면 실질적인 자산 증가는 약 7% 수준입니다. 장기 목표를 세울 때는 명목 수익률이 아닌, 인플레이션을 감안한 '실질 수익률'을 고려해야 미래에 내가 원하는 구매력을 확보할 수 있습니다.</p>
         </div>
       </div>

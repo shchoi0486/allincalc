@@ -134,31 +134,94 @@ const UnitConverterPage = () => {
 
   const resultSection = null;
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
         <p>
-          <strong>통합 단위 변환기</strong>는 기본 단위(길이, 면적, 체적, 온도)와 공학 단위(유량, 압력, 에너지, 질량, 엔탈피)를 하나의 화면에서 모두 변환할 수 있는 실용적인 도구입니다.
+          <strong>통합 단위 변환기</strong>는 길이, 면적, 부피, 온도 등 기본 단위와 유량, 압력, 에너지, 질량, 엔탈피 등 공학 단위를 하나의 화면에서 모두 변환할 수 있는 실용적인 도구입니다. 드롭다운에서 단위를 선택하고 값을 입력하면 해당 카테고리의 모든 단위로 자동 환산된 결과를 한눈에 확인할 수 있습니다.
         </p>
         <p>
-          변환할 단위를 선택하고 값을 입력하면, 해당 카테고리의 모든 단위로 자동 변환된 결과를 한눈에 확인할 수 있습니다.
+          일상생활에서는 집 꾸미기, 요리, 운동 기록 등에서 자주 단위 환산이 필요하고, 산업 현장과 연구소에서는 설계 도면, 시험 데이터, 해외 규격을 다룰 때 전문 단위 변환이 필수적입니다. 이 도구는 기본 탭과 공학 탭으로 나뉘어 누구나 쉽게 사용할 수 있습니다.
+        </p>
+        <p>
+          학생과 교사에게는 단위 개념을 익히는 학습 자료로, 엔지니어와 기술자에게는 도면과 시방서를 검토하는 실무 도구로 유용합니다. 또한 수입 장비의 사양서를 읽거나 해외 문헌을 번역할 때도 큰 도움이 됩니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          변환 계수는 국제 단위계(SI)와 널리 통용되는 표준을 따릅니다. 다만 온도(°C, °F, K)는 단순 비례가 아닌 별도의 선형 공식으로 계산되므로 다른 단위와 혼동하지 않도록 주의하세요.
         </p>
       </div>
     ),
     calculationFormula: (
-      <div className="space-y-4">
-        <p>변환 공식: <code>대상값 = 입력값 × (대상 단위 계수 / 기준 단위 계수)</code></p>
-        <p>온도 변환은 선형 변환이 아닌 별도 공식을 사용합니다.</p>
+      <div className="space-y-6">
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">선형 단위 변환 공식</h4>
+          <p>길이, 면적, 부피, 질량 등 비례 단위는 기준 단위 계수를 이용해 환산합니다.</p>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-xl font-bold">대상값 = 입력값 × (대상 단위 계수 / 기준 단위 계수)</p>
+          </div>
+          <p className="text-sm text-muted-foreground">예: 1 m = 100 cm = 1,000 mm, 1 km = 1,000 m</p>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">온도 변환 공식</h4>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-sm">°F = °C × 9/5 + 32</p>
+            <p className="font-mono text-sm mt-1">K = °C + 273.15</p>
+          </div>
+          <p className="text-sm text-muted-foreground">온도는 영점이 다르므로 곱셈과 덧셈이 함께 적용됩니다.</p>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">계산 예시</h4>
+          <p>5 km를 m과 cm로 변환하면:</p>
+          <div className="my-2 p-3 bg-muted rounded-lg">
+            <p className="font-mono text-sm text-center">5 km × 1,000 = 5,000 m = 500,000 cm</p>
+          </div>
+        </div>
       </div>
     ),
     usefulTips: (
-      <div className="space-y-4">
-        <h4 className="font-semibold">활용 팁</h4>
-        <ul className="list-disc list-inside space-y-2">
-          <li>기본 단위 탭에서는 일상적으로 자주 사용하는 길이, 면적, 체적, 온도 변환을 할 수 있습니다.</li>
-          <li>공학 단위 탭에서는 산업 현장에서 사용되는 유량, 압력, 에너지 등의 전문 단위를 변환할 수 있습니다.</li>
-          <li>드롭다운에서 기준 단위를 선택하고 값을 입력하면 모든 단위로 동시에 변환됩니다.</li>
-        </ul>
+      <div className="space-y-6">
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">기본 단위 활용</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>길이, 면적, 부피, 온도는 일상에서 가장 자주 쓰이는 단위입니다.</li>
+            <li>집 인테리어나 운동 기록 정리에 기본 탭을 활용하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">공학 단위 활용</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>유량, 압력, 에너지, 질량, 엔탈피는 플랜트와 기계 설계에 사용됩니다.</li>
+            <li>해외 장비 사양서의 단위를 국내 기준으로 바꿀 때 유용합니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">온도 변환 주의</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>섭씨, 화씨, 절대온도(K)는 선형 공식으로 따로 계산합니다.</li>
+            <li>영점이 다르므로 비례 단위와 혼동하지 마세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">소수점과 유효숫자</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>측정값의 정밀도에 맞춰 결과의 자릿수를 조정하세요.</li>
+            <li>과도한 소수점은 오히려 신뢰도를 떨어뜨릴 수 있습니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">단위 접두어 익히기</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>k(킬로)=1,000, m(밀리)=0.001, µ(마이크로)=0.000001 배수입니다.</li>
+            <li>접두어만 바꿔도 계산이 쉬워집니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">검증 습관</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>중요한 설계 값은 계산기를 바꿔 두 번 이상 확인하세요.</li>
+            <li>특히 압력과 에너지 단위는 차원이 잘못되기 쉽습니다.</li>
+          </ul>
+        </div>
       </div>
     ),
   };

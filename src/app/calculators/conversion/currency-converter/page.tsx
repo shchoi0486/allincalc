@@ -109,71 +109,88 @@ export default function CurrencyConverter() {
     </div>
   );
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
         <p>
-          <strong>환율 변환기</strong>는 주요 국제 통화 간의 환율 변환을 제공하는 도구입니다. 
-          미국 달러(USD), 유로(EUR), 일본 엔(JPY), 중국 위안(CNY), 한국 원(KRW), 영국 파운드(GBP) 간의 
-          환율 변환을 빠르게 수행할 수 있습니다.
+          <strong>환율 변환기</strong>는 세계 주요 통화 간의 환율을 빠르게 환산해 주는 실용적인 금융 도구입니다. 여행, 해외 쇼핑, 국제 송금, 투자 등 외국 화폐의 가치를 우리 돈이나 다른 통화로 바꿔야 할 때 언제 어디서든 편리하게 활용할 수 있습니다.
         </p>
         <p>
-          여행, 국제 거래, 투자 등 다양한 상황에서 환율 변환이 필요할 때 활용할 수 있으며, 
-          실시간이 아닌 참고용 근사 환율을 사용합니다.
+          이 도구는 미국 달러(USD), 유로(EUR), 일본 엔(JPY), 중국 위안(CNY), 한국 원(KRW), 영국 파운드(GBP) 등 주요 6개 통화를 지원하며, 기준 통화를 선택하면 나머지 통화로의 환산 결과를 한눈에 보여줍니다. 금융 시장은 시시각각 변하므로 대략적인 기준 환율을 제공하여 빠른 가늠을 돕습니다.
         </p>
-        <div className="p-3 bg-orange-50 dark:bg-orange-900/30 border-l-4 border-orange-500 rounded-r-lg text-sm">
-          <strong>주의:</strong> 이 변환기는 고정된 근사 환율을 사용합니다. 
-          실제 거래 시에는 은행이나 환전소의 실시간 환율을 확인하시기 바랍니다.
-        </div>
+        <p>
+          환율은 수출입 기업의 원가, 해외 여행객의 예산, 글로벌 투자자의 수익률에 직결되는 핵심 지표입니다. 개인은 해외 결제 시 발생하는 수수료를 줄이기 위해, 기업은 외화 자산과 부채의 가치를 관리하기 위해 환율 정보를 일상적으로 활용합니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          환율은 매일 변동하며 은행이나 환전소마다 적용되는 매매기준율과 수수료가 다릅니다. 이 계산기는 학습과 대략적인 참고용이며, 실제 거래에는 반드시 거래 기관의 실시간 환율을 확인하시기 바랍니다.
+        </p>
       </div>
     ),
     calculationFormula: (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">환율 변환 공식</h4>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2">
-            <p className="text-center font-mono text-sm">대상 통화 금액 = 원래 금액 × (대상 통화 환율 / 원래 통화 환율)</p>
-            <div className="mt-4 text-sm space-y-1">
-              <p className="text-center">기준 환율 (1 USD 기준, 근사치):</p>
-              <p className="text-center font-mono">1 USD = 1 EUR = 149 JPY = 7.1 CNY = 1,350 KRW = 0.79 GBP</p>
-            </div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">환율 변환 공식</h4>
+          <p>기준 통화의 금액을 대상 통화의 환율로 환산하는 공식은 다음과 같습니다.</p>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-xl font-bold">대상 금액 = 원래 금액 × (대상 통화 환율 / 원래 통화 환율)</p>
           </div>
+          <p className="text-sm text-muted-foreground">기준 환율(1 USD 기준, 근사치): 1 USD = 1 EUR ≈ 1,491 JPY ≈ 7.25 CNY ≈ 1,380 KRW ≈ 0.79 GBP</p>
         </div>
-        <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 rounded-r-lg text-sm">
-          <strong>참고:</strong> 환율은 매일 변동하며, 매매 기준율과 실시간 매매율之间有差异。 
-          환전 수수료도 실제 환율에 영향을 줍니다.
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">계산 예시</h4>
+          <p>예를 들어 100 USD를 한국 원으로 환산할 경우:</p>
+          <div className="my-2 p-3 bg-muted rounded-lg">
+            <p className="font-mono text-sm text-center">100 USD × (1,380 KRW / 1 USD) = 138,000 KRW</p>
+          </div>
+          <p>같은 방식으로 모든 통화 쌍에 대해 기준 환율 비율을 곱해 결과를 구합니다. (근사치 환율 사용)</p>
         </div>
       </div>
     ),
     usefulTips: (
-      <div className="space-y-4">
-        <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">💡 환율 관련 핵심 정보</h4>
-          <ul className="space-y-3">
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">환전 수수료 이해하기</p>
-              <p className="text-xs mt-1">
-                은행이나 환전소는 매매기준율에 수수료를 포함한 환율을 적용합니다. 
-                인터넷 뱅킹이나 모바일 앱을 통한 환전이 일반적으로 더 유리합니다. 
-                공항 환전소는 수수료가 높은 편이므로 가급적 피하는 것이 좋습니다.
-              </p>
-            </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">주요 환율 관련 경제 지표</p>
-              <p className="text-xs mt-1">
-                <strong>금리:</strong> 중앙은행 금리 결정이 환율에 큰 영향<br />
-                <strong>무역수지:</strong> 수출입 균형이 통화 가치에 영향<br />
-                <strong>인플레이션:</strong> 물가 상승률 차이가 환율에 반영
-              </p>
-            </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">여행 시 환전 팁</p>
-              <p className="text-xs mt-1">
-               旅行先의 통화를 출발 전에 미리 환전하는 것이 일반적으로 유리합니다. 
-                신용카드를 사용할 때는 해외 결제 수수료(약 1~3%)가 부과될 수 있으므로, 
-                현금과 카드를 적절히 혼용하는 것이 좋습니다.
-              </p>
-            </li>
+      <div className="space-y-6">
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">환전 수수료 이해하기</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>은행과 환전소는 매매기준율에 환전 수수료를 포함한 환율을 적용합니다.</li>
+            <li>인터넷 뱅킹이나 모바일 앱 환전이 영업점 방문보다 일반적으로 유리합니다.</li>
+            <li>공항 환전소는 수수료가 높은 편이므로 가급적 피하는 것이 좋습니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">여행 시 환전 팁</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>출발 전 미리 환전하면 급한 상황보다 유리한 환율을 적용받을 수 있습니다.</li>
+            <li>신용카드 해외 결제 시 1~3%의 수수료가 붙으므로 현금과 적절히 혼용하세요.</li>
+            <li>남은 외화는 귀국 후 재환전하거나 다음 여행에 대비해 보관하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">환율에 영향을 주는 요인</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>중앙은행의 금리 결정이 환율에 가장 큰 영향을 미칩니다.</li>
+            <li>수출입 무역수지와 자본 이동이 통화 가치를 좌우합니다.</li>
+            <li>양국의 인플레이션율 차이도 환율에 반영됩니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">역환율 주의</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>같은 두 통화를 양방향으로 환산하면 수수료 차이로 미세한 오차가 생깁니다.</li>
+            <li>정확한 거래에는 거래 기관의 매도율과 매수율을 각각 확인하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">고액 송금 시 유의사항</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>중개 은행이 여러 곳을 거치면 추가 수수료가 발생할 수 있습니다.</li>
+            <li>송금 목적과 출처를 증빙할 서류를 미리 준비해 두는 것이 좋습니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">투자와 환율</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>외화 자산은 환율 변동에 따라 원화 환산 수익이 커지거나 줄어듭니다.</li>
+            <li>해외 주식이나 펀드에 투자할 때 환헤지 상품 여부를 꼼꼼히 비교하세요.</li>
           </ul>
         </div>
       </div>

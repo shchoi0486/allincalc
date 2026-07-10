@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useCallback } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -302,12 +302,12 @@ const FreeInstallmentSavingsPage: React.FC = () => {
   const infoSection = {
     calculatorDescription: (
       <>
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">자유적금 계산기: 당신의 저축 스타일에 자유를 더하다</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+        <h2 className="text-2xl font-bold text-foreground mb-4">자유적금 계산기: 당신의 저축 스타일에 자유를 더하다</h2>
+        <p className="text-lg text-muted-foreground mb-6">
           매달 정해진 날짜, 정해진 금액을 넣어야 하는 정기적금의 빡빡함에 지치셨나요? <strong>자유적금</strong>은 그 이름처럼, 당신이 원할 때, 원하는 만큼만 자유롭게 입금하며 목돈을 만들어나가는 혁신적이고 유연한 금융 상품입니다. 저축에 대한 스트레스는 줄이고, 성취감은 높여주는 스마트한 재테크 도구이죠.
         </p>
-        <div className="mt-6 text-gray-700 dark:text-gray-300 leading-relaxed bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-purple-500">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">🎯 누구에게 가장 필요할까요?</h3>
+        <div className="mt-6 text-foreground leading-relaxed bg-muted p-6 rounded-lg border-l-4 border-primary">
+          <h3 className="text-xl font-semibold text-foreground mb-3">🎯 누구에게 가장 필요할까요?</h3>
           <ul className="list-disc list-inside space-y-2">
             <li><strong>프리랜서, 자영업자:</strong> 매달 수입이 일정하지 않아 고정적인 저축이 부담스러운 분</li>
             <li><strong>사회초년생, 학생:</strong> 아직 소득이 적지만, 소액이라도 꾸준히 저축하는 습관을 만들고 싶은 분</li>
@@ -325,14 +325,14 @@ const FreeInstallmentSavingsPage: React.FC = () => {
     ),
     calculationFormula: (
       <>
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">💰 자유적금 이자, 어떻게 계산될까요?</h2>
+        <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">💰 자유적금 이자, 어떻게 계산될까요?</h2>
         <p className="text-base leading-relaxed mb-6">
           자유적금 이자 계산의 핵심 원리는 <strong>'각각의 입금 건을 별개의 정기예금처럼 취급'</strong>하는 것입니다. 즉, 모든 납입금에 동일한 이자가 붙는 것이 아니라, 돈을 '일찍', 그리고 '많이' 넣을수록 더 많은 이자를 받게 됩니다. 이자는 '일(日) 단위'로 계산되는 것이 가장 큰 특징입니다.
         </p>
-        <div className="mt-4 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center shadow-inner">
+        <div className="mt-4 p-6 bg-muted rounded-lg text-center shadow-inner">
           <p className="font-mono text-xl tracking-tighter"><strong>총 이자 = (1번 납입금 × 연이율 × 예치일수/365) + (2번 납입금 × 연이율 × 예치일수/365) + ...</strong></p>
         </div>
-        <div className="mt-8 p-6 border-l-4 border-blue-500 bg-blue-50 dark:bg-gray-800/50 rounded-r-lg">
+        <div className="mt-8 p-6 border-l-4 border-primary bg-muted rounded-r-lg">
           <h4 className="font-bold text-lg mb-3">💡 실제 계산 예시로 이해하기</h4>
           <p className="text-base">
             - 약정 이율: 연 3.5% (단리)
@@ -343,7 +343,7 @@ const FreeInstallmentSavingsPage: React.FC = () => {
                 <li>2025년 7월 1일: 50만원 납입 (예치일수: 183일)</li>
               </ul>
           </p>
-          <p className="mt-4 font-mono bg-white dark:bg-gray-700 p-4 rounded-md text-sm">
+          <p className="mt-4 font-mono bg-card p-4 rounded-md text-sm">
             <strong>1. 100만원에 대한 이자:</strong><br/>
             1,000,000원 × 3.5% × (364일 / 365일) = 34,904원<br/><br/>
             <strong>2. 50만원에 대한 이자:</strong><br/>
@@ -352,7 +352,7 @@ const FreeInstallmentSavingsPage: React.FC = () => {
             34,904원 + 8,763원 = <strong>43,667원</strong>
           </p>
         </div>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">단리 vs 월복리, 무엇이 더 유리할까?</h3>
+        <h3 className="text-xl font-bold text-foreground mt-10 mb-4">단리 vs 월복리, 무엇이 더 유리할까?</h3>
         <p className="text-base leading-relaxed mb-4">
           적금 상품을 선택할 때 반드시 고려해야 할 요소입니다. 본 계산기는 두 가지 방식을 모두 지원하여 최적의 선택을 돕습니다.
         </p>
@@ -370,34 +370,34 @@ const FreeInstallmentSavingsPage: React.FC = () => {
     ),
     usefulTips: (
       <>
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">🚀 자유적금 200% 활용 꿀팁: 단순 저축을 넘어 재테크로!</h2>
+        <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">🚀 자유적금 200% 활용 꿀팁: 단순 저축을 넘어 재테크로!</h2>
         <div className="space-y-8">
-          <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-800">
-            <h4 className="font-bold text-lg text-purple-600 dark:text-purple-400">1. '초반'에 '자주', '많이' 납입하세요 (선납 효과)</h4>
+          <div className="p-4 rounded-md bg-muted">
+            <h4 className="font-bold text-lg text-primary">1. '초반'에 '자주', '많이' 납입하세요 (선납 효과)</h4>
             <p className="mt-2 text-base">
               자유적금 이자는 '예치일수'가 생명입니다. 같은 금액이라도 적금 초반에 넣는 것이 만기일에 가깝게 넣는 것보다 훨씬 더 많은 이자를 받을 수 있습니다. 여유 자금이 생기면 하루라도 미루지 말고 바로바로 입금하는 습관이 이자 수익의 차이를 만듭니다. 특히, 가입 초기에 목돈을 예치하면 사실상 정기예금과 같은 효과를 누릴 수 있습니다. (이를 '선납' 효과라고 합니다.)
             </p>
           </div>
-          <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-800">
-            <h4 className="font-bold text-lg text-purple-600 dark:text-purple-400">2. 정기적금 vs 자유적금, 금리 비교는 필수!</h4>
+          <div className="p-4 rounded-md bg-muted">
+            <h4 className="font-bold text-lg text-primary">2. 정기적금 vs 자유적금, 금리 비교는 필수!</h4>
             <p className="mt-2 text-base">
               일반적으로 자유적금은 정기적금보다 기본 금리가 0.1%p ~ 0.5%p 가량 낮은 경향이 있습니다. 은행 입장에서는 자금 운용의 예측 가능성이 떨어지기 때문입니다. 따라서, 매달 고정적인 저축이 가능하다면 정기적금이 더 유리할 수 있습니다. 하지만, 우대금리 조건을 꼼꼼히 따져보면 자유적금이 더 높은 금리를 제공하는 경우도 있으니, 반드시 두 상품의 최종 적용 금리를 비교하는 것이 현명합니다.
             </p>
           </div>
-          <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-800">
-            <h4 className="font-bold text-lg text-purple-600 dark:text-purple-400">3. '자동이체'로 자유적금의 단점을 보완하세요.</h4>
+          <div className="p-4 rounded-md bg-muted">
+            <h4 className="font-bold text-lg text-primary">3. '자동이체'로 자유적금의 단점을 보완하세요.</h4>
             <p className="mt-2 text-base">
               자유롭다는 장점은 '저축을 미루게 되는' 단점으로 이어질 수 있습니다. 이를 방지하기 위해 최소한의 금액이라도 매월 특정일에 자동이체를 설정해두세요. 그리고 추가적인 수입이 생길 때마다 '수시 납입'을 하는 방식으로 운영하면, 꾸준한 저축 습관과 유연한 자금 운용이라는 두 마리 토끼를 모두 잡을 수 있습니다.
             </p>
           </div>
-          <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-800">
-            <h4 className="font-bold text-lg text-purple-600 dark:text-purple-400">4. 비과세 및 세금우대 혜택, 놓치면 손해! (2025년 기준)</h4>
+          <div className="p-4 rounded-md bg-muted">
+            <h4 className="font-bold text-lg text-primary">4. 비과세 및 세금우대 혜택, 놓치면 손해! (2025년 기준)</h4>
             <p className="mt-2 text-base">
               이자소득에 대한 세금(일반과세 15.4%)은 생각보다 큽니다. 2025년 현재, 만 65세 이상 거주자, 장애인, 독립유공자 등은 <strong>비과세 종합저축</strong> 한도(최대 5천만원) 내에서 세금 없이 이자를 모두 받을 수 있습니다. 또한, ISA(개인종합자산관리계좌)를 통해 가입하면 별도의 비과세 혜택을 누릴 수 있습니다. 가입 요건이 된다면 이러한 절세 상품을 최우선으로 고려하여 만기 수령액을 극대화하세요.
             </p>
           </div>
-          <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-800">
-            <h4 className="font-bold text-lg text-purple-600 dark:text-purple-400">5. 목표 달성을 위한 '통장 쪼개기'에 활용하세요.</h4>
+          <div className="p-4 rounded-md bg-muted">
+            <h4 className="font-bold text-lg text-primary">5. 목표 달성을 위한 '통장 쪼개기'에 활용하세요.</h4>
             <p className="mt-2 text-base">
               자유적금은 단기/중기 재무 목표를 달성하기 위한 훌륭한 도구입니다. '1년 뒤 해외여행 자금', '2년 뒤 자동차 계약금', '3년 뒤 전세 보증금' 등 각 목표별로 자유적금 통장을 만들어보세요. 각 통장에 목표 이름을 붙여두면 저축에 대한 동기부여가 훨씬 강해지고, 목표 달성 현황을 직관적으로 파악할 수 있습니다.
             </p>

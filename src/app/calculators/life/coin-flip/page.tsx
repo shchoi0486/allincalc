@@ -167,31 +167,58 @@ const CoinFlip: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">동전 던지기는 가장 단순하면서도 공정한 의사결정 도구로, 각 결과가 50%의 확률로 발생합니다.</p>
-        <p>여러 번 던진 결과를 기록하고 통계를 분석하면, 확률과 통계의 기본 개념을 직관적으로 이해할 수 있습니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          가상 동전 던지기로 공정한 의사결정을 하세요!
+        </p>
+        <p>
+          동전 던지기는 가장 단순하면서도 공정한 의사결정 도구로, 각 결과가 50%의 확률로 발생합니다.
+          컴퓨터 알고리즘을 통해 앞면과 뒷면이 동일한 확률로 나오도록 설계되어 있어
+          두 가지 선택지 중 하나를 공정하게 결정해야 할 때 유용합니다.
+        </p>
+        <p>
+          여러 번 던진 결과를 기록하고 통계를 분석하면 확률과 통계의 기본 개념을 직관적으로 이해할 수 있어
+          교육적인 목적에도 활용할 수 있습니다.
+        </p>
+        <p>
+          게임의 순서 정하기, 간단한 결정, 확률 학습, 교육용 시뮬레이션 등
+          다양한 상황에서 가볍게 사용할 수 있는 만능 의사결정 도구입니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">확률의 법칙 (대수의 법칙)</h3>
-          <p className="mb-2">동전 던지기는 이산 확률 분포의 가장 기본적인 예시입니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <p className="mb-2 text-muted-foreground">
+            동전 던지기는 이산 확률 분포의 가장 기본적인 예시입니다.
+          </p>
+          <div className="p-4 bg-muted rounded-lg">
             <code className="text-sm">P(앞면) = P(뒷면) = 0.5 (50%)</code>
           </div>
-          <p className="mt-2">대수의 법칙에 따르면, 던지는 횟수가 늘어날수록 앞면과 뒷면의 비율은 50:50에 수렴합니다.</p>
+          <p className="mt-2 text-muted-foreground">
+            대수의 법칙에 따르면, 던지는 횟수가 늘어날수록 앞면과 뒷면의 비율은 50:50에 수렴합니다.
+            예를 들어 1000번 던지면 앞면이 약 480~520번 사이로 나오는 경향이 있습니다.
+          </p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-lg mb-2">랜덤 생성 방식</h3>
+          <p className="text-muted-foreground">
+            JavaScript의 Math.random() 함수를 사용하여 0~1 사이의 균일 분포 난수를 생성하고,
+            0.5 미만이면 앞면, 이상이면 뒷면으로 판정합니다.
+          </p>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">동전 던지기 활용 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>공정한 의사결정:</strong> 두 선택지 사이에서 공정하게 결정해야 할 때 활용</li>
-            <li><strong>순서 정하기:</strong> 게임이나 활동의 시작 순서를 정할 때</li>
-            <li><strong>확률 학습:</strong> 자녀에게 확률의 기본 개념을 가르칠 때 체험형 학습 도구로 활용</li>
-            <li><strong>스트레스 해소:</strong> 복잡한 결정이 필요할 때 잠시 휴식을 취하는 용도</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">동전 던지기 활용 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>공정한 의사결정:</strong> 두 선택지 사이에서 공정하게 결정해야 할 때 활용합니다.</li>
+            <li><strong>순서 정하기:</strong> 게임이나 활동의 시작 순서를 정할 때 편리합니다.</li>
+            <li><strong>확률 학습:</strong> 자녀에게 확률의 기본 개념을 가르칠 때 체험형 학습 도구로 활용할 수 있습니다.</li>
+            <li><strong>여러 번 던지기:</strong> 한 번만으로는 불공평할 수 있으므로 3번이나 5번 중多数결로 결정하면 더 공정합니다.</li>
+            <li><strong>기록 관리:</strong> 던진 결과를 기록하면 대수의 법칙을 직접 체험할 수 있습니다.</li>
           </ul>
         </div>
       </div>

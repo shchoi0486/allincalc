@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useMemo } from 'react';
 import CalculatorsLayout from '@/components/calculators/Calculatorslayout';
@@ -159,7 +159,7 @@ export default function SalaryCalculator() {
               <TableCell>지방소득세 (10%)</TableCell>
               <TableCell className="text-right">{formatNumber(Math.round(result.deductions.localIncomeTax))}원</TableCell>
             </TableRow>
-            <TableRow className="text-lg font-bold bg-gray-50 dark:bg-gray-800">
+            <TableRow className="text-lg font-bold bg-muted">
               <TableCell>총 공제액</TableCell>
               <TableCell className="text-right">{formatNumber(Math.round(result.totalDeductions))}원</TableCell>
             </TableRow>
@@ -186,8 +186,8 @@ export default function SalaryCalculator() {
       <div className="text-base leading-relaxed space-y-6">
         <p className="font-semibold">실수령액은 연봉에서 비과세 소득을 제외한 과세 대상 금액을 기준으로 각종 공제 항목을 뺀 금액입니다. 주요 공제 항목은 다음과 같습니다. (2025년 기준)</p>
         
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">1. 4대 사회보험</h3>
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">1. 4대 사회보험</h3>
           <ul className="list-disc list-inside space-y-2 text-sm">
             <li><strong>국민연금 (근로자 4.5%):</strong> 월 소득액의 4.5%를 공제합니다. (월 소득 상한 617만원, 하한 39만원 적용)
             </li>
@@ -197,8 +197,8 @@ export default function SalaryCalculator() {
           </ul>
         </div>
 
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-green-500">
-          <h3 className="text-lg font-bold text-green-600 dark:text-green-400 mb-3">2. 소득세 및 지방소득세</h3>
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">2. 소득세 및 지방소득세</h3>
           <ul className="list-disc list-inside space-y-2 text-sm">
             <li><strong>소득세:</strong> 과세 대상 월 급여와 부양가족 수에 따라 국세청의 '근로소득 간이세액표'를 기준으로 결정됩니다. 본 계산기는 이를 바탕으로 한 추정치를 제공합니다.</li>
             <li><strong>지방소득세:</strong> 산출된 소득세의 10%를 공제합니다.</li>
@@ -208,10 +208,10 @@ export default function SalaryCalculator() {
     ),
     usefulTips: (
       <div className="text-base leading-relaxed space-y-8">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">💡 연봉 200% 활용을 위한 직장인 재테크 꿀팁</h2>
+        <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">💡 연봉 200% 활용을 위한 직장인 재테크 꿀팁</h2>
         
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-blue-500">
-          <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400">1. '비과세 항목'을 최대로 활용하라</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">1. '비과세 항목'을 최대로 활용하라</h3>
           <p className="mt-2">연봉 협상 시, 비과세 항목을 적극적으로 활용하면 실질 소득을 높일 수 있습니다. 대표적인 비과세 항목은 다음과 같습니다.</p>
           <ul className="list-disc list-inside mt-3 space-y-2 text-sm">
             <li><strong>식대:</strong> 월 20만원까지 비과세 (연 240만원)</li>
@@ -221,13 +221,13 @@ export default function SalaryCalculator() {
           <p className="mt-2 text-sm">예를 들어 연봉 5,000만원인 경우, 식대 비과세 240만원을 적용하면 과세 대상 소득이 4,760만원으로 줄어들어 4대 보험료와 소득세를 모두 절약할 수 있습니다.</p>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-green-500">
-          <h3 className="font-bold text-lg text-green-600 dark:text-green-400">2. 연말정산, 미리 준비하는 자가 '13월의 월급'을 얻는다</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">2. 연말정산, 미리 준비하는 자가 '13월의 월급'을 얻는다</h3>
           <p className="mt-2">연말정산은 1년 동안 낸 세금을 최종 정산하는 과정입니다. 어떻게 준비하느냐에 따라 세금을 돌려받을 수도, 더 낼 수도 있습니다. 신용카드/체크카드 사용액, 의료비, 교육비, 월세액 등 공제 항목을 꼼꼼히 챙겨두세요. 특히 <strong>연금저축/IRP</strong>는 연간 최대 900만원까지 세액공제가 가능한 강력한 절세 상품이므로, 노후 준비와 절세를 동시에 잡는 것을 추천합니다.</p>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-yellow-500">
-          <h3 className="font-bold text-lg text-yellow-600 dark:text-yellow-400">3. 연봉 협상, '세전' 기준으로 당당하게 요구하라</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">3. 연봉 협상, '세전' 기준으로 당당하게 요구하라</h3>
           <p className="mt-2">모든 연봉 협상은 '세전' 금액을 기준으로 진행됩니다. 협상 전, 동종 업계와 직무의 평균 연봉 수준을 파악하고(커리어 플랫폼, 채용 사이트 등 활용), 지난 1년간의 자신의 성과를 구체적인 수치와 사례로 정리해두는 것이 중요합니다. 막연한 인상 요구보다는, '매출 10% 상승에 기여', '프로젝트 기간 2주 단축' 등 명확한 근거를 제시할 때 성공 확률이 높아집니다.</p>
         </div>
       </div>

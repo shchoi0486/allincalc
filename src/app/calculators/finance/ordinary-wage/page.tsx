@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useMemo } from 'react';
 import { NextPage } from 'next';
@@ -160,17 +160,17 @@ const OrdinaryWageCalculator: NextPage = () => {
       <div className="text-base leading-relaxed space-y-6">
         <p className="font-semibold">통상임금은 근로자에게 정기적이고 일률적으로 소정근로 또는 총 근로에 대하여 지급하기로 정한 금액을 말합니다. 시간급, 일급, 월급 등 다양한 형태로 계산될 수 있습니다.</p>
         
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">1. 월 통상임금 산정</h3>
-          <p className="font-mono p-3 bg-white dark:bg-gray-900 rounded-md text-sm shadow-sm">
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">1. 월 통상임금 산정</h3>
+          <p className="font-mono p-3 bg-card rounded-md text-sm shadow-sm">
             월 통상임금 = 월 기본급 + 각종 수당(매월 고정 지급) + (연간 상여금 및 기타 금품 / 12)
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">※ 모든 수당과 상여금이 통상임금에 포함되는 것은 아니며, 아래 '유용한 팁' 섹션의 포함 기준(정기성, 일률성, 고정성)을 충족해야 합니다.</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-2">※ 모든 수당과 상여금이 통상임금에 포함되는 것은 아니며, 아래 '유용한 팁' 섹션의 포함 기준(정기성, 일률성, 고정성)을 충족해야 합니다.</p>
         </div>
 
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-green-500">
-          <h3 className="text-lg font-bold text-green-600 dark:text-green-400 mb-3">2. 시간급 통상임금 산정 (가장 기본!)</h3>
-          <p className="font-mono p-3 bg-white dark:bg-gray-900 rounded-md text-sm shadow-sm">
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">2. 시간급 통상임금 산정 (가장 기본!)</h3>
+          <p className="font-mono p-3 bg-card rounded-md text-sm shadow-sm">
             시간급 통상임금 = 월 통상임금 / 월 소정근로시간
           </p>
           <p className="mt-3"><strong>월 소정근로시간이란?</strong></p>
@@ -181,21 +181,27 @@ const OrdinaryWageCalculator: NextPage = () => {
           </ul>
         </div>
 
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-yellow-500">
-          <h3 className="text-lg font-bold text-yellow-600 dark:text-yellow-400 mb-3">3. 일급 통상임금 산정</h3>
-          <p className="font-mono p-3 bg-white dark:bg-gray-900 rounded-md text-sm shadow-sm">
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">3. 일급 통상임금 산정</h3>
+          <p className="font-mono p-3 bg-card rounded-md text-sm shadow-sm">
             일급 통상임금 = 시간급 통상임금 × 1일 소정근로시간
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">※ 1일 소정근로시간은 보통 8시간입니다.</p>
+            <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-2">※ 1일 소정근로시간은 보통 8시간입니다.</p>
+          </div>
+          <div className="mt-6 p-4 bg-muted rounded-lg border border-border">
+            <h4 className="font-semibold text-foreground mb-2">계산 예시 (시간급 10,000원, 주 40시간·주 5일)</h4>
+            <p className="text-sm text-muted-foreground">월 소정근로시간 = (40 + 8) × (365 / 7 / 12) ≈ 209시간</p>
+            <p className="font-mono text-sm text-primary mt-1">월 통상임금 = 10,000 × 209 = 2,090,000원</p>
+            <p className="font-mono text-sm text-primary">일급 통상임금 = 10,000 × 8 = 80,000원</p>
+          </div>
         </div>
-      </div>
     ),
     usefulTips: (
       <div className="text-base leading-relaxed space-y-8">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">💼 통상임금, 2025년 기준 이것만은 꼭 알아두세요!</h2>
+        <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">💼 통상임금, 2025년 기준 이것만은 꼭 알아두세요!</h2>
         
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-red-500">
-          <h3 className="font-bold text-lg text-red-600 dark:text-red-400">1. 통상임금 판단의 3대 원칙: 정기성, 일률성, 고정성</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">1. 통상임금 판단의 3대 원칙: 정기성, 일률성, 고정성</h3>
           <p className="mt-2">어떤 금품이 통상임금에 속하는지를 판단하는 가장 중요한 기준입니다. 아래 세 가지 요건을 모두 충족해야 합니다.</p>
           <ul className="mt-3 space-y-2 list-disc list-inside">
             <li><strong>정기성:</strong> 1개월을 초과하는 기간(분기, 반기 등)에 지급되더라도, 앞으로도 계속적, 주기적으로 지급될 것이 예정되어 있다면 정기성이 인정됩니다. (예: 분기별 정기상여금)</li>
@@ -204,11 +210,11 @@ const OrdinaryWageCalculator: NextPage = () => {
           </ul>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-purple-500">
-          <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400">2. 통상임금 포함 vs 미포함 대표 항목</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">2. 통상임금 포함 vs 미포함 대표 항목</h3>
           <div className="grid md:grid-cols-2 gap-6 mt-3">
             <div>
-              <h4 className="font-semibold text-green-600 dark:text-green-400">✅ 통상임금 포함 (O)</h4>
+              <h4 className="font-semibold text-primary">✅ 통상임금 포함 (O)</h4>
               <ul className="mt-2 space-y-1 list-disc list-inside text-sm">
                 <li>기본급</li>
                 <li>직무/직책 수당</li>
@@ -219,7 +225,7 @@ const OrdinaryWageCalculator: NextPage = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-red-600 dark:text-red-400">❌ 통상임금 미포함 (X)</h4>
+              <h4 className="font-semibold text-primary">❌ 통상임금 미포함 (X)</h4>
               <ul className="mt-2 space-y-1 list-disc list-inside text-sm">
                 <li>실제 근무실적에 따라 변동되는 성과급</li>
                 <li>출장비, 업무추진비 등 실비변상적 금품</li>
@@ -231,8 +237,8 @@ const OrdinaryWageCalculator: NextPage = () => {
           </div>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-indigo-500">
-          <h3 className="font-bold text-lg text-indigo-600 dark:text-indigo-400">3. 통상임금이 왜 중요한가요? 각종 수당의 기준!</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">3. 통상임금이 왜 중요한가요? 각종 수당의 기준!</h3>
           <p className="mt-2">통상임금은 아래 수당들을 계산하는 기초가 되기 때문에 매우 중요합니다. 통상임금이 오르면 이 수당들도 함께 오릅니다.</p>
           <ul className="mt-3 space-y-2 list-disc list-inside">
             <li><strong>연장/야간/휴일 근로수당:</strong> 시간급 통상임금의 50%를 가산하여 지급 (총 150%)</li>
@@ -243,8 +249,8 @@ const OrdinaryWageCalculator: NextPage = () => {
           </ul>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-teal-500">
-          <h3 className="font-bold text-lg text-teal-600 dark:text-teal-400">4. 근로자와 사업주를 위한 최종 조언</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">4. 근로자와 사업주를 위한 최종 조언</h3>
           <p className="mt-2"><strong>근로자라면,</strong> 자신의 급여명세서를 꼼꼼히 살펴보고, 통상임금에 포함되어야 할 항목이 누락되지는 않았는지 확인해보세요. 궁금한 점은 회사의 인사/급여 담당자에게 문의하거나 고용노동부를 통해 상담받을 수 있습니다.</p>
           <p className="mt-3"><strong>사업주라면,</strong> 최신 판례와 법규를 반영하여 통상임금 산정 기준을 명확히 하고, 이를 기반으로 정확한 임금을 지급해야 합니다. 이는 불필요한 법적 분쟁을 막고, 건강한 노사 문화를 만드는 가장 확실한 방법입니다.</p>
         </div>

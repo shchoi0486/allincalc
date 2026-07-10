@@ -274,73 +274,90 @@ const InternetSpeedTest: React.FC = () => {
     </div>
   );
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
-        <p className="text-lg">인터넷 속도 테스트는 현재 인터넷 연결의 다운로드, 업로드 속도 및 핑 지연 시간을 측정하는 도구입니다.</p>
-        <p><strong>중요:</strong> 이 도구는 시뮬레이션된 결과를 제공합니다. 실제 정확한 속도 측정을 위해서는 Speedtest.net 또는 Fast.com과 같은 전문 서비스를 이용하시기 바랍니다.</p>
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="font-semibold text-md mb-2">측정 항목:</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>핑(Ping):</strong> 서버와 클라이언트 간의 지연 시간 (ms)</li>
-            <li><strong>다운로드 속도:</strong> 데이터 수신 속도 (Mbps)</li>
-            <li><strong>업로드 속도:</strong> 데이터 송신 속도 (Mbps)</li>
-            <li><strong>지터(Jitter):</strong> 핑 지연 시간의 변동폭 (ms)</li>
-          </ul>
-        </div>
+        <p>
+          <strong>인터넷 속도 테스트</strong>는 현재 인터넷 연결의 다운로드·업로드 속도와 핑(Ping) 지연 시간을 측정하는 도구입니다. 가정이나 사무실의 회선이 약속된 속도를 내는지, 온라인 게임이나 화상 회의가 끊김 없이 가능한지 빠르게 점검할 수 있습니다.
+        </p>
+        <p>
+          재택근무자, 게이머, 영상 스트리밍 이용자, 네트워크 관리자에게 유용합니다. 통신사 가입 속도와 실제 체감 속도의 차이를 확인하고, 문제 발생 시 원인(와이파이 간섭, 타 기기 점유 등)을 좁혀가는 데 활용됩니다.
+        </p>
+        <p>
+          초보자에게는 느린 인터넷의 원인을 찾는 진단 도구로, IT 담당자에게는 장애 대응의 1차 확인 도구로 쓰입니다. 측정값은 여러 번 반복해 평균을 내는 것이 신뢰도가 높습니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          이 도구는 시뮬레이션된 결과를 제공하므로 참고용입니다. 실제 정확한 측정에는 Speedtest.net, Fast.com 등 전용 서비스를 이용하세요. 측정 환경(와이파이·유선·다른 기기 사용 여부)에 따라 결과가 크게 달라집니다.
+        </p>
       </div>
     ),
     calculationFormula: (
       <div className="space-y-6">
         <div>
-          <h3 className="font-semibold text-xl mb-2 border-b-2 border-gray-200 pb-2">인터넷 속도 측정 원리</h3>
-          <p className="mb-4">실제 속도 테스트는 서버와 클라이언트 간에 데이터를 전송하고 그 시간을 측정하여 속도를 계산합니다.</p>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-lg mb-2">1. 핑(Ping) 측정</h3>
-          <p className="mb-2">ICMP Echo Request 패킷을 서버에 전송하고 응답 시간을 측정합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">Ping = 왕복 시간 (RTT) ÷ 2</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">핑(Ping) 측정</h4>
+          <p>서버에 패킷을 보내고 응답까지 왕복 시간을 측정합니다.</p>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-lg font-bold">Ping = 왕복 시간(RTT) ÷ 2</p>
           </div>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">2. 다운로드 속도</h3>
-          <p className="mb-2">서버에서 클라이언트로 일정량의 데이터를 전송하고 소요 시간을 측정합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">다운로드 속도 (Mbps) = (전송된 데이터량 × 8) ÷ 소요 시간 (초) ÷ 1,000,000</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">다운로드 속도</h4>
+          <p>일정량의 데이터를 받는 데 걸린 시간으로 속도를 계산합니다.</p>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-sm">속도(Mbps) = (데이터량 × 8) ÷ 시간(초) ÷ 1,000,000</p>
           </div>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">3. 업로드 속도</h3>
-          <p className="mb-2">클라이언트에서 서버로 데이터를 전송하는 속도를 측정합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">업로드 속도 (Mbps) = (전송된 데이터량 × 8) ÷ 소요 시간 (초) ÷ 1,000,000</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">업로드 속도와 지터</h4>
+          <div className="my-2 p-3 bg-muted rounded-lg">
+            <p className="font-mono text-sm text-center">업로드 속도 = (전송량 × 8) ÷ 시간(초) ÷ 1,000,000</p>
           </div>
+          <p>지터(Jitter)는 핑 지연 시간의 변동폭으로, 작을수록 안정적입니다.</p>
         </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-6">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">정확한 측정을 위한 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>유선 연결:</strong> 가능하면 이더넷 케이블을 사용하여 Wi-Fi 간섭을 제거하세요.</li>
-            <li><strong>다른 기기 차단:</strong> 테스트 중 다른 기기의 네트워크 사용을 중지하세요.</li>
-            <li><strong>VPN 비활성화:</strong> VPN 사용 시 추가 지연이 발생할 수 있습니다.</li>
-            <li><strong>여러 번 테스트:</strong> 여러 번 테스트하여 평균값을 구하는 것이 정확합니다.</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">유선 연결</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>가능하면 이더넷 케이블을 사용해 와이파이 간섭을 제거하세요.</li>
+            <li>공유기와 가까울수록 안정적인 결과를 얻습니다.</li>
           </ul>
         </div>
-        <div className="p-4 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20">
-          <h3 className="font-semibold text-lg mb-2">인터넷 속도 기준</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>웹 서핑:</strong> 최소 5-10 Mbps 권장</li>
-            <li><strong>HD 스트리밍:</strong> 최소 5-10 Mbps 권장</li>
-            <li><strong>4K 스트리밍:</strong> 최소 25 Mbps 권장</li>
-            <li><strong>온라인 게임:</strong> 핑 20ms 이하 권장</li>
-            <li><strong>화상 회의:</strong> 최소 10-20 Mbps 권장</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">다른 기기 차단</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>테스트 중 다른 기기의 스트리밍·다운로드를 멈추세요.</li>
+            <li>백그라운드 업데이트도 속도를 잡아먹습니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">VPN 비활성화</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>VPN 사용 시 암호화 오버헤드로 지연이 커집니다.</li>
+            <li>순수 회선 속도를 보려면 VPN을 끄세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">반복 측정</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>여러 번 측정해 평균과 최솟값을 비교하세요.</li>
+            <li>시간대에 따라 망 혼잡도가 달라집니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">속도 기준</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>웹·HD 5~10 Mbps, 4K 25 Mbps, 화상회의 10~20 Mbps 권장</li>
+            <li>온라인 게임은 핑 20 ms 이하가 유리합니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">문제 대응</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>느리면 공유기 재시작과 펌웨어 점검을 먼저 하세요.</li>
+            <li>지속 이상 시 통신사에 회선 점검을 요청하세요.</li>
           </ul>
         </div>
       </div>

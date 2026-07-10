@@ -273,104 +273,111 @@ const inputSection = (
   const infoSection = {
       calculatorDescription: (
         <>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">DTI 계산기: 내 집 마련의 첫 관문, 현명하게 통과하기</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-            내 집 마련의 꿈을 안고 금융기관의 문을 두드릴 때, 가장 먼저 마주하게 되는 숫자가 바로 <strong>DTI(총부채상환비율, Debt to Income)</strong>입니다. DTI는 당신의 연간 소득 대비 연간 부채 상환액이 얼마나 되는지를 나타내는 비율로, 금융기관이 "이 사람에게 돈을 빌려주었을 때, 안정적으로 갚아나갈 능력이 있는가?"를 판단하는 핵심적인 재무 건전성 지표입니다.
+          <h2 className="text-2xl font-bold text-foreground mb-4">DTI 계산기: 내 집 마련의 첫 관문, 현명하게 통과하기</h2>
+          <p className="text-lg text-muted-foreground mb-6">
+            내 집 마련의 꿈을 안고 금융기관의 문을 두드릴 때, 가장 먼저 마주하게 되는 숫자가 바로 <strong className="text-foreground">DTI(총부채상환비율, Debt to Income)</strong>입니다. DTI는 연간 소득 대비 연간 부채 상환액이 얼마나 되는지를 나타내는 비율로, 금융기관이 상환 능력을 판단하는 핵심적인 재무 건전성 지표입니다.
           </p>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            주택 가격과 함께 대출의 규모를 결정하는 LTV(주택담보대출비율)와 더불어, DTI는 대출 한도를 결정하는 양대 산맥과도 같습니다. DTI 비율이 낮을수록 당신의 상환 능력은 높게 평가되며, 이는 더 많은 대출 한도와 유리한 금리 조건으로 이어질 수 있습니다. 반대로 DTI가 높다면, 대출이 거절되거나 원하는 만큼의 한도를 확보하지 못할 수도 있습니다.
+          <p className="text-muted-foreground leading-relaxed">
+            주택 가격과 함께 대출의 규모를 결정하는 LTV와 더불어, DTI는 대출 한도를 결정하는 양대 산맥입니다. DTI 비율이 낮을수록 상환 능력이 높게 평가되며, 더 많은 대출 한도와 유리한 금리 조건으로 이어질 수 있습니다. 반대로 DTI가 높다면, 대출이 거절되거나 원하는 만큼의 한도를 확보하지 못할 수도 있습니다.
           </p>
-          <p className="mt-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p className="mt-4 text-muted-foreground leading-relaxed">
             하지만 DTI 계산은 생각보다 복잡합니다. 주택담보대출의 원리금뿐만 아니라, 기존에 가지고 있던 신용대출, 자동차 할부, 학자금 대출 등 다른 부채의 '이자'까지 고려해야 하기 때문입니다. 많은 분들이 자신의 DTI를 어림짐작만 하다가, 실제 대출 심사 과정에서 예상치 못한 결과에 당황하곤 합니다.
           </p>
-          <p className="mt-6 text-gray-700 dark:text-gray-300 leading-relaxed bg-blue-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-blue-500">
-            <strong>All-in-Calc의 DTI 계산기</strong>는 이러한 복잡함을 해결하고, 당신의 재정 상태를 명확하게 진단해주는 든든한 조력자입니다. 간단한 정보 입력만으로 당신의 현재 DTI를 정확히 계산하고, 정부의 최신 규제(2025년 기준)에 맞춰 대출 가능한 금액을 예측해볼 수 있습니다. 이제 막연한 불안감 대신, 정확한 데이터에 기반하여 성공적인 내 집 마련 계획을 세워보세요.
+          <p className="mt-6 text-muted-foreground leading-relaxed bg-muted p-4 rounded-lg border-l-4 border-border">
+            <strong className="text-foreground">All-in-Calc의 DTI 계산기</strong>는 이러한 복잡함을 해결하고, 재정 상태를 명확하게 진단해주는 든든한 조력자입니다. 간단한 정보 입력만으로 현재 DTI를 정확히 계산하고, 최신 규제에 맞춰 대출 가능한 금액을 예측해볼 수 있습니다.
           </p>
         </>
       ),
       calculationFormula: (
         <>
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mt-8 mb-4">🔍 DTI, 정확히 어떻게 계산될까요?</h3>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            DTI는 당신의 연간 총소득에서 1년 동안 갚아야 할 대출 원리금과 이자가 차지하는 비율을 의미합니다. 공식 자체는 간단해 보이지만, 어떤 부채가 포함되는지에 따라 결과는 크게 달라집니다.
+          <h3 className="text-xl font-bold text-foreground mt-8 mb-4">DTI, 정확히 어떻게 계산될까요?</h3>
+          <p className="text-muted-foreground leading-relaxed mb-6">
+            DTI는 연간 총소득에서 1년 동안 갚아야 할 대출 원리금과 이자가 차지하는 비율을 의미합니다. 공식 자체는 간단해 보이지만, 어떤 부채가 포함되는지에 따라 결과는 크게 달라집니다.
           </p>
-          <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md text-center shadow-inner">
-            <p className="font-mono text-lg tracking-tight">
+          <div className="mt-4 p-4 bg-muted rounded-md text-center border border-border">
+            <p className="font-mono text-lg tracking-tight text-primary">
               <strong>DTI (%) = ( (신규 주택담보대출 연간 원리금) + (기타 부채의 연간 이자) ) / 연간 소득 × 100</strong>
             </p>
           </div>
           <ul className="list-none space-y-4 mt-6">
-            <li className="p-4 border-l-4 border-green-500 bg-green-50 dark:bg-gray-800 rounded-r-lg">
-              <strong className="font-semibold text-green-800 dark:text-green-300">신규 주택담보대출 연간 원리금:</strong> 새로 받으려는 주택담보대출에 대해 1년 동안 상환해야 할 원금과 이자의 합계입니다. 대출 기간이 짧을수록 이 금액은 커집니다.
+            <li className="p-4 border-l-4 border-border bg-muted rounded-r-lg">
+              <strong className="font-semibold text-foreground">신규 주택담보대출 연간 원리금:</strong> <span className="text-muted-foreground">새로 받으려는 주택담보대출에 대해 1년 동안 상환해야 할 원금과 이자의 합계입니다. 대출 기간이 짧을수록 이 금액은 커집니다.</span>
             </li>
-            <li className="p-4 border-l-4 border-yellow-500 bg-yellow-50 dark:bg-gray-800 rounded-r-lg">
-              <strong className="font-semibold text-yellow-800 dark:text-yellow-300">기타 부채의 연간 이자:</strong> 신용대출, 마이너스 통장, 자동차 할부, 학자금 대출 등 기존에 보유한 모든 부채의 1년 치 '이자' 비용입니다. DTI는 DSR과 달리 원금은 제외하고 이자만 계산에 포함하는 것이 특징입니다.
+            <li className="p-4 border-l-4 border-border bg-muted rounded-r-lg">
+              <strong className="font-semibold text-foreground">기타 부채의 연간 이자:</strong> <span className="text-muted-foreground">신용대출, 마이너스 통장, 자동차 할부, 학자금 대출 등 기존에 보유한 모든 부채의 1년 치 이자 비용입니다. DTI는 DSR과 달리 원금은 제외하고 이자만 계산에 포함합니다.</span>
             </li>
-            <li className="p-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-gray-800 rounded-r-lg">
-              <strong className="font-semibold text-blue-800 dark:text-blue-300">연간 소득:</strong> 세금을 공제하기 전의 소득(세전 소득)을 기준으로 하며, 원천징수영수증, 소득금액증명원 등 공인된 서류로 증빙된 금액만 인정됩니다.
+            <li className="p-4 border-l-4 border-border bg-muted rounded-r-lg">
+              <strong className="font-semibold text-foreground">연간 소득:</strong> <span className="text-muted-foreground">세금을 공제하기 전의 소득(세전 소득)을 기준으로 하며, 원천징수영수증, 소득금액증명원 등 공인된 서류로 증빙된 금액만 인정됩니다.</span>
             </li>
           </ul>
 
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">🤔 DTI vs DSR, 무엇이 다를까요? (2025년 기준 핵심)</h3>
-          <p className="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">
-            최근 대출 시장에서는 DTI보다 더 강력한 규제인 <strong>DSR(총부채원리금상환비율, Debt Service Ratio)</strong>이 핵심적인 기준으로 자리 잡았습니다. DTI가 '주택담보대출' 중심의 규제라면, DSR은 신용대출, 카드론 등 모든 가계부채를 포괄하는 더 촘촘하고 강력한 '그물'입니다. 2025년 현재, 대부분의 금융기관은 DSR을 우선적으로 적용하여 대출 한도를 심사합니다.
+          <h3 className="text-xl font-bold text-foreground mt-10 mb-4">DTI vs DSR, 무엇이 다를까요?</h3>
+          <p className="mb-4 text-muted-foreground leading-relaxed">
+            최근 대출 시장에서는 DTI보다 더 강력한 규제인 <strong className="text-foreground">DSR(총부채원리금상환비율)</strong>이 핵심적인 기준으로 자리 잡았습니다. DTI가 '주택담보대출' 중심의 규제라면, DSR은 신용대출, 카드론 등 모든 가계부채를 포괄하는 더 촘촘한 기준입니다.
           </p>
           <div className="overflow-x-auto">
-            <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <TableHeader className="bg-gray-50 dark:bg-gray-800">
+            <Table className="min-w-full divide-y divide-border">
+              <TableHeader className="bg-muted">
                 <TableRow>
-                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">구분</TableHead>
-                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DTI (총부채상환비율)</TableHead>
-                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DSR (총부채원리금상환비율)</TableHead>
+                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">구분</TableHead>
+                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">DTI</TableHead>
+                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">DSR</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+              <TableBody className="bg-card divide-y divide-border">
                 <TableRow>
-                  <TableCell className="px-6 py-4 whitespace-nowrap font-semibold">개념</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">연소득 대비 <strong>주담대 원리금 + 기타대출 이자</strong></TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">연소득 대비 <strong>모든 대출의 원리금</strong></TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap font-semibold text-foreground">개념</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-muted-foreground">연소득 대비 <strong className="text-foreground">주담대 원리금 + 기타대출 이자</strong></TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-muted-foreground">연소득 대비 <strong className="text-foreground">모든 대출의 원리금</strong></TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="px-6 py-4 whitespace-nowrap font-semibold">부채 포함 범위</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">신규 주담대(원리금) + 기존 부채(<strong>이자만</strong>)</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">모든 금융권 대출(<strong>원리금 모두</strong>)</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap font-semibold text-foreground">부채 포함 범위</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-muted-foreground">신규 주담대(원리금) + 기존 부채(<strong className="text-foreground">이자만</strong>)</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-muted-foreground">모든 금융권 대출(<strong className="text-foreground">원리금 모두</strong>)</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="px-6 py-4 whitespace-nowrap font-semibold">규제 강도</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">상대적으로 완화</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap"><strong>훨씬 강력함</strong> (대출 한도 더 적게 나옴)</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap font-semibold text-foreground">규제 강도</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-muted-foreground">상대적으로 완화</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap text-muted-foreground"><strong className="text-foreground">훨씬 강력함</strong></TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </div>
-          <p className="mt-4 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-gray-800 p-3 rounded-md">
-            <strong>중요:</strong> DTI 기준을 충족하더라도, DSR 기준(통상 1금융권 40%, 2금융권 50%)을 넘으면 대출이 거절될 수 있습니다. 따라서 DTI와 함께 DSR도 반드시 함께 고려해야 합니다.
-          </p>
+          <div className="mt-4 p-4 bg-muted rounded-lg border border-border">
+            <h4 className="font-semibold text-foreground mb-2">계산 예시</h4>
+            <p className="text-sm text-muted-foreground">연소득 5,000만 원, 신규 주담대 연간 원리금 1,200만 원, 기타 부채 연간 이자 300만 원인 경우</p>
+            <p className="font-mono text-sm text-primary mt-1">DTI = (12,000,000 + 3,000,000) / 50,000,000 × 100 = 30%</p>
+            <p className="text-xs text-muted-foreground mt-1">통상 1금융권 DSR 40% 기준 이내라면 대출 한도에 여유가 있습니다. 단 DSR 기준도 함께 넘지 않아야 합니다.</p>
+          </div>
         </>
       ),
       usefulTips: (
         <>
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mt-8 mb-4">💡 DTI 낮추고 대출 한도 늘리는 5가지 현실적인 전략</h3>
+          <h3 className="text-xl font-bold text-foreground mt-8 mb-4">DTI 낮추고 대출 한도 늘리는 현실적인 전략</h3>
           <ul className="space-y-6">
-            <li className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md transition-transform hover:scale-105">
-              <h4 className="font-semibold text-lg mb-2 text-blue-600 dark:text-blue-400">1. 부채 다이어트: 이자 높은 빚부터 정리하기</h4>
-              <p className="text-gray-600 dark:text-gray-400">가장 기본적이면서도 효과적인 방법입니다. 금리가 높은 신용대출, 카드론, 현금서비스부터 상환하여 '기타 부채 이자' 총액을 줄이세요. 사용하지 않는 마이너스 통장도 한도를 줄이거나 해지하는 것이 좋습니다. 이자 부담이 줄면 DTI 비율이 직접적으로 낮아집니다.</p>
+            <li className="p-4 rounded-lg bg-muted border border-border">
+              <h4 className="font-semibold text-lg mb-2 text-primary">1. 부채 다이어트: 이자 높은 빚부터 정리하기</h4>
+              <p className="text-muted-foreground">가장 기본적이면서도 효과적인 방법입니다. 금리가 높은 신용대출, 카드론, 현금서비스부터 상환하여 '기타 부채 이자' 총액을 줄이세요. 이자 부담이 줄면 DTI 비율이 직접적으로 낮아집니다.</p>
             </li>
-            <li className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md transition-transform hover:scale-105">
-              <h4 className="font-semibold text-lg mb-2 text-green-600 dark:text-green-400">2. 소득 증명: 인정 소득 최대한 끌어모으기</h4>
-              <p className="text-gray-600 dark:text-gray-400">금융기관은 서류로 증빙되는 '공식 소득'만 인정합니다. 근로소득 원천징수영수증 외에도, 사업소득금액증명원, 국민연금/건강보험료 납부 내역, 신용카드 사용액 등을 통해 소득을 추가로 인정받을 수 있습니다. 배우자가 소득이 있다면 '부부합산 소득'으로 신고하여 분모를 키우는 것도 좋은 전략입니다.</p>
+            <li className="p-4 rounded-lg bg-muted border border-border">
+              <h4 className="font-semibold text-lg mb-2 text-primary">2. 소득 증명: 인정 소득 최대한 끌어모으기</h4>
+              <p className="text-muted-foreground">금융기관은 서류로 증빙되는 '공식 소득'만 인정합니다. 근로소득 원천징수영수증 외에도, 사업소득금액증명원, 국민연금/건강보험료 납부 내역 등을 통해 소득을 추가로 인정받을 수 있습니다. 배우자 소득이 있다면 '부부합산 소득' 신고도 유리합니다.</p>
             </li>
-            <li className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md transition-transform hover:scale-105">
-              <h4 className="font-semibold text-lg mb-2 text-yellow-600 dark:text-yellow-400">3. 대출 기간: 길게 설정하여 연간 상환 부담 줄이기</h4>
-              <p className="text-gray-600 dark:text-gray-400">동일한 금액을 빌리더라도 대출 기간을 30년에서 40년, 50년(초장기 모기지)으로 늘리면 매년 갚아야 할 원리금 상환액이 줄어듭니다. 이는 DTI 비율을 낮추는 데 매우 효과적입니다. 단, 총 내야 하는 이자 부담은 늘어나므로, 중도 상환 계획 등을 고려하여 신중하게 결정해야 합니다.</p>
+            <li className="p-4 rounded-lg bg-muted border border-border">
+              <h4 className="font-semibold text-lg mb-2 text-primary">3. 대출 기간: 길게 설정하여 연간 상환 부담 줄이기</h4>
+              <p className="text-muted-foreground">동일한 금액을 빌리더라도 대출 기간을 30년에서 40년, 50년으로 늘리면 매년 갚아야 할 원리금 상환액이 줄어듭니다. DTI 비율을 낮추는 데 매우 효과적이지만, 총 이자 부담은 늘어나므로 신중하게 결정해야 합니다.</p>
             </li>
-            <li className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md transition-transform hover:scale-105">
-              <h4 className="font-semibold text-lg mb-2 text-red-600 dark:text-red-400">4. 스트레스 DTI/DSR 제도 이해하고 대비하기</h4>
-              <p className="text-gray-600 dark:text-gray-400">2024년부터 단계적으로 시행된 '스트레스 DSR' 제도는 미래 금리 인상 가능성까지 반영하여 대출 한도를 산정합니다. 변동금리 대출 시 현재 금리에 '가산금리'가 더해져 DTI/DSR이 계산되므로, 예상보다 대출 한도가 줄어들 수 있습니다. 고정금리 대출을 선택하거나, 스트레스 금리가 적용되더라도 DTI/DSR이 규제 한도 이내에 들어오도록 자금 계획을 보수적으로 세우는 것이 중요합니다.</p>
+            <li className="p-4 rounded-lg bg-muted border border-border">
+              <h4 className="font-semibold text-lg mb-2 text-primary">4. 스트레스 DSR 제도 이해하고 대비하기</h4>
+              <p className="text-muted-foreground">스트레스 DSR 제도는 미래 금리 인상 가능성을 반영하여 대출 한도를 산정합니다. 변동금리 대출 시 현재 금리에 가산금리가 더해져 계산되므로, 예상보다 대출 한도가 줄어들 수 있습니다.</p>
             </li>
-            <li className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md transition-transform hover:scale-105">
-              <h4 className="font-semibold text-lg mb-2 text-purple-600 dark:text-purple-400">5. 정부 정책 모니터링 및 규제 지역 확인은 필수</h4>
-              <p className="text-gray-600 dark:text-gray-400">DTI와 DSR 규제는 정부의 부동산 정책 방향과 지역(투기과열지구, 조정대상지역 등)에 따라 수시로 변동됩니다. 특히 생애최초 주택구매자, 신혼부부 등을 위한 완화된 DTI/LTV 기준이 적용되는 경우가 많습니다. 대출 신청 시점의 최신 금융 정책과 내가 주택을 구매하려는 지역의 규제 수준을 반드시 확인하여 예상치 못한 변수를 줄여야 합니다.</p>
+            <li className="p-4 rounded-lg bg-muted border border-border">
+              <h4 className="font-semibold text-lg mb-2 text-primary">5. 정부 정책 모니터링 및 규제 지역 확인은 필수</h4>
+              <p className="text-muted-foreground">DTI와 DSR 규제는 정부의 부동산 정책 방향과 지역에 따라 수시로 변동됩니다. 생애최초 주택구매자, 신혼부부 등을 위한 완화된 기준이 적용되는 경우가 많으니, 대출 신청 시점의 최신 정책을 반드시 확인하세요.</p>
+            </li>
+            <li className="p-4 rounded-lg bg-muted border border-border">
+              <h4 className="font-semibold text-lg mb-2 text-primary">6. DSR 한도도 함께 점검하세요.</h4>
+              <p className="text-muted-foreground">DTI 기준을 충족하더라도 모든 대출의 원리금을 포함하는 DSR(통상 1금융권 40%)을 넘으면 대출이 거절될 수 있습니다. 두 지표를 모두 관리하는 것이 안전합니다.</p>
             </li>
           </ul>
         </>

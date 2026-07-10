@@ -91,63 +91,86 @@ export default function PowerConverter() {
     </div>
   );
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
         <p>
-          <strong>출력 변환기</strong>는 다양한 동력/출력 단위 간의 정확한 변환을 제공하는 도구입니다. 
-          와트(W), 킬로와트(kW), 메가와트(MW), 마력(hp), BTU/h 간의 변환을 빠르게 수행할 수 있습니다.
+          <strong>출력 변환기</strong>는 다양한 동력·출력 단위 간의 정확한 변환을 제공하는 도구입니다. 와트(W), 킬로와트(kW), 메가와트(MW), 마력(hp), BTU/h 간의 환산을 빠르게 수행할 수 있으며, 전기공학·기계공학·HVAC(난방·환기·냉방) 등 광범위한 분야에서 활용됩니다.
         </p>
         <p>
-          전기 기기의 소비 전력, 엔진 출력, 냉방 용량 등 다양한 상황에서 출력 단위 변환이 필요할 때 활용할 수 있으며, 
-          전기공학, 기계공학, HVAC(난방·환기·냉방) 등에서 유용하게 사용됩니다.
+          전기 기기의 소비 전력, 엔진 출력, 냉방 용량, 발전 용량 등을 비교할 때 출력 단위 변환이 필요합니다. 특히 해외 제품 사양서의 마력(hp)과 국내 기준 kW를 오갈 때 유용하며, 설비 선정과 에너지 관리에 필수적입니다.
+        </p>
+        <p>
+          엔지니어와 설비 담당자에게는 설계 도구로, 소비자에게는 가전·차량 사양을 비교하는 도구로 활용됩니다. 정확한 출력 환산은 적정 용량 선정과 전력 비용 절감의 기초입니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          변환 계수는 국제 표준을 따릅니다. 1 kW = 1,000 W, 1 MW = 1,000 kW, 1 hp(메커니컬) = 745.7 W, 1 BTU/h = 0.293071 W입니다. 마력에는 메커니컬·전기·미터법 등 종류가 있으므로 기준을 확인하세요.
         </p>
       </div>
     ),
     calculationFormula: (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">출력 단위 변환 관계</h4>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-1">
-            <p className="text-center font-mono text-sm">1 kW = 1,000 W</p>
-            <p className="text-center font-mono text-sm">1 MW = 1,000 kW = 1,000,000 W</p>
-            <p className="text-center font-mono text-sm">1 hp(메커니컬) = 745.7 W</p>
-            <p className="text-center font-mono text-sm">1 BTU/h = 0.293071 W</p>
-            <p className="text-center font-mono text-sm">1 kW ≈ 1.341 hp</p>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">출력 단위 변환 관계</h4>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center space-y-1">
+            <p className="font-mono text-sm">1 kW = 1,000 W</p>
+            <p className="font-mono text-sm">1 MW = 1,000 kW = 1,000,000 W</p>
+            <p className="font-mono text-sm">1 hp(메커니컬) = 745.7 W</p>
+            <p className="font-mono text-sm">1 BTU/h = 0.293071 W</p>
+            <p className="font-mono text-sm">1 kW ≈ 1.341 hp</p>
           </div>
         </div>
-        <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 rounded-r-lg text-sm">
-          <strong>참고:</strong> 마력(hp)에는 메커니컬 hp, 전기 hp, 미터馬力等多种이 있습니다. 
-          이 계산기는 메커니컬 hp(1hp = 745.7W)를 기준으로 합니다.
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">계산 예시</h4>
+          <p>예를 들어 150 hp를 kW로 변환하면:</p>
+          <div className="my-2 p-3 bg-muted rounded-lg">
+            <p className="font-mono text-sm text-center">150 hp × 0.7457 = 111.86 kW</p>
+          </div>
         </div>
       </div>
     ),
     usefulTips: (
-      <div className="space-y-4">
-        <div>
-          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">💡 출력 단위 활용 팁</h4>
-          <ul className="space-y-3">
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">일상적인 전력 비교</p>
-              <p className="text-xs mt-1">
-                LED 전구: 10~20W / 선풍기: 50~100W / 에어컨: 800~2,000W(1~2.5hp) / 
-                전기밥솥: 700~1,000W / 전기차 모터: 100~500kW
-              </p>
-            </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">엔진 출력 비교</p>
-              <p className="text-xs mt-1">
-                소형차: 80~120hp / 중형차: 150~250hp / 스포츠카: 300~1,000hp / 
-                트럭 엔진: 300~600hp / 제트 엔진: 10,000hp 이상
-              </p>
-            </li>
-            <li className="p-3 border rounded-lg">
-              <p className="font-semibold text-sm">냉방 용량</p>
-              <p className="text-xs mt-1">
-                냉방 용량은 주로 BTU/h로 표시됩니다. 10평방미터(약 3평) 방: 약 5,000 BTU/h / 
-                20평 아파트 전체: 약 20,000~30,000 BTU/h
-              </p>
-            </li>
+      <div className="space-y-6">
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">일상적인 전력 비교</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>LED 전구 10~20 W, 선풍기 50~100 W</li>
+            <li>에어컨 800~2,000 W, 전기차 모터 100~500 kW</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">엔진 출력 비교</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>소형차 80~120 hp, 스포츠카 300~1,000 hp</li>
+            <li>트럭 엔진 300~600 hp, 제트 엔진 10,000 hp 이상</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">냉방 용량</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>냉방 용량은 주로 BTU/h로 표시됩니다.</li>
+            <li>3평 방 약 5,000 BTU/h, 20평 아파트 20,000~30,000 BTU/h</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">마력 종류 주의</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>메커니컬 hp는 745.7 W, 전기 hp는 746 W입니다.</li>
+            <li>문헌의 hp 기준을 먼저 확인하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">설비 선정</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>필요 출력에 여유(안전율)를 더해 모터를 선정하세요.</li>
+            <li>역률과 효율을 고려해 입력 전력(kW)을 산정하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">전력 비용</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>kW는 순간 출력, kWh는 사용량(요금) 단위입니다.</li>
+            <li>두 단위를 구분해 청구서를 이해하세요.</li>
           </ul>
         </div>
       </div>

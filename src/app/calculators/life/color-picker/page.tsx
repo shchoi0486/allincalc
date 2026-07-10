@@ -239,39 +239,56 @@ const ColorPicker: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">컬러 피커는 HEX, RGB, HSL 등 다양한 색상 코드를 자유롭게 변환하고 미리 볼 수 있는 웹 디자인 필수 도구입니다.</p>
-        <p>웹 개발, 그래픽 디자인, UI/UX 디자인 등에서 색상을 정확하게 선택하고 다양한 포맷으로 변환하여 활용할 수 있습니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          HEX, RGB, HSL 색상 코드를 자유롭게 변환하고 미리보세요!
+        </p>
+        <p>
+          컬러 피커는 웹 개발, 그래픽 디자인, UI/UX 디자인 등에서 색상을 정확하게 선택하고
+          다양한 포맷으로 변환하여 활용할 수 있는 필수 도구입니다.
+        </p>
+        <p>
+          HEX(#RRGGBB), RGB(레드, 그린, 블루), HSL(색상, 채도, 명도) 세 가지 주요 색상 포맷을
+          실시간으로相互変換하고 색상 미리보기를 통해 결과를 즉시 확인할 수 있습니다.
+        </p>
+        <p>
+          웹사이트 디자인 시 브랜드 색상을 정확하게 설정하거나, 디자인 작업 중 일관된 색상 팔레트를 관리할 때,
+          또는 색상 코드를 모르는 상황에서 원하는 색상을 탐색할 때 유용하게 활용할 수 있습니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">색상 코드 변환 공식</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2">
-            <p><strong>HEX to RGB:</strong></p>
+          <div className="p-4 bg-muted rounded-lg space-y-2">
+            <p className="font-semibold text-primary">HEX to RGB 변환</p>
+            <p className="text-xs text-muted-foreground">16진수 2자리를 10진수로 변환합니다.</p>
             <code className="text-sm">R = parseInt(hex.substring(1,3), 16)</code><br/>
             <code className="text-sm">G = parseInt(hex.substring(3,5), 16)</code><br/>
             <code className="text-sm">B = parseInt(hex.substring(5,7), 16)</code>
           </div>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2 mt-4">
-            <p><strong>RGB to HSL:</strong></p>
-            <code className="text-sm">H = acos(-1/3 * ((R-G) + (R-B)) / sqrt((R-G)² + (R-B)(G-B)))</code><br/>
-            <code className="text-sm">S = max - min / max + min (L > 0.5)</code><br/>
-            <code className="text-sm">L = (max + min) / 2</code>
+          <div className="p-4 bg-muted rounded-lg space-y-2 mt-4">
+            <p className="font-semibold text-primary">RGB to HSL 변환</p>
+            <p className="text-xs text-muted-foreground">RGB 값을 기반으로 색상(H), 채도(S), 명도(L)를 계산합니다.</p>
+            <code className="text-sm">L = (max(R,G,B) + min(R,G,B)) / 2</code><br/>
+            <code className="text-sm">S = (max - min) / (L > 0.5 ? 2 - max - min : max + min)</code><br/>
+            <code className="text-sm">H = 색상에 따른 각도 계산 (0~360도)</code>
           </div>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">색상 코드 활용 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>HEX 코드:</strong> 웹 개발에서 가장 많이 사용되는 형식 (#RRGGBB)</li>
-            <li><strong>RGB:</strong> 화면 표시에 적합하며, 투명도를 추가할 때 RGBA 사용</li>
-            <li><strong>HSL:</strong> 색상 조정 시 직관적이며, 밝기와 채도를 쉽게 변경 가능</li>
-            <li><strong>접근성:</strong> 텍스트와 배경색의 대비율을 4.5:1 이상 유지하세요</li>
-            <li><strong>일관성:</strong> 프로젝트 전체에서 사용할 색상을 CSS 변수로 관리하면 유지보수가 편리합니다</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">색상 코드 활용 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>HEX 코드:</strong> 웹 개발에서 가장 많이 사용되는 형식(#RRGGBB)으로, CSS에서 직접 입력할 수 있습니다.</li>
+            <li><strong>RGB:</strong> 화면 표시에 적합하며, 투명도를 추가할 때 RGBA를 사용합니다.</li>
+            <li><strong>HSL:</strong> 색상 조정 시 직관적이며, 밝기와 채도를 쉽게 변경 가능하여 디자인 작업에 편리합니다.</li>
+            <li><strong>접근성(WCAG):</strong> 텍스트와 배경색의 대비율을 4.5:1 이상 유지하면 시각장애인도 읽기 쉬운 웹사이트를 만들 수 있습니다.</li>
+            <li><strong>CSS 변수 활용:</strong> 프로젝트 전체에서 사용할 색상을 CSS 변수로 관리하면 유지보수가 편리합니다.</li>
+            <li><strong>팔레트 생성:</strong> 메인 색상을 기반으로 유사색, 보색 등을 조합하면 조화로운 색상 구성이 가능합니다.</li>
+            <li><strong>다크모드 고려:</strong> 라이트모드와 다크모드 모두에서 잘 보이는 색상을 선택하는 것이 좋습니다.</li>
           </ul>
         </div>
       </div>

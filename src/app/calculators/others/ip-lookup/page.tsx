@@ -185,65 +185,87 @@ const IPLookup: React.FC = () => {
     </div>
   );
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
-        <p className="text-lg">IP 주소 조회 도구는 현재 인터넷에 연결된 기기의 공인 IP 주소와 관련 지리적 정보를 실시간으로 표시합니다.</p>
-        <p>IP 주소는 인터넷에서 기기를 식별하는 고유한 번호이며, ISP(인터넷 서비스 제공업체)가 할당합니다. 이 도구를 통해 자신의 IP 주소, 위치(도시, 국가), ISP 정보 등을 확인할 수 있습니다.</p>
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="font-semibold text-md mb-2">표시 정보:</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>공인 IP:</strong> 인터넷에서 보이는 내 기기의 주소</li>
-            <li><strong>지리적 위치:</strong> 도시, 지역, 국가 정보</li>
-            <li><strong>ISP:</strong> 인터넷 서비스 제공업체 정보</li>
-            <li><strong>좌표:</strong> 대략적인 위도/경도</li>
-            <li><strong>시간대:</strong> 기기가 속한 시간대</li>
-          </ul>
-        </div>
+        <p>
+          <strong>IP 주소 조회</strong> 도구는 현재 인터넷에 연결된 기기의 공인 IP 주소와 관련 지리 정보를 실시간으로 표시합니다. IP 주소는 인터넷에서 기기를 식별하는 고유 번호로, ISP(인터넷 서비스 제공업체)가 할당하며 이 도구로 IP·위치·ISP 등을 한눈에 확인할 수 있습니다.
+        </p>
+        <p>
+          원격 접속 설정, 방화벽 허용 목록 등록, 네트워크 문제 진단, 지역 제한 콘텐츠 접근 여부 확인 등에 활용됩니다. 또한 내 공인 IP가 예상과 다른지, 의심스러운 접속이 없는지 보안 점검에도 쓰입니다.
+        </p>
+        <p>
+          네트워크 관리자와 보안 담당자에게는 기본 진단 도구로, 일반 사용자에게는 내 접속 정보를 확인하는 도구로 유용합니다. 외부 지리위치 정보(IP 기반)는 대략적인 위치만 알려주며 정확한 주소는 아닙니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          이 도구는 외부 API(ipinfo.io, ipify)를 순차 호출해 정보를 가져옵니다. 표시되는 위치는 IP 할당 기준이므로 실제 물리 위치와 차이가 있을 수 있으며, 정밀 위치는 제공되지 않습니다.
+        </p>
       </div>
     ),
     calculationFormula: (
       <div className="space-y-6">
         <div>
-          <h3 className="font-semibold text-xl mb-2 border-b-2 border-gray-200 pb-2">IP 조회 방식</h3>
-          <p className="mb-4">이 도구는 외부 API를 활용하여 IP 정보를 가져옵니다. 두 가지 API를 순차적으로 시도합니다.</p>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">조회 방식</h4>
+          <p>외부 API를 통해 접속 IP를 파악하고 지리 정보를 조회합니다. 두 API를 순차로 시도합니다.</p>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">1. ipinfo.io API (1차 시도)</h3>
-          <p className="mb-2">ipinfo.io는 IP 기반 지리적 위치 정보를 제공하는 서비스입니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">GET https://ipinfo.io/json?token=demo</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">1차 시도: ipinfo.io</h4>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-sm">GET https://ipinfo.io/json?token=demo</p>
           </div>
-          <p className="mt-2">응답 예시: IP, 도시, 지역, 국가, 좌표, ISP, 시간대 등 상세 정보를 제공합니다.</p>
+          <p className="text-sm text-muted-foreground">IP, 도시, 지역, 국가, 좌표, ISP, 시간대 등 상세 정보를 제공합니다.</p>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">2. ipify API (대체)</h3>
-          <p className="mb-2">ipinfo.io 실패 시, ipify를 사용하여 최소한의 IP 정보를 가져옵니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">GET https://api.ipify.org?format=json</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">대체: ipify</h4>
+          <div className="my-2 p-3 bg-muted rounded-lg">
+            <p className="font-mono text-sm text-center">GET https://api.ipify.org?format=json</p>
           </div>
+          <p>1차 실패 시 최소한의 IP 정보를 가져와 표시합니다.</p>
         </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-6">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">IP 주소 보안 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>VPN 사용:</strong> IP 주소를 숨기기 위해 VPN 서비스를 사용할 수 있습니다.</li>
-            <li><strong>프라이버시:</strong> IP 주소는 대략적인 위치를 노출할 수 있으므로 주의가 필요합니다.</li>
-            <li><strong>공유기 설정:</strong> 공유기 관리 페이지에서 외부 IP를 확인할 수도 있습니다.</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">VPN 활용</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>IP를 숨기려면 VPN 서비스를 사용하세요.</li>
+            <li>VPN 연결 시 표시 IP가 달라집니다.</li>
           </ul>
         </div>
-        <div className="p-4 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20">
-          <h3 className="font-semibold text-lg mb-2">활용 사례</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>원격 접속 설정:</strong> 방화벽 설정 시自分の IP 확인</li>
-            <li><strong>네트워크 문제 해결:</strong> 연결 문제 진단 시 IP 확인</li>
-            <li><strong>콘텐츠 접근:</strong> 지역 제한 콘텐츠 접근 가능 여부 확인</li>
-            <li><strong>보안 감사:</strong> 예상치 못한 IP에서의 접속 확인</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">프라이버시</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>공인 IP는 대략적인 위치를 노출할 수 있습니다.</li>
+            <li>공유기 외부 IP는 관리 페이지에서도 확인 가능합니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">원격 접속 설정</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>방화벽 허용 목록에 내 IP를 등록하세요.</li>
+            <li>고정 IP가 아니면 주기적으로 갱신하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">네트워크 진단</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>연결 문제 발생 시 내 IP와 ISP를 먼저 확인하세요.</li>
+            <li>예상과 다르면 공유기 재시작을 고려하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">지역 제한 확인</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>콘텐츠 접근 가능 여부를 IP 기반으로 판단합니다.</li>
+            <li>국가 정보는 ISP 할당 기준임을 유의하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">보안 감사</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>의심스러운 접속은 IP로 출처를 추적하세요.</li>
+            <li>로그인 알림의 IP와 비교해 보세요.</li>
           </ul>
         </div>
       </div>

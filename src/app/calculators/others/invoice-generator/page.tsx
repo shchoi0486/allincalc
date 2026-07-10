@@ -309,74 +309,89 @@ const InvoiceGenerator: React.FC = () => {
     </div>
   );
 
-  const infoSection = {
+    const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
-        <p className="text-lg">인보이스 생성기는 전문적인 청구서(인보이스)를 손쉽게 작성하고 인쇄할 수 있는 도구입니다.</p>
-        <p>회사 정보, 고객 정보, 품목 목록, 세율 등을 입력하면 소계, 부가세, 합계를 자동 계산하여 깔끔한 인보이스를 생성합니다. 인쇄 버튼을 통해 PDF 저장이나 직접 인쇄가 가능합니다.</p>
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="font-semibold text-md mb-2">주요 기능:</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li><strong>자동 계산:</strong> 소계, 부가세, 합계를 자동 계산</li>
-            <li><strong>품목 관리:</strong> 품목 추가/삭제 및 수정 기능</li>
-            <li><strong>인쇄 지원:</strong> 인쇄 친화적 레이아웃으로 출력 가능</li>
-            <li><strong>커스터마이징:</strong> 세율, 비고 등 자유롭게 수정 가능</li>
-          </ul>
-        </div>
+        <p>
+          <strong>인보이스 생성기</strong>는 전문적인 청구서(인보이스)를 손쉽게 작성하고 인쇄할 수 있는 도구입니다. 회사 정보, 고객 정보, 품목 목록, 세율 등을 입력하면 소계·부가세·합계를 자동으로 계산하여 깔끔한 인보이스를 만들어 줍니다.
+        </p>
+        <p>
+          프리랜서, 소상공인, 스타트업, 영업 담당자에게 매출 관리와 고객 청구는 필수 업무입니다. 이 도구는 엑셀이나 회계 소프트웨어 없이도 브라우저에서 바로 청구서를 발급하고 인쇄·PDF 저장할 수 있어 업무 효율을 높입니다.
+        </p>
+        <p>
+          품목을 자유롭게 추가·삭제하고 수량과 단가를 관리할 수 있으며, 비고와 인보이스 번호도 직접 지정할 수 있습니다. 발행 내역을 정리해 거래 명세를 투명하게 관리하는 데 유용합니다.
+        </p>
+        <p className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          한국의 표준 부가세율은 10%이며, 면세 품목은 0%로 설정합니다. 세금계산서가 필요한 거래는 법적 요건(사업자등록번호, 상호, 공급가액과 세액 구분 등)을 별도로 확인하세요. 이 도구는 참고용 양식입니다.
+        </p>
       </div>
     ),
     calculationFormula: (
       <div className="space-y-6">
         <div>
-          <h3 className="font-semibold text-xl mb-2 border-b-2 border-gray-200 pb-2">인보이스 계산 공식</h3>
-          <p className="mb-4">인보이스의 금액은 다음 공식에 따라 계산됩니다.</p>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-lg mb-2">1. 품목별 금액</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">품목 금액 = 수량 × 단가</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">품목별 금액</h4>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-lg font-bold">품목 금액 = 수량 × 단가</p>
           </div>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">2. 소계 (Subtotal)</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">소계 = Σ (각 품목의 수량 × 단가)</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">소계 (Subtotal)</h4>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center">
+            <p className="font-mono text-lg font-bold">소계 = Σ (수량 × 단가)</p>
           </div>
         </div>
-
         <div>
-          <h3 className="font-semibold text-lg mb-2">3. 부가세 (Tax)</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">부가세 = 소계 × (세율 ÷ 100)</code>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-border pl-3">부가세와 합계</h4>
+          <div className="my-4 p-4 bg-muted rounded-lg text-center space-y-1">
+            <p className="font-mono text-sm">부가세 = 소계 × (세율 ÷ 100)</p>
+            <p className="font-mono text-sm">합계 = 소계 + 부가세</p>
           </div>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-lg mb-2">4. 합계 (Total)</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">합계 = 소계 + 부가세</code>
-          </div>
+          <p className="text-sm text-muted-foreground">예: 소계 100,000원, 세율 10% → 부가세 10,000원, 합계 110,000원</p>
         </div>
       </div>
     ),
     usefulTips: (
       <div className="space-y-6">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">인보이스 작성 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>품목 설명:</strong> 품목명은 구체적으로 작성하여 고객이 이해하기 쉽도록 합니다.</li>
-            <li><strong>세율 확인:</strong> 한국의 표준 부가세율은 10%이며, 면세 품목의 경우 0%를 설정합니다.</li>
-            <li><strong>인보이스 번호:</strong> 고유한 번호를 사용하여 추후 관리 용이성을 높입니다.</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">품목 작성</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>품목명은 구체적으로 작성해 고객이 이해하기 쉽게 하세요.</li>
+            <li>수량과 단가를 정확히 입력하면 합계가 자동 계산됩니다.</li>
           </ul>
         </div>
-        <div className="p-4 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20">
-          <h3 className="font-semibold text-lg mb-2">법적 필수 사항</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>사업자등록번호, 상호, 대표자명 등의 기재가 필요할 수 있습니다.</li>
-            <li>세금계산서 발행 시 법적 요건을 반드시 확인하세요.</li>
-            <li>품목별 공급가액과 세액을 구분하여 기재하는 것이 일반적입니다.</li>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">세율 설정</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>표준 세율은 10%, 면세 품목은 0%입니다.</li>
+            <li>간이과세자 여부를 먼저 확인하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">인보이스 번호</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>고유 번호를 부여해 추적과 대조를 쉽게 하세요.</li>
+            <li>연도·월별 번호 체계를 정해 두면 편리합니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">인쇄와 보관</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>인쇄 친화 레이아웃으로 PDF 저장이 가능합니다.</li>
+            <li>발행 복사본은 거래 내역과 함께 보관하세요.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">법적 요건</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>세금계산서 발행 시 사업자등록번호 등을 기재하세요.</li>
+            <li>공급가액과 세액을 구분 기재하는 것이 일반적입니다.</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-bold text-lg mb-2">비고 활용</h4>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>결제 기한·계좌·환불 정책 등을 비고에 적으세요.</li>
+            <li>약관을 간략히 적어 분쟁을 예방하세요.</li>
           </ul>
         </div>
       </div>

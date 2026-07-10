@@ -194,36 +194,60 @@ const PasswordGenerator: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">비밀번호 생성기는 강력하고 안전한 랜덤 비밀번호를 즉시 생성해주는 필수 보안 도구입니다.</p>
-        <p>대문자, 소문자, 숫자, 특수문자 조합과 길이 설정을 통해 해킹이나 무차별 대입 공격으로부터 안전한 비밀번호를 손쉽게 만들 수 있습니다. 브라우저의 Web Crypto API를 사용하여 cryptographically secure한 랜덤 값을 생성합니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          강력하고 안전한 랜덤 비밀번호를 즉시 생성하세요!
+        </p>
+        <p>
+          비밀번호 생성기는 대문자, 소문자, 숫자, 특수문자 조합과 길이 설정을 통해
+          해킹이나 무차별 대입 공격으로부터 안전한 비밀번호를 손쉽게 만들어주는 필수 보안 도구입니다.
+        </p>
+        <p>
+          브라우저의 Web Crypto API를 사용하여 cryptographically secure한 랜덤 값을 생성하므로
+          예측이 불가능한 고품질의 비밀번호를 제공합니다. 비밀번호 강도를 실시간으로 분석하여
+          현재 생성된 비밀번호의 보안 수준을直观적으로 확인할 수 있습니다.
+        </p>
+        <p>
+          웹사이트, 이메일, 은행 업무 등 온라인에서 여러 계정을 관리하는 모든 사용자에게
+          매번 다른 강력한 비밀번호를 생성하여 보안을 강화하는 데 유용합니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">랜덤 비밀번호 생성 원리</h3>
-          <p className="mb-2">사용자가 선택한 문자 집합에서 지정된 길이만큼 무작위로 문자를 선택하여 비밀번호를 생성합니다.</p>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <p className="mb-2 text-muted-foreground">
+            사용자가 선택한 문자 집합에서 지정된 길이만큼 무작위로 문자를 선택하여 비밀번호를 생성합니다.
+          </p>
+          <div className="p-4 bg-muted rounded-lg">
             <code className="text-sm">crypto.getRandomValues(new Uint32Array(length))</code>
           </div>
-          <p className="mt-2">Web Crypto API의 <code>crypto.getRandomValues()</code>를 사용하여 cryptographically secure한 난수를 생성합니다. 이는 일반적인 Math.random()보다 훨씬 더 안전합니다.</p>
+          <p className="mt-2 text-muted-foreground">
+            Web Crypto API의 crypto.getRandomValues()를 사용하여 cryptographically secure한 난수를 생성합니다.
+            이는 일반적인 Math.random()보다 훨씬 더 안전하여 보안이 중요한 환경에 적합합니다.
+          </p>
         </div>
         <div>
           <h3 className="font-semibold text-lg mb-2">비밀번호 강도 계산</h3>
-          <p>길이, 문자 유형 수 등을 종합적으로 분석하여 강도를 판정합니다.</p>
+          <p className="text-muted-foreground">
+            비밀번호 길이, 문자 유형 수(대문자, 소문자, 숫자, 기호), 조합 다양성을 종합적으로 분석하여
+            '약함', '보통', '강함', '매우 강함' 4단계로 판정합니다.
+          </p>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20">
-          <h3 className="font-semibold text-lg mb-2">비밀번호 보안 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>최소 12자 이상</strong> 사용하세요</li>
-            <li><strong>대문자, 소문자, 숫자, 특수문자</strong>를 모두 조합하세요</li>
-            <li><strong>개인정보</strong>(생년월일, 이름 등)를 포함하지 마세요</li>
-            <li><strong>각 사이트마다 다른 비밀번호</strong>를 사용하세요</li>
-            <li><strong>비밀번호 관리자</strong>를 활용하는 것이 가장 안전합니다</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">비밀번호 보안 핵심 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>최소 12자 이상 사용하세요:</strong> 8자 이하의 비밀번호는 무차별 대입 공격에 취약합니다.</li>
+            <li><strong>대문자, 소문자, 숫자, 특수문자를 모두 조합하세요:</strong> 문자 유형이 많을수록 브루트포스 공격 시간이 기하급수적으로 증가합니다.</li>
+            <li><strong>개인정보를 포함하지 마세요:</strong> 생년월일, 이름, 전화번호 등 공개된 정보는 비밀번호에 절대 넣지 마세요.</li>
+            <li><strong>각 사이트마다 다른 비밀번호를 사용하세요:</strong> 하나가 유출되더라도 다른 계정까지 연쇄 피해를 막을 수 있습니다.</li>
+            <li><strong>비밀번호 관리자를 활용하세요:</strong> 여러 비밀번호를 안전하게 관리하고 자동 입력해 주는 비밀번호 관리자가 가장 안전합니다.</li>
+            <li><strong>2단계 인증(2FA)을 활성화하세요:</strong> 비밀번호 외에 추가 인증 수단을 설정하면 보안이 크게 강화됩니다.</li>
+            <li><strong>정기적으로 변경하세요:</strong> 주요 계정의 비밀번호는 3~6개월마다 변경하는 것이 좋습니다.</li>
           </ul>
         </div>
       </div>

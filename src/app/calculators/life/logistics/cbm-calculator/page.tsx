@@ -326,137 +326,103 @@ const CBMCalculator: NextPage = () => {
     </>
   );
 
-  const containerSpecifications = (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">타입</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">길이 (m)</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">너비 (m)</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">높이 (m)</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">내부 부피 (m³)</th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">최대 중량 (kg)</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {Object.entries(CONTAINER_SPECS).map(([type, spec]) => (
-            <tr key={type}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{type}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.interiorLength}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.interiorWidth}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.interiorHeight}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.maxVolumeM3}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.maxWeightKg}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-
   const infoSection = {
     calculatorDescription: (
       <div className="space-y-4">
-        <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+        <p className="text-lg font-semibold text-foreground">
           글로벌 무역과 물류의 핵심, CBM을 정복하여 운송 비용을 최적화하세요!
         </p>
         <p>
-          CBM(Cubic Meter, 입방미터)은 국제 무역 및 물류 현장에서 사용되는 가장 기본적인 부피 단위입니다. 가로, 세로, 높이가 각각 1미터인 정육면체의 부피를 1 CBM이라고 하며, 이는 화물의 공간 점유도를 나타내는 '공간의 언어'와 같습니다.
+          CBM(Cubic Meter, 입방미터)은 국제 무역 및 물류 현장에서 사용되는 가장 기본적인 부피 단위입니다.
+          가로, 세로, 높이가 각각 1미터인 정육면체의 부피를 1 CBM이라고 하며,
+          이는 화물의 공간 점유도를 나타내는 '공간의 언어'와 같습니다.
         </p>
         <p>
-          정확한 CBM 계산은 단순히 공간을 예측하는 것을 넘어, 운송 비용 산정, 컨테이너 공간 활용 계획, 효율적인 창고 관리, 그리고 원활한 통관 절차에 이르기까지 물류의 모든 과정에 직접적인 영향을 미칩니다. 특히 해상 및 항공 운송료는 화물의 실제 중량(Actual Weight)과 부피 중량(Volumetric Weight) 중 더 큰 값을 기준으로 책정되는 경우가 많아, CBM을 정확히 아는 것이 곧 비용 절감의 첫걸음입니다.
+          정확한 CBM 계산은 운송 비용 산정, 컨테이너 공간 활용 계획, 효율적인 창고 관리,
+          그리고 원활한 통관 절차에 이르기까지 물류의 모든 과정에 직접적인 영향을 미칩니다.
+          특히 해상 및 항공 운송료는 화물의 실제 중량과 부피 중량 중 더 큰 값을 기준으로 책정되는 경우가 많아
+          CBM을 정확히 아는 것이 곧 비용 절감의 첫걸음입니다.
         </p>
         <p>
-          본 CBM 계산기는 수출입 기업 담당자, 포워더, 창고 관리자, 해외 구매대행 사업자, 그리고 해외 이사나 유학을 준비하는 개인까지, 물류와 관련된 모든 분들이 복잡한 계산 과정 없이 신속하고 정확하게 화물의 부피와 필요 컨테이너 수량을 예측할 수 있도록 설계되었습니다.
+          본 CBM 계산기는 수출입 기업 담당자, 포워더, 창고 관리자, 해외 구매대행 사업자,
+          그리고 해외 이사나 유학을 준비하는 개인까지 물류와 관련된 모든 분들이
+          복잡한 계산 없이 신속하고 정확하게 화물의 부피와 필요 컨테이너 수량을 예측할 수 있도록 설계되었습니다.
         </p>
       </div>
     ),
     calculationFormula: (
-      <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-        <h3 className="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3">CBM 계산, 이렇게 간단합니다!</h3>
+      <div className="p-4 bg-muted rounded-lg">
+        <h3 className="text-xl font-bold mb-4 border-l-4 border-primary pl-3">CBM 계산, 이렇게 간단합니다!</h3>
         <div className="space-y-3 text-sm">
-          <p>CBM 계산은 간단한 곱셈으로 이루어지지만, 각 요소의 의미를 정확히 아는 것이 중요합니다.</p>
-          <div className="p-3 bg-white dark:bg-gray-700 rounded-md shadow-sm">
-            <p className="font-semibold text-blue-600 dark:text-blue-400">1. 개별 화물 부피 (CBM) 계산</p>
+          <div className="p-3 bg-card rounded-md shadow-sm border border-border">
+            <p className="font-semibold text-primary">1. 개별 화물 부피 (CBM) 계산</p>
             <code className="block bg-muted p-2 rounded-md my-2 text-xs">
               개당 부피 (m³) = 가로(m) × 세로(m) × 높이(m)
             </code>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              * 저희 계산기는 cm, inch, ft 등 다양한 단위로 입력해도 자동으로 미터(m)로 변환하여 계산해 주므로 단위 변환의 번거로움이 없습니다.
+            <p className="text-xs text-muted-foreground">
+              계산기는 cm, inch, ft 등 다양한 단위로 입력해도 자동으로 미터(m)로 변환하여 계산합니다.
             </p>
           </div>
-          <div className="p-3 bg-white dark:bg-gray-700 rounded-md shadow-sm">
-            <p className="font-semibold text-blue-600 dark:text-blue-400">2. 총 부피 및 총 중량 계산</p>
+          <div className="p-3 bg-card rounded-md shadow-sm border border-border">
+            <p className="font-semibold text-primary">2. 총 부피 및 총 중량 계산</p>
             <code className="block bg-muted p-2 rounded-md my-2 text-xs">
               총 부피 (CBM) = 개당 부피 (m³) × 총 수량
             </code>
             <code className="block bg-muted p-2 rounded-md my-2 text-xs">
               총 중량 (kg) = 개당 중량 (kg) × 총 수량
             </code>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              * 총 부피는 컨테이너 종류를 선택하는 기준이 되며, 총 중량은 선박이나 항공기의 중량 제한(Weight Limit)을 초과하지 않는지 확인하는 데 필수적입니다.
+            <p className="text-xs text-muted-foreground">
+              총 부피는 컨테이너 종류를 선택하는 기준이 되며, 총 중량은 선박이나 항공기의 중량 제한 초과 여부를 확인하는 데 필수적입니다.
+            </p>
+          </div>
+          <div className="p-3 bg-card rounded-md shadow-sm border border-border">
+            <p className="font-semibold text-primary">3. 컨테이너 적재 효율</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              물류 업계에서는 컨테이너 실제 사용 가능 공간을 총 부피의 약 85%로 간주합니다.
+              데드 스페이스, 컨테이너 구조, 화물 형태 등 현실적 요인이 반영된 수치입니다.
             </p>
           </div>
         </div>
       </div>
     ),
-    containerLoadingExplanation: (
-      <div className="mt-6">
-        <h3 className="text-xl font-bold mb-4 border-l-4 border-green-500 pl-3">컨테이너, 공간의 마법: 적재 효율성의 모든 것</h3>
-        <div className="space-y-4 text-sm">
-          <p>
-            컨테이너의 제원상 내부 부피가 33 CBM이라고 해서 1 CBM 박스 33개를 항상 실을 수 있는 것은 아닙니다. 실제 적재량은 '적재 효율(Load Factor)'에 따라 달라지며, 여기에는 여러 현실적인 요인이 작용합니다.
-          </p>
-          <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
-            <p className="font-semibold">이론적 적재량 vs 현실적 적재량</p>
-            <code className="block bg-muted p-2 rounded-md my-2 text-xs">
-              현실적 적재량 ≈ 컨테이너 내부 용적 × 85% (적재 효율)
-            </code>
-            <p className="text-xs mt-2">
-              물류 업계에서는 일반적으로 컨테이너 실제 사용 가능 공간을 총 부피의 <strong>약 85%</strong>로 간주합니다. 그 이유는 다음과 같습니다.
-            </p>
-            <ul className="list-disc list-inside text-xs space-y-1 mt-2 text-gray-600 dark:text-gray-400">
-              <li><strong>데드 스페이스 (Dead Space):</strong> 화물과 화물 사이, 화물과 컨테이너 벽/천장 사이에 생기는 빈 공간</li>
-              <li><strong>컨테이너 구조:</strong> 컨테이너 내부의 굴곡, 문턱 등 적재를 방해하는 구조물</li>
-              <li><strong>화물 형태 및 포장:</strong> 규격화되지 않은 화물이나 파손되기 쉬운 화물은 더 많은 여유 공간이 필요</li>
-              <li><strong>작업 공간:</strong> 안전하고 효율적인 적재 및 하역 작업을 위한 최소한의 공간</li>
-            </ul>
-          </div>
-          <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
-            <p className="font-semibold">2단 적재 (Double Stack) 고려사항</p>
-            <p className="text-xs mt-2">
-              화물 위에 다른 화물을 쌓는 '2단 적재'는 공간 효율을 극대화할 수 있지만, 모든 화물에 적용 가능한 것은 아닙니다. 하단에 놓일 화물의 포장이 상단 화물의 무게를 견딜 수 있을 만큼 충분히 견고한지 반드시 확인해야 합니다. 파손 시 손실이 큰 고가품이나 압력에 약한 제품은 2단 적재를 피하는 것이 좋습니다.
-            </p>
-          </div>
-        </div>
-      </div>
-    ),
-    containerSpecifications: containerSpecifications,
     usefulTips: (
       <div className="mt-6">
-        <h3 className="text-xl font-bold mb-4 border-l-4 border-yellow-500 pl-3">💡 물류 전문가를 위한 CBM 활용 꿀팁</h3>
+        <h3 className="text-xl font-bold mb-4 border-l-4 border-primary pl-3">💡 물류 전문가를 위한 CBM 활용 꿀팁</h3>
         <div className="space-y-4">
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm">✈️ 항공 운송의 핵심, 부피 중량 (Dimensional Weight)을 이해하세요.</p>
-            <p className="text-xs mt-1">
-              항공 운송료는 실제 중량과 부피 중량 중 더 무거운 쪽을 기준으로 책정됩니다. 부피 중량은 화물이 차지하는 공간을 무게로 환산한 것으로, 운송사마다 다르지만 보통 <code className="text-xs bg-muted p-1 rounded">가로(cm)×세로(cm)×높이(cm) / 5000</code> 공식으로 계산됩니다. 솜, 의류, 플라스틱 제품처럼 가볍지만 부피가 큰 화물은 부피 중량 때문에 운송비가 예상보다 훨씬 많이 나올 수 있으니 반드시 확인해야 합니다.
+          <div className="p-3 border border-border rounded-lg">
+            <p className="font-semibold text-sm">항공 운송의 핵심, 부피 중량을 이해하세요</p>
+            <p className="text-xs mt-1 text-muted-foreground">
+              항공 운송료는 실제 중량과 부피 중량 중 더 무거운 쪽을 기준으로 책정됩니다.
+              부피 중량은 가로(cm)×세로(cm)×높이(cm) / 5000 공식으로 계산됩니다.
+              가볍지만 부피가 큰 화물(솜, 의류, 플라스틱 등)은 부피 중량 때문에 운송비가 높아질 수 있으니 반드시 확인하세요.
             </p>
           </div>
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm">📦 LCL vs FCL, 어떤 것이 유리할까요?</p>
-            <p className="text-xs mt-1">
-              - <strong>LCL (Less than Container Load):</strong> 화물의 양이 컨테이너 하나를 다 채우지 못할 때 다른 화주들의 화물과 함께 싣는 방식입니다. 운송료가 CBM 단위로 계산되므로, CBM을 0.1이라도 줄이는 것이 비용 절감에 직접적인 영향을 줍니다.
-              <br/>
-              - <strong>FCL (Full Container Load):</strong> 컨테이너 하나를 통째로 빌리는 방식입니다. 일반적으로 총 화물량이 15~20 CBM 이상일 경우, LCL보다 FCL이 더 경제적일 수 있습니다. CBM 계산 후 FCL 비용과 비교하여 더 유리한 쪽을 선택하세요.
+          <div className="p-3 border border-border rounded-lg">
+            <p className="font-semibold text-sm">LCL vs FCL, 어떤 것이 유리할까요?</p>
+            <p className="text-xs mt-1 text-muted-foreground">
+              LCL(소량 화물)은 CBM 단위로 운송료가 계산되므로 CBM을 줄이는 것이 비용 절감에 직접적입니다.
+              FCL(전체 컨테이너)은 총 화물량이 15~20CBM 이상일 경우 일반적으로 더 경제적입니다.
             </p>
           </div>
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm">📏 정확한 측정과 포장 최적화</p>
-            <p className="text-xs mt-1">
-              - <strong>비정형 화물:</strong> 원통형이나 모양이 불규칙한 화물은 화물의 가장 긴 부분을 기준으로 가상의 직육면체를 만들어 CBM을 계산합니다.
-              <br/>
-              - <strong>포장 다이어트:</strong> 제품을 안전하게 보호하면서도 불필요한 포장재를 줄여 CBM을 최소화하는 것이 중요합니다. 맞춤형 박스를 제작하거나 진공 포장을 활용하는 것도 좋은 방법입니다.
+          <div className="p-3 border border-border rounded-lg">
+            <p className="font-semibold text-sm">정확한 측정과 포장 최적화</p>
+            <p className="text-xs mt-1 text-muted-foreground">
+              비정형 화물은 가장 긴 부분을 기준으로 가상의 직육면체를 만들어 CBM을 계산합니다.
+              불필요한 포장재를 줄이거나 맞춤형 박스를 제작하면 CBM을 최소화할 수 있습니다.
+            </p>
+          </div>
+          <div className="p-3 border border-border rounded-lg">
+            <p className="font-semibold text-sm">컨테이너 2단 적재 고려사항</p>
+            <p className="text-xs mt-1 text-muted-foreground">
+              화물 위에 다른 화물을 쌓으면 공간 효율을 높일 수 있지만,
+              하단 화물의 포장이 상단 무게를 견딜 수 있는지 반드시 확인해야 합니다.
+            </p>
+          </div>
+          <div className="p-3 border border-border rounded-lg">
+            <p className="font-semibold text-sm">운송사별 부피 중량 환산율 비교</p>
+            <p className="text-xs mt-1 text-muted-foreground">
+              운송사마다 부피 중량 환산율(division factor)이 다를 수 있으므로,
+              여러 운송사의 견적을 비교하여 가장 유리한 조건을 선택하세요.
             </p>
           </div>
         </div>

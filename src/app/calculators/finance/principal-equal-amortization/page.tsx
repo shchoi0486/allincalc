@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -228,40 +228,40 @@ export default function PrincipalEqualAmortizationCalculator() {
       <div className="text-base leading-relaxed space-y-6">
         <p className="font-semibold">원금 균등 분할 상환의 계산 구조는 매우 직관적입니다. 매월 갚는 원금은 고정되어 있고, 이자만 변동됩니다.</p>
         
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-blue-500">
-          <h3 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">1. 월 상환 원금 (고정)</h3>
-          <p className="font-mono p-3 bg-white dark:bg-gray-900 rounded-md text-sm shadow-sm">
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">1. 월 상환 원금 (고정)</h3>
+          <p className="font-mono p-3 bg-card rounded-md text-sm shadow-sm">
             월 상환 원금 = 총 대출 원금 / 상환 개월 수
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">예: 1억 원을 30년(360개월)간 빌렸다면, 매월 갚는 원금은 약 277,777원으로 동일합니다.</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-2">예: 1억 원을 30년(360개월)간 빌렸다면, 매월 갚는 원금은 약 277,777원으로 동일합니다.</p>
         </div>
 
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-green-500">
-          <h3 className="text-lg font-bold text-green-600 dark:text-green-400 mb-3">2. 월 상환 이자 (변동)</h3>
-          <p className="font-mono p-3 bg-white dark:bg-gray-900 rounded-md text-sm shadow-sm">
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">2. 월 상환 이자 (변동)</h3>
+          <p className="font-mono p-3 bg-card rounded-md text-sm shadow-sm">
             월 상환 이자 = 전월 대출 잔액 × 월 이자율 (연이율 / 12)
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">대출 잔액이 매달 줄어들기 때문에, 이자 금액도 매달 감소합니다.</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-2">대출 잔액이 매달 줄어들기 때문에, 이자 금액도 매달 감소합니다.</p>
         </div>
 
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-l-4 border-yellow-500">
-          <h3 className="text-lg font-bold text-yellow-600 dark:text-yellow-400 mb-3">3. 월 총 상환금 (변동)</h3>
-          <p className="font-mono p-3 bg-white dark:bg-gray-900 rounded-md text-sm shadow-sm">
+        <div className="p-4 bg-muted rounded-lg border-l-4 border-primary">
+          <h3 className="text-lg font-bold text-primary mb-3">3. 월 총 상환금 (변동)</h3>
+          <p className="font-mono p-3 bg-card rounded-md text-sm shadow-sm">
             월 총 상환금 = 월 상환 원금(고정) + 월 상환 이자(변동)
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">결과적으로 월 총 상환금은 대출 초기일수록 가장 높고, 회차가 지날수록 점차 줄어드는 계단식 형태를 띱니다.</p>
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-2">결과적으로 월 총 상환금은 대출 초기일수록 가장 높고, 회차가 지날수록 점차 줄어드는 계단식 형태를 띱니다.</p>
         </div>
       </div>
     ),
     usefulTips: (
       <div className="text-base leading-relaxed space-y-8">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-10 mb-4">💡 이자를 가장 아끼는 상환법, 2025년 누가 선택해야 할까?</h2>
+        <h2 className="text-2xl font-bold text-foreground mt-10 mb-4">💡 이자를 가장 아끼는 상환법, 2025년 누가 선택해야 할까?</h2>
         
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-red-500">
-          <h3 className="font-bold text-lg text-red-600 dark:text-red-400">1. 원금 균등 vs 원리금 균등: 최종 승자는?</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">1. 원금 균등 vs 원리금 균등: 최종 승자는?</h3>
           <p className="mt-2">정답은 없습니다. 당신의 <strong>자금 상황과 미래 계획</strong>에 따라 최적의 선택이 달라집니다.</p>
           <div className="grid md:grid-cols-2 gap-6 mt-4 text-sm">
-            <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-900/20">
+            <div className="p-4 border rounded-lg bg-muted">
               <h4 className="font-bold text-center">원금 균등 상환 (본 계산기)</h4>
               <ul className="mt-3 space-y-2 list-disc list-inside">
                 <li>🏆 <strong>총이자 최소화:</strong> 가장 큰 장점. 원금 감소 속도가 빨라 이자 부담이 가장 적습니다.</li>
@@ -292,8 +292,8 @@ export default function PrincipalEqualAmortizationCalculator() {
           </div>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-purple-500">
-          <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400">2. DSR 계산 시 원금 균등 방식의 유불리</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">2. DSR 계산 시 원금 균등 방식의 유불리</h3>
           <p className="mt-2">DSR(총부채원리금상환비율)은 연 소득에서 모든 대출의 연간 원리금이 차지하는 비율을 의미합니다. 2025년 현재 은행권은 40%를 적용하고 있습니다.</p>
           <ul className="mt-3 space-y-2 list-disc list-inside text-sm">
             <li><strong>DSR 산정 방식:</strong> 원금 균등 상환은 초회차 상환액이 가장 높기 때문에, DSR 산정 시 이 <strong>첫해의 높은 상환액</strong>을 기준으로 계산합니다.</li>
@@ -301,14 +301,14 @@ export default function PrincipalEqualAmortizationCalculator() {
           </ul>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-indigo-500">
-          <h3 className="font-bold text-lg text-indigo-600 dark:text-indigo-400">3. 중도상환을 계획하고 있다면?</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">3. 중도상환을 계획하고 있다면?</h3>
           <p className="mt-2">원금 균등 상환은 원금 감소 속도가 빠르기 때문에, 중도상환 시 효율이 매우 좋습니다. 조금이라도 여유 자금이 생길 때마다 원금을 갚아나가면, 총이자 절감 효과를 극대화할 수 있습니다.</p>
           <p className="mt-3 text-sm">특히 대출 초기, 이자 비중이 높을 때 중도상환을 하는 것이 가장 효과적입니다. (단, 3년 이내 중도상환수수료는 반드시 확인해야 합니다.)</p>
         </div>
 
-        <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-teal-500">
-          <h3 className="font-bold text-lg text-teal-600 dark:text-teal-400">4. 최종 선택을 위한 시뮬레이션의 중요성</h3>
+        <div className="p-5 rounded-lg bg-muted border-l-4 border-primary">
+          <h3 className="font-bold text-lg text-primary">4. 최종 선택을 위한 시뮬레이션의 중요성</h3>
           <p className="mt-2">가장 좋은 방법은 본인의 대출 예상액, 기간, 금리를 가지고 <strong>두 가지 상환 방식(원금 균등, 원리금 균등)을 모두 계산해보는 것</strong>입니다.</p>
           <p className="mt-3 text-sm">각 방식의 월 상환액 변화 추이와 총이자 차이를 직접 눈으로 확인하고, 자신의 미래 자금 계획과 비교하여 최종적으로 가장 적합한 방식을 선택하는 것이 후회 없는 결정의 핵심입니다.</p>
         </div>

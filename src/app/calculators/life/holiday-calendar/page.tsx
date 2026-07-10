@@ -230,17 +230,30 @@ const HolidayCalendar: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">공휴일 캘린더는 대한민국의法定公休日을 한눈에 확인할 수 있는 도구입니다.</p>
-        <p>2024년과 2025년의 공휴일을 달력 형태로 표시하며, 각 공휴일의 날짜와 이름을 쉽게 확인할 수 있습니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          대한민국 공휴일을 달력에서 한눈에 확인하세요!
+        </p>
+        <p>
+          공휴일 캘린더는 대한민국의 법정 공휴일을 달력 형태로 표시하여
+          각 공휴일의 날짜와 이름을 쉽고 빠르게 확인할 수 있는 도구입니다.
+        </p>
+        <p>
+          2024년과 2025년의 공휴일 정보를 포함하고 있으며, 설날·추석·어린이날 등
+          매년 고정된 공휴일부터 음력에 따른 변동 공휴일까지 모두 확인할 수 있습니다.
+        </p>
+        <p>
+          연차 계획, 여행 일정, 택배 배송, 은행·관공서 운영 확인 등
+          공휴일에 따라 달라지는 일상생활 정보를 미리 파악하는 데 유용하게 활용할 수 있습니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">대한민국 공휴일 목록 (2024-2025)</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2">
-            <p><strong>매년 고정 공휴일:</strong></p>
-            <ul className="list-disc list-inside text-sm">
+          <div className="p-4 bg-muted rounded-lg space-y-2">
+            <p className="font-semibold text-primary">매년 고정 공휴일:</p>
+            <ul className="list-disc list-inside text-sm text-muted-foreground">
               <li>신정 (1월 1일)</li>
               <li>삼일절 (3월 1일)</li>
               <li>어린이날 (5월 5일)</li>
@@ -250,11 +263,11 @@ const HolidayCalendar: React.FC = () => {
               <li>한글날 (10월 9일)</li>
               <li>크리스마스 (12월 25일)</li>
             </ul>
-            <p className="mt-2"><strong>음력 기반 공휴일:</strong></p>
-            <ul className="list-disc list-inside text-sm">
-              <li>설날 (음력 1월 1일 전후)</li>
+            <p className="mt-2 font-semibold text-primary">음력 기반 공휴일:</p>
+            <ul className="list-disc list-inside text-sm text-muted-foreground">
+              <li>설날 (음력 1월 1일 전후, 최대 3일 + 대체공휴일)</li>
               <li>부처님 오신 날 (음력 4월 8일)</li>
-              <li>추석 (음력 8월 15일 전후)</li>
+              <li>추석 (음력 8월 15일 전후, 최대 3일 + 대체공휴일)</li>
             </ul>
           </div>
         </div>
@@ -262,14 +275,15 @@ const HolidayCalendar: React.FC = () => {
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">공휴일 관련 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>대체공휴일:</strong> 공휴일이 토요일이나 일요일과 겹치면 다음 평일이 대체공휴일로 지정될 수 있습니다</li>
-            <li><strong>연차 계획:</strong> 공휴일 전후로 연차를 사용하면 장기 휴가를 만들 수 있습니다</li>
-            <li><strong>택배/배송:</strong> 공휴일에는 택배 배송이 지연될 수 있으니 미리 주문하세요</li>
-            <li><strong>은행/관공서:</strong> 공휴일에는 운영하지 않는 곳이 많으니 사전 확인이 필요합니다</li>
-            <li><strong>영업시간:</strong> 공휴일에는 일반적으로 주말 영업시간으로 운영됩니다</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">공휴일 활용 핵심 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>대체공휴일 제도:</strong> 공휴일이 토요일이나 일요일과 겹치면 다음 평일이 대체공휴일로 지정될 수 있습니다. 2024년부터 대체공휴일 적용 범위가 확대되었습니다.</li>
+            <li><strong>연차 활용 전략:</strong> 공휴일 전후로 연차를 사용하면 장기 휴가를 만들 수 있습니다. 공휴일과 이어지는 월요일이나 금요일에 연차를 내면 효과적입니다.</li>
+            <li><strong>택배/배송:</strong> 공휴일에는 택배 배송이 지연될 수 있으므로 중요한 물건은 미리 주문하세요.</li>
+            <li><strong>은행/관공서:</strong> 공휴일에는 대부분의 은행과 관공서가 운영하지 않으니 사전 확인이 필요합니다.</li>
+            <li><strong>영업시간 변경:</strong> 공휴일에는 일반적으로 주말 영업시간으로 운영되며, 일부 매장은 휴무일 수 있습니다.</li>
+            <li><strong>공공기관 민원:</strong> 공휴일에는 민원 접수 및 처리가 불가능하므로 업무 일정에 참고하세요.</li>
           </ul>
         </div>
       </div>

@@ -240,37 +240,66 @@ const TypingSpeed: React.FC = () => {
   const infoSection = {
     calculatorDescription: `
       <div className="space-y-4">
-        <p className="text-lg">타이핑 속도 테스트는 분당 타이핑하는 단어 수(WPM)와 정확도를 측정하는 도구입니다.</p>
-        <p>랜덤 문장을 보고 직접 타이핑하여 자신의 타이핑 실력을 객관적으로 평가하고 개선할 수 있습니다.</p>
+        <p className="text-lg font-semibold text-foreground">
+          타이핑 속도와 정확도를 측정하여 실력을 객관적으로 평가하세요!
+        </p>
+        <p>
+          타이핑 속도 테스트는 분당 타이핑하는 단어 수(WPM)와 정확도를 실시간으로 측정하는 도구입니다.
+          랜덤으로 제공되는 한국어 문장을 보고 직접 타이핑하여 자신의 타이핑 실력을 객관적으로 평가하고 개선할 수 있습니다.
+        </p>
+        <p>
+          타이핑이 시작되면 첫 글자를 입력한 시점부터 타이머가 가동되어 경과 시간, 정확한 글자 수, WPM을 계산합니다.
+          각 글자는 올바르게 입력되면 초록색으로, 틀리면 빨간색으로 표시되어 즉시 피드백을 받을 수 있습니다.
+        </p>
+        <p>
+          사무직 종사자, 프로그래머, 작가, 학생 등 타이핑 능력이 중요한 모든 분들이
+          자신의 타이핑 실력을 객관적으로 측정하고 꾸준히 향상시키는 데 활용할 수 있습니다.
+        </p>
       </div>
     `,
     calculationFormula: `
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold text-lg mb-2">WPM (Words Per Minute) 계산</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <div className="p-4 bg-muted rounded-lg">
             <code className="text-sm">WPM = (입력한 단어 수) / (경과 시간(분))</code>
           </div>
-          <p className="mt-2">일반적으로 1단어 = 5글자로 가정하며, 타이핑한 총 글자 수를 5로 나누어 단어 수를 계산합니다.</p>
+          <p className="mt-2 text-muted-foreground">
+            일반적으로 1단어 = 5글자로 가정하며, 타이핑한 총 글자 수를 5로 나누어 단어 수를 계산합니다.
+            예를 들어 60초 동안 200글자를 입력하면 WPM = (200/5) / 1 = 40WPM이 됩니다.
+          </p>
         </div>
         <div>
           <h3 className="font-semibold text-lg mb-2">정확도 계산</h3>
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <code className="text-sm">정확도 = (정확한 글자 수 / 전체 글자 수) × 100</code>
+          <div className="p-4 bg-muted rounded-lg">
+            <code className="text-sm">정확도(%) = (정확한 글자 수 / 전체 글자 수) × 100</code>
           </div>
+          <p className="mt-2 text-muted-foreground">
+            원본 텍스트와 사용자 입력을 글자 단위로 비교하여 일치하는 글자의 비율을 계산합니다.
+          </p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-lg mb-2">속도 등급 기준</h3>
+          <ul className="list-disc list-inside text-sm space-y-1 text-muted-foreground">
+            <li><strong>60 WPM 이상:</strong> 매우 빠름 (전문가 수준)</li>
+            <li><strong>40~59 WPM:</strong> 빠름 (우수한 실력)</li>
+            <li><strong>20~39 WPM:</strong> 보통 (일반적인 수준)</li>
+            <li><strong>20 WPM 미만:</strong> 초보 (연습 필요)</li>
+          </ul>
         </div>
       </div>
     `,
     usefulTips: `
       <div className="space-y-4">
-        <div className="p-4 rounded-lg border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20">
-          <h3 className="font-semibold text-lg mb-2">타이핑 실력 향상 팁</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li><strong>정확성 우선:</strong> 처음에는 속도보다 정확한 타이핑에 집중하세요</li>
-            <li><strong>홈 키 위치:</strong> 왼손은 'ㅁF', 오른손은 'ㅗJ'를 기준으로 손가락 위치를 잡으세요</li>
-            <li><strong>자세:</strong> 등과 어깨를 펴고 팔꿈치를 90도로 구부리세요</li>
-            <li><strong>눈은 화면:</strong> 키보드를 보지 않고 화면을 보며 타이핑하는 연습을 하세요</li>
-            <li><strong>꾸준한 연습:</strong> 매일 10~15분씩 꾸준히 연습하면 실력이 크게 향상됩니다</li>
+        <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
+          <h3 className="font-semibold text-lg mb-2 text-foreground">타이핑 실력 향상 핵심 팁</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li><strong>정확성 우선:</strong> 처음에는 속도보다 정확한 타이핑에 집중하세요. 정확도가 높아지면 자연히 속도도 향상됩니다.</li>
+            <li><strong>홈 키 위치:</strong> 왼손은 'ㅁF', 오른손은 'ㅗJ'를 기준으로 손가락 위치를 잡고 기본 자세를 유지하세요.</li>
+            <li><strong>올바른 자세:</strong> 등과 어깨를 펴고 팔꿈치를 90도로 구부리며, 손목이 바닥에 닿지 않도록 주의하세요.</li>
+            <li><strong>눈은 화면으로:</strong> 키보드를 보지 않고 화면을 보며 타이핑하는 연습(터치 타이핑)을 하면 속도가 크게 향상됩니다.</li>
+            <li><strong>꾸준한 연습:</strong> 매일 10~15분씩 꾸준히 연습하면 한 달 내에 눈에 띄는 실력 향상을 경험할 수 있습니다.</li>
+            <li><strong>자주 틀리는 글자 집중 공략:</strong> 틀린 글자를 기록하여 특정 글자에 대한 근육 기억을 키우는 것이 효과적입니다.</li>
           </ul>
         </div>
       </div>
