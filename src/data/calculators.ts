@@ -20,6 +20,7 @@ export const calculatorCategories = [
           { id: 'installment-savings-monthly-compound-interest', name: '적립식 월 복리 계산기', href: '/calculators/finance/installment-savings-monthly-compound-interest' },
           { id: 'principal-equal-amortization', name: '원금 균등상환 계산기', href: '/calculators/finance/principal-equal-amortization' },
           { id: 'principal-and-interest-equal-repayment', name: '원리금 균등상환 계산기', href: '/calculators/finance/principal-and-interest-equal-repayment' },
+          { id: 'credit-card-installment-fee', name: '신용카드 할부 수수료 계산기', href: '/calculators/finance/credit-card-installment-fee' },
 
         ],
       },
@@ -127,7 +128,7 @@ export const calculatorCategories = [
         id: 'date-time',
         name: '날짜/시간 계산기',
         calculators: [
-          { id: 'age-calculator', name: '만 나이 계산기', href: '/calculators/life/man-nai' },
+
           { id: 'korean-age-calculator', name: '한국 나이 계산기', href: '/calculators/life/korean-age' },
           { id: 'anniversary-calculator', name: '기념일 계산기', href: '/calculators/life/anniversary' },
           { id: 'date-difference-calculator', name: '날짜 차이 계산기', href: '/calculators/life/date-difference-calculator' },

@@ -81,7 +81,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b">
+    <header className="bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 z-40 w-full border-b">
       {/* Top row: Logo, Search, Icons */}
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         {/* Logo */}

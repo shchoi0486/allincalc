@@ -196,7 +196,7 @@ const MonthlyCompoundSavingsCalculator: NextPage = () => {
               <span className="text-2xl font-extrabold text-primary">{futureValue?.toLocaleString()}원</span>
             </div>
           </div>
-          <Tabs defaultValue="chart" className="w-full mt-2 border-b">
+          <Tabs defaultValue="details" className="w-full mt-2 border-b">
             <TabsList>
               <TabsTrigger value="chart">차트</TabsTrigger>
               <TabsTrigger value="details">월별 상세 내역</TabsTrigger>
@@ -217,7 +217,7 @@ const MonthlyCompoundSavingsCalculator: NextPage = () => {
               </div>
             </TabsContent>
             <TabsContent value="details">
-              <div className="overflow-x-auto">
+              <div className="overflow-y-auto max-h-[300px]">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -252,36 +252,72 @@ const MonthlyCompoundSavingsCalculator: NextPage = () => {
 
   const infoSection = {
     calculatorDescription: (
-      <p>
-        월 복리 적금은 매월 꾸준히 일정 금액을 저축하고, 원금과 이자에 다시 이자가 붙는 복리 방식으로 자산을 불려나가는 금융 상품입니다. 이 계산기는 매월 적립하는 금액과 초기 투자금, 투자 기간, 연 이자율을 바탕으로 만기 시 예상되는 총 금액을 계산하여 효과적인 재정 계획 수립을 돕습니다.
-      </p>
+      <>
+        <h3 className="font-semibold text-xl mb-3 text-blue-800 dark:text-blue-300">"세계 8대 불가사의", 복리 계산기 완벽 가이드</h3>
+        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+          알버트 아인슈타인이 "인류 최고의 발명"이자 "세계 8대 불가사의"라고 칭했던 <strong>복리(Compound Interest)</strong>. 복리 계산기는 바로 이 강력한 힘을 여러분의 자산 증식에 활용할 수 있도록 돕는 필수 도구입니다. 단순히 원금에 대해서만 이자가 붙는 '단리'와는 차원이 다릅니다. 복리는 <strong>'이자에 이자가 붙는'</strong> 마법 같은 원리를 통해, 마치 눈덩이가 언덕을 굴러 내려오며 거대해지듯 여러분의 자산을 기하급수적으로 불려줍니다.
+          <br/><br/>
+          이 계산기는 초기 투자금, 매월 꾸준히 납입할 적립금, 기대 연이율, 그리고 가장 중요한 '시간'이라는 변수를 입력하여 미래의 내 자산이 얼마나 될지 정밀하게 예측해 줍니다. 막연한 부자의 꿈을 구체적인 숫자로 시각화하여, 현실적인 재무 목표를 설정하고 꾸준히 동기를 부여받는 데 최고의 파트너가 될 것입니다.
+        </p>
+      </>
     ),
     calculationFormula: (
       <>
-        <p>월 복리 적금의 만기지급금액은 다음 공식을 사용하여 계산됩니다:</p>
-        <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">
-          FV = P * (1 + r/12)^t + M * [ ((1 + r/12)^t - 1) / (r/12) ] * (1 + (r/12 * k))
-        </p>
-        <ul className="list-disc list-inside text-sm space-y-1">
-          <li><b>FV</b>: 미래 가치 (만기지급금액)</li>
-          <li><b>P</b>: 초기 투자금</li>
-          <li><b>M</b>: 월 적립금</li>
-          <li><b>r</b>: 연 이자율 (소수점 형태, 예: 5%는 0.05)</li>
-          <li><b>t</b>: 투자 기간 (개월)</li>
-          <li><b>k</b>: 적립 시점 (월초 = 1, 월말 = 0)</li>
-        </ul>
-        <p className="mt-2">총 원금 = 초기 투자금 + (월 적립금 × 투자 기간)</p>
-        <p>총 이자 = 만기지급금액 - 총 원금</p>
+        <h3 className="text-lg font-semibold mt-6 mb-3">복리 계산, 어떻게 이루어지나요?</h3>
+        <div className="space-y-4">
+          <div className="p-4 border-l-4 border-green-500 bg-green-50 dark:bg-gray-800">
+            <h4 className="font-semibold text-lg mb-2">1. 거치식 투자 (월 적립금 없는 경우)</h4>
+            <p className="mb-2">초기 투자금만 넣어두고 더 이상 추가 납입을 하지 않을 때의 계산법입니다.</p>
+            <p className="font-mono p-3 bg-muted rounded-md my-2 text-center">
+              <strong>미래가치(FV) = 원금(P) * (1 + 월이율)^개월수</strong>
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              - <strong>P (Principal)</strong>: 초기 투자 원금<br/>
+              - <strong>월이율</strong>: 연이율(r) / 12<br/>
+              - <strong>개월수</strong>: 투자 기간(년) * 12
+            </p>
+          </div>
+
+          <div className="p-4 border-l-4 border-purple-500 bg-purple-50 dark:bg-gray-800">
+            <h4 className="font-semibold text-lg mb-2">2. 적립식 투자 (월 적립금 있는 경우)</h4>
+            <p className="mb-2">매월 꾸준히 일정 금액을 추가로 투자할 때, 복리의 효과는 극대화됩니다. 이 계산기는 월초/월말 납입 시점을 선택하여 더 정밀한 계산이 가능합니다.</p>
+            <p className="font-mono p-3 bg-muted rounded-md my-2">
+              <strong>월초 납입 시:</strong><br/>
+              미래가치(FV) = [거치식 FV] + 월적립액(M) * [((1+월이율)^개월수 - 1) / 월이율] * (1+월이율)
+            </p>
+            <p className="font-mono p-3 bg-muted rounded-md my-2">
+              <strong>월말 납입 시:</strong><br/>
+              미래가치(FV) = [거치식 FV] + 월적립액(M) * [((1+월이율)^개월수 - 1) / 월이율]
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              월초에 납입하면 한 달치 이자를 더 받기 때문에 월말에 납입하는 것보다 최종 금액이 약간 더 커집니다. 사소한 차이 같지만, 투자 기간이 길어질수록 이 차이는 무시할 수 없는 수준으로 벌어집니다.
+            </p>
+          </div>
+        </div>
       </>
     ),
     usefulTips: (
-      <ul className="list-disc list-inside text-sm space-y-2">
-        <li><strong>꾸준함의 힘:</strong> 월 복리 적금은 꾸준히 납입할수록 복리 효과가 극대화됩니다. 소액이라도 꾸준히 저축하는 습관이 중요합니다.</li>
-        <li><strong>장기 투자의 중요성:</strong> 복리는 시간이 길어질수록 그 효과가 더욱 커집니다. 단기적인 수익보다는 장기적인 관점에서 접근하는 것이 유리합니다.</li>
-        <li><strong>적립 시점의 중요성:</strong> 월초에 적립하는 것이 월말에 적립하는 것보다 한 달치 이자를 더 받을 수 있어 유리합니다. 작은 차이지만 장기적으로는 무시할 수 없는 차이를 만듭니다.</li>
-        <li><strong>세금 우대 상품 활용:</strong> 이자 소득에 대한 세금을 절감할 수 있는 비과세 또는 세금 우대 상품(예: ISA, 연금저축)을 활용하면 실질 수익률을 높일 수 있습니다.</li>
-        <li><strong>금리 비교:</strong> 같은 월 복리 적금이라도 금융기관별로 금리가 다를 수 있습니다. 여러 금융기관의 상품을 비교하여 가장 높은 금리를 제공하는 곳을 선택하는 것이 좋습니다.</li>
-      </ul>
+      <>
+        <h3 className="text-lg font-semibold mt-6 mb-3">복리 효과 200% 활용을 위한 유용한 팁</h3>
+        <ul className="space-y-4">
+          <li className="p-4 rounded-md bg-white dark:bg-gray-800 shadow">
+            <h4 className="font-semibold text-lg mb-2 text-red-600 dark:text-red-400">1. 시간의 마법사, 지금 바로 시작하세요</h4>
+            <p>복리 효과의 핵심 재료는 '시간'입니다. 25세에 매월 30만원씩 투자를 시작한 사람과 35세에 매월 60만원씩 시작한 사람을 비교해볼까요? 연 8% 수익률을 가정하면, 65세가 되었을 때 25세에 시작한 사람의 자산이 훨씬 더 많습니다. 일찍 시작하는 것이 적은 돈으로 더 큰 부를 쌓는 가장 확실한 방법입니다.</p>
+          </li>
+          <li className="p-4 rounded-md bg-white dark:bg-gray-800 shadow">
+            <h4 className="font-semibold text-lg mb-2 text-yellow-600 dark:text-yellow-400">2. '72의 법칙'으로 복리의 힘 체감하기</h4>
+            <p>복잡한 계산 없이 투자 원금이 2배가 되는 시간을 어림짐작할 수 있는 마법의 공식입니다. <strong>'72 / 연이율(%) ≈ 원금 2배 달성 기간(년)'</strong>. 예를 들어, 연이율이 8%라면 약 9년(72/8)마다 자산이 두 배로 불어나는 셈입니다. 이 법칙을 통해 장기적인 자산 증식 계획을 직관적으로 세울 수 있습니다.</p>
+          </li>
+          <li className="p-4 rounded-md bg-white dark:bg-gray-800 shadow">
+            <h4 className="font-semibold text-lg mb-2 text-green-600 dark:text-green-400">3. 세금, 똑똑하게 관리하기 (2025년 기준)</h4>
+            <p>일반적인 예적금이나 펀드에서 발생하는 이자 및 배당 소득에는 <strong>15.4%의 세금</strong>이 부과됩니다. 1,000만원의 이자 수익이 발생했다면 154만원이 세금으로 나가는 셈이죠. 이 세금을 줄이는 것이 실질 수익률을 높이는 핵심입니다. 개인종합자산관리계좌(ISA), 연금저축, IRP 등 <strong>절세/비과세 혜택을 제공하는 금융 상품</strong>을 최우선으로 활용하여 '세후 수익률'을 극대화하는 전략이 반드시 필요합니다.</p>
+          </li>
+          <li className="p-4 rounded-md bg-white dark:bg-gray-800 shadow">
+            <h4 className="font-semibold text-lg mb-2 text-indigo-600 dark:text-indigo-400">4. 꾸준함이 최고의 무기입니다</h4>
+            <p>단기적인 시장의 등락에 일희일비하는 것은 장기 투자의 가장 큰 적입니다. 시장이 좋을 때나 나쁠 때나 꾸준히 정해진 금액을 투자하는 '적립식 투자(코스트 에버리징 효과)'는 평균 매입 단가를 낮춰 장기적으로 안정적인 수익을 기대하게 합니다. 감정에 휘둘리지 말고, 세워둔 계획에 따라 꾸준히 투자하는 것이 성공의 왕도입니다.</p>
+          </li>
+        </ul>
+      </>
     ),
   };
 
