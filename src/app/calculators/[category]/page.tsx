@@ -24,7 +24,7 @@ export default function CategoryPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-2">{category.name} 계산기</h1>
-      <p className="text-lg text-gray-600 mb-8">총 {categoryCalculators.length}개의 계산기가 있습니다.</p>
+      <p className="text-lg text-muted-foreground mb-8">총 {categoryCalculators.length}개의 계산기가 있습니다.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {categoryCalculators.map((calculator) => (
           <Link href={`/calculators/${categorySlug}/${calculator.id}`} key={calculator.id} className="group">
@@ -34,7 +34,7 @@ export default function CategoryPage() {
                 <CardTitle>{calculator.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{calculator.description}</p>
+                <p className="text-sm text-muted-foreground">{calculator.description}</p>
               </CardContent>
             </Card>
 

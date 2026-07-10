@@ -173,11 +173,11 @@ table {
 }
 
 table, th, td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
 }
 
 th {
-  background-color: #f9fafb;
+  background-color: var(--muted);
   font-weight: 600;
   padding: 8px 12px;
 }
@@ -201,12 +201,12 @@ td {
 }
 
 .dry-container-table .first {
-  background-color: #f9fafb;
+  background-color: var(--muted);
   font-weight: 600;
 }
 
 .dry-container-table li {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   padding: 8px 12px;
   text-align: left;
 }
@@ -218,29 +218,6 @@ td {
 
 .dry-container-table li span {
   margin-right: 8px;
-}
-
-/* Dark mode table styles */
-.dark table, .dark th, .dark td {
-  border-color: #374151;
-}
-
-.dark th {
-  background-color: #111827;
-}
-
-.dark td {
-  background-color: #1f2937;
-}
-
-/* Dark mode dry container table styles */
-.dark .dry-container-table .first {
-  background-color: #111827;
-}
-
-.dark .dry-container-table li {
-  border-color: #374151;
-  background-color: #1f2937;
 }
 
 /* Accordion Typography Optimization */
@@ -278,7 +255,7 @@ td {
 
 .accordion-content-optimized code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-  background-color: hsl(var(--muted));
+  background-color: var(--muted);
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.875em;
@@ -358,35 +335,20 @@ select {
 
 /* Dropdown option styling - limited browser support */
 select option {
-  border: 1px solid #d1d5db;
-  background-color: white;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--card-foreground);
   padding: 0.5rem;
   margin: 0;
 }
 
 select option:hover {
-  background-color: #f3f4f6;
+  background-color: var(--accent);
 }
 
 select option:checked {
-  background-color: #3b82f6;
-  color: white;
-}
-
-/* Dark mode dropdown styles */
-.dark select option {
-  border-color: #374151;
-  background-color: #1f2937;
-  color: #e5e7eb;
-}
-
-.dark select option:hover {
-  background-color: #374151;
-}
-
-.dark select option:checked {
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 /* Table styles for content rendered with dangerouslySetInnerHTML */
@@ -394,7 +356,7 @@ select option:checked {
 [data-content] table,
 div[dangerouslySetInnerHTML] table {
   border-collapse: collapse !important;
-  border: 1px solid #d1d5db !important;
+  border: 1px solid var(--border) !important;
   width: 100% !important;
   margin: 1rem 0 !important;
 }
@@ -405,7 +367,7 @@ div[dangerouslySetInnerHTML] table {
 [data-content] td,
 div[dangerouslySetInnerHTML] th,
 div[dangerouslySetInnerHTML] td {
-  border: 1px solid #d1d5db !important;
+  border: 1px solid var(--border) !important;
   padding: 8px 12px !important;
   text-align: left !important;
 }
@@ -413,28 +375,6 @@ div[dangerouslySetInnerHTML] td {
 .prose th,
 [data-content] th,
 div[dangerouslySetInnerHTML] th {
-  background-color: #f9fafb !important;
+  background-color: var(--muted) !important;
   font-weight: 600 !important;
-}
-
-/* Dark mode table styles */
-.dark .prose table,
-.dark [data-content] table,
-.dark div[dangerouslySetInnerHTML] table {
-  border-color: #374151 !important;
-}
-
-.dark .prose th,
-.dark .prose td,
-.dark [data-content] th,
-.dark [data-content] td,
-.dark div[dangerouslySetInnerHTML] th,
-.dark div[dangerouslySetInnerHTML] td {
-  border-color: #374151 !important;
-}
-
-.dark .prose th,
-.dark [data-content] th,
-.dark div[dangerouslySetInnerHTML] th {
-  background-color: #1f2937 !important;
 }

@@ -52,13 +52,13 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
     .filter(subcategory => subcategory.calculators.length > 0);
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900">
+    <div className="bg-background">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-foreground leading-tight">
             {category.name} 계산기
           </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-500 dark:text-gray-400">
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
             {category.description}
           </p>
         </div>
@@ -69,7 +69,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
             placeholder="계산기 검색..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 text-lg border-gray-300 rounded-full shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:border-gray-600 dark:text-white"
+            className="w-full px-4 py-3 text-lg rounded-full shadow-sm"
           />
         </div>
 
@@ -77,13 +77,13 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
           {filteredSubcategories.map(subcategory => {
             const Icon = ICONS[subcategory.id] || ICONS.default;
             return (
-              <Card key={subcategory.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-                <CardHeader className="bg-gray-50 dark:bg-gray-700/50 p-3">
+              <Card key={subcategory.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out rounded-2xl">
+                <CardHeader className="bg-muted p-3">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full">
-                      <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <div className="bg-primary/10 p-2 rounded-full">
+                      <Icon className="w-5 h-5 text-primary" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">{subcategory.name}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-card-foreground">{subcategory.name}</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="p-3">
@@ -91,14 +91,14 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
                     {subcategory.calculators.map(calculator => (
                       <li key={calculator.id}>
                         <Link href={calculator.href} passHref>
-                          <div className="group flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                          <div className="group flex items-center justify-between px-4 py-2 rounded-lg hover:bg-accent transition-colors duration-200">
                             <div className="flex items-center space-x-3">
-                              <CalculatorIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
-                              <span className="text-base font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">
+                              <CalculatorIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
+                              <span className="text-base font-medium text-muted-foreground group-hover:text-foreground">
                                 {calculator.name}
                               </span>
                             </div>
-                            <ArrowRight className="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:translate-x-1 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
+                            <ArrowRight className="w-5 h-5 text-muted-foreground transform transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary" />
                           </div>
                         </Link>
                       </li>

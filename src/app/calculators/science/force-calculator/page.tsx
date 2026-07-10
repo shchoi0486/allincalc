@@ -3,8 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import CalculatorsLayout from '@/components/calculators/CalculatorsLayout';
+import CalculatorsLayout from '@/components/calculators/Calculatorslayout';
 import { Label } from '@/components/ui/label';
 
 const infoSection = {
@@ -100,47 +99,57 @@ export default function ForceCalculatorPage() {
     setForce(null);
   }, []);
 
+  const inputSection = (
+    <div className="space-y-4">
+      <div>
+        <Label htmlFor="mass">질량 (kg)</Label>
+        <Input
+          id="mass"
+          type="number"
+          value={mass}
+          onChange={(e) => setMass(e.target.value)}
+          placeholder="예: 70"
+        />
+      </div>
+      <div>
+        <Label htmlFor="acceleration">가속도 (m/s²)</Label>
+        <Input
+          id="acceleration"
+          type="number"
+          value={acceleration}
+          onChange={(e) => setAcceleration(e.target.value)}
+          placeholder="예: 9.8"
+        />
+      </div>
+      <div className="flex space-x-2">
+        <Button onClick={handleCalculate} className="flex-1">계산하기</Button>
+        <Button onClick={handleReset} variant="outline" className="flex-1">초기화</Button>
+      </div>
+    </div>
+  );
+
+  const resultSection = (
+    <div className="space-y-4">
+      {force !== null ? (
+        <div className="p-4 bg-muted rounded-lg text-center">
+          <p className="text-sm text-muted-foreground">계산된 힘</p>
+          <p className="text-2xl font-bold">{force.toLocaleString()} N</p>
+        </div>
+      ) : (
+        <div className="text-center py-8">
+          <p className="text-lg">계산하기 버튼을 클릭하여 결과를 확인하세요.</p>
+        </div>
+      )}
+    </div>
+  );
+
   return (
-    <CalculatorsLayout infoSection={infoSection}>
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>힘 계산기 (F=ma)</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="mass">질량 (kg)</Label>
-              <Input
-                id="mass"
-                type="number"
-                value={mass}
-                onChange={(e) => setMass(e.target.value)}
-                placeholder="예: 70"
-              />
-            </div>
-            <div>
-              <Label htmlFor="acceleration">가속도 (m/s²)</Label>
-              <Input
-                id="acceleration"
-                type="number"
-                value={acceleration}
-                onChange={(e) => setAcceleration(e.target.value)}
-                placeholder="예: 9.8"
-              />
-            </div>
-            <div className="flex space-x-2">
-              <Button onClick={handleCalculate} className="flex-1">계산하기</Button>
-              <Button onClick={handleReset} variant="outline" className="flex-1">초기화</Button>
-            </div>
-            {force !== null && (
-              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-center">
-                <p className="text-sm text-gray-500 dark:text-gray-400">계산된 힘</p>
-                <p className="text-2xl font-bold">{force.toLocaleString()} N</p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </CalculatorsLayout>
+    <CalculatorsLayout
+      title="힘 계산기"
+      description="질량과 가속도를 입력하여 힘(F=ma)을 계산합니다."
+      inputSection={inputSection}
+      resultSection={resultSection}
+      infoSection={infoSection}
+    />
   );
 }

@@ -48,7 +48,7 @@ const DialogContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-4",
+      "bg-card rounded-lg shadow-lg p-6 w-full max-w-md mx-4",
       "max-h-[90vh] overflow-y-auto",
       className
     )}
@@ -81,7 +81,7 @@ const DialogTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-none tracking-tight",
+      "text-lg font-semibold leading-none tracking-tight text-card-foreground",
       className
     )}
     {...props}
@@ -95,7 +95,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-gray-600", className)}
+    className={      cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ))

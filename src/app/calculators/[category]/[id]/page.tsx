@@ -23,9 +23,9 @@ export default function CalculatorPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-2">{calculator.name}</h1>
-      <p className="text-lg text-gray-600 mb-8">{calculator.description}</p>
+      <p className="text-lg text-muted-foreground mb-8">{calculator.description}</p>
       {/* 여기에 각 계산기의 실제 구현이 들어갑니다. */}
-      <div className="bg-gray-100 p-8 rounded-lg">
+      <div className="bg-muted p-8 rounded-lg">
         <p>계산기 구현 영역</p>
       </div>
     </div>

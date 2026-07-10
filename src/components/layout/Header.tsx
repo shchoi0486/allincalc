@@ -23,11 +23,11 @@ const allCalculators = calculatorCategories.flatMap(category =>
 
 const orderedCategoryNames = [
   'finance',
-  'life',
   'conversion',
+  'life',
   'science',
   'engineering',
-  'material',
+  'ai-tools',
   'game',
   'others',
 ];
@@ -87,7 +87,7 @@ const Header: React.FC = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-3">
           <Image src="/logo/allincalc5.png" alt="AllinCalc Logo" width={60} height={18} />
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">All-in-Calc</h1>
+          <h1 className="text-2xl font-bold text-foreground">All-in-Calc</h1>
         </Link>
 
         <div className="flex flex-1 items-center justify-end space-x-4">
@@ -173,7 +173,7 @@ const Header: React.FC = () => {
                 className={`text-base font-medium transition-colors px-3 py-1 rounded-md ${
                   isActive
                     ? 'bg-primary text-primary-foreground'
-                    : 'text-black hover:text-foreground hover:bg-muted'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
                 {item.name}

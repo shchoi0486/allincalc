@@ -37,16 +37,6 @@ interface CalculationResults {
 }
 
 const CreditCardInstallmentFeeCalculator: NextPage = () => {
-  return (
-    <CalculatorsLayout
-      title="신용카드 할부 수수료 계산기"
-      description="신용카드 할부 수수료를 계산하고 비교해보세요."
-      inputSection={inputSection}
-      resultSection={resultSection}
-      infoSection={infoSection}
-    />
-  );
-};
   const [paymentAmount, setPaymentAmount] = useState<number>(1000000);
   const [installmentMonths, setInstallmentMonths] = useState<number>(12);
   const [interestFreeMonths, setInterestFreeMonths] = useState<number>(0);
@@ -387,9 +377,9 @@ const CreditCardInstallmentFeeCalculator: NextPage = () => {
                       <TableRow>
                         <TableHead className="whitespace-nowrap w-[50px] text-xs">회차</TableHead>
                         <TableHead className="text-right whitespace-nowrap">원금</TableHead>
-                        <TableHead className="text-right whitespacea_nowrap">수수료</TableHead>
-                        <TableHead className="text-right whitespacea_nowrap">월 납부</TableHead>
-                        <TableHead className="text-right whitespacea_nowrap">누적 상환</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">수수료</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">월 납부</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">누적 상환</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -424,8 +414,8 @@ const CreditCardInstallmentFeeCalculator: NextPage = () => {
   const infoSection = {
     calculatorDescription: (
       <>
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">신용카드 할부 수수료 계산기: 현명한 소비의 첫걸음</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+        <h2 className="text-2xl font-bold text-foreground mb-4">신용카드 할부 수수료 계산기: 현명한 소비의 첫걸음</h2>
+        <p className="text-lg text-muted-foreground mb-6">
           갖고 싶었던 최신형 노트북, 온 가족이 함께 떠나는 해외여행... 목돈이 들어가는 소비를 계획할 때, 신용카드 할부 결제는 참 매력적인 선택지입니다. 당장의 부담을 덜고 원하는 것을 먼저 얻을 수 있으니까요. 하지만 '할부'라는 편리함 뒤에는 '수수료'라는 비용이 숨어있다는 사실, 알고 계셨나요?
         </p>
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -502,7 +492,8 @@ const CreditCardInstallmentFeeCalculator: NextPage = () => {
           </li>
         </ul>
       </>
-    )  };
+    ),
+  };
 
   return (
     <CalculatorsLayout

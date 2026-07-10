@@ -213,7 +213,7 @@ export default function SalaryCalculator() {
         <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-blue-500">
           <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400">1. '비과세 항목'을 최대로 활용하라</h3>
           <p className="mt-2">연봉 협상 시, 비과세 항목을 적극적으로 활용하면 실질 소득을 높일 수 있습니다. 대표적인 비과세 항목은 다음과 같습니다.</p>
-          <ul class="list-disc list-inside mt-3 space-y-2 text-sm">
+          <ul className="list-disc list-inside mt-3 space-y-2 text-sm">
             <li><strong>식대:</strong> 월 20만원까지 비과세 (연 240만원)</li>
             <li><strong>차량유지비(자가운전보조금):</strong> 본인 명의 차량을 업무에 사용할 경우 월 20만원까지 비과세</li>
             <li><strong>육아수당:</strong> 만 6세 이하 자녀가 있을 경우 월 20만원까지 비과세</li>

@@ -1,0 +1,209 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import CalculatorsLayout from '@/components/calculators/Calculatorslayout';
+import { Input } from '@/components/ui/input';
+
+const timezones = [
+  { id: 'UTC', label: 'UTC', offset: 0 },
+  { id: 'US-Eastern', label: '미국 동부(EST/EDT)', offset: -5 },
+  { id: 'US-Pacific', label: '미국 서부(PST/PDT)', offset: -8 },
+  { id: 'Europe-London', label: '유럽 런던(GMT/BST)', offset: 0 },
+  { id: 'Asia-Tokyo', label: '아시아 도쿄(JST)', offset: 9 },
+  { id: 'Asia-Seoul', label: '아시아 서울(KST)', offset: 9 },
+  { id: 'Asia-Shanghai', label: '아시아 상하이(CST)', offset: 8 },
+] as const;
+
+type TimezoneId = typeof timezones[number]['id'];
+
+function formatDateTime(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function convertTimezone(
+  dateStr: string,
+  fromTz: TimezoneId,
+): Record<TimezoneId, Date> {
+  if (!dateStr) return {} as Record<TimezoneId, Date>;
+
+  const fromDate = new Date(dateStr);
+  if (isNaN(fromDate.getTime())) return {} as Record<TimezoneId, Date>;
+
+  const fromOffset = timezones.find((t) => t.id === fromTz)?.offset ?? 0;
+  const utcTime = fromDate.getTime() - fromOffset * 60 * 60 * 1000;
+
+  const results: Record<string, Date> = {};
+  timezones.forEach((tz) => {
+    results[tz.id] = new Date(utcTime + tz.offset * 60 * 60 * 1000);
+  });
+
+  return results as Record<TimezoneId, Date>;
+}
+
+function formatTimeWithZone(date: Date): string {
+  if (isNaN(date.getTime())) return '-';
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${month}월 ${day}일 ${hours}:${minutes}`;
+}
+
+function getDayOfWeek(date: Date): string {
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  return days[date.getDay()];
+}
+
+export default function TimezoneConverter() {
+  const [dateTime, setDateTime] = useState(formatDateTime(new Date()));
+  const [fromTimezone, setFromTimezone] = useState<TimezoneId>('UTC');
+  const [results, setResults] = useState<Record<TimezoneId, Date>>({} as Record<TimezoneId, Date>);
+
+  useEffect(() => {
+    if (dateTime) {
+      setResults(convertTimezone(dateTime, fromTimezone));
+    }
+  }, [dateTime, fromTimezone]);
+
+  const inputSection = (
+    <div className="flex flex-col space-y-4">
+      <div className="flex items-center space-x-2">
+        <label htmlFor="dateTime" className="w-24">날짜/시간:</label>
+        <Input
+          id="dateTime"
+          type="datetime-local"
+          value={dateTime}
+          onChange={(e) => setDateTime(e.target.value)}
+          className="flex-grow"
+        />
+      </div>
+      <div className="flex items-center space-x-2">
+        <label htmlFor="fromTz" className="w-24">기준 시간대:</label>
+        <select
+          id="fromTz"
+          value={fromTimezone}
+          onChange={(e) => setFromTimezone(e.target.value as TimezoneId)}
+          className="border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring flex-grow"
+        >
+          {timezones.map((tz) => (
+            <option key={tz.id} value={tz.id}>{tz.label} (UTC{tz.offset >= 0 ? '+' : ''}{tz.offset})</option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+
+  const resultSection = (
+    <div className="space-y-3">
+      {timezones
+        .filter((tz) => tz.id !== fromTimezone)
+        .map((tz) => {
+          const date = results[tz.id];
+          return (
+            <div key={tz.id} className="flex items-center justify-between p-3 bg-muted rounded-md">
+              <div>
+                <span className="text-sm font-medium">{tz.label}</span>
+                <span className="text-xs text-muted-foreground ml-2">(UTC{tz.offset >= 0 ? '+' : ''}{tz.offset})</span>
+              </div>
+              <div className="text-right">
+                <span className="text-sm font-bold text-primary">
+                  {formatTimeWithZone(date ?? new Date(0))}
+                </span>
+                <span className="text-xs text-muted-foreground ml-2">
+                  ({getDayOfWeek(date ?? new Date(0))})
+                </span>
+              </div>
+            </div>
+          );
+        })}
+    </div>
+  );
+
+  const infoSection = {
+    calculatorDescription: (
+      <div className="space-y-4">
+        <p>
+          <strong>시간대 변환기</strong>는 전 세계 주요 시간대 간의 시간 변환을 제공하는 도구입니다. 
+          UTC, 미국 동부/서부, 유럽 런던, 아시아 도쿄/서울/상하이 시간대 간의 시간 변환을 빠르게 수행할 수 있습니다.
+        </p>
+        <p>
+          국제회의, 해외여행, 원격근무 등 시간대 변환이 필요할 때 활용할 수 있으며, 
+          날짜와 시간을 입력하면 선택한 기준 시간대의 시간이 다른 시간대로 변환된 결과를 보여줍니다.
+        </p>
+      </div>
+    ),
+    calculationFormula: (
+      <div className="space-y-4">
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-green-500 pl-3">시간대 변환 공식</h4>
+          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-2">
+            <p className="text-center font-mono text-sm">대상 시간 = 원래 시간 + (대상 시간대 오프셋 - 원래 시간대 오프셋)</p>
+            <div className="mt-4 text-sm space-y-1">
+              <p className="text-center">시간대 오프셋 (UTC 기준):</p>
+              <div className="font-mono text-xs space-y-1 mt-2">
+                <p>UTC: +0</p>
+                <p>미국 동부: -5 (서머타임: -4)</p>
+                <p>미국 서부: -8 (서머타임: -7)</p>
+                <p>런던: +0 (서머타임: +1)</p>
+                <p>도쿄: +9</p>
+                <p>서울: +9</p>
+                <p>상하이: +8</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 rounded-r-lg text-sm">
+          <strong>참고:</strong> 이 변환기는 표준 시간대 오프셋을 기준으로 합니다. 
+          서머타임(DST)은 자동으로 적용되지 않으며, 필요 시 수동으로 오프셋을 조정해야 합니다.
+        </div>
+      </div>
+    ),
+    usefulTips: (
+      <div className="space-y-4">
+        <div>
+          <h4 className="font-bold text-lg mb-2 border-l-4 border-yellow-500 pl-3">💡 시간대 관련 핵심 정보</h4>
+          <ul className="space-y-3">
+            <li className="p-3 border rounded-lg">
+              <p className="font-semibold text-sm">서머타임(DST) 이해하기</p>
+              <p className="text-xs mt-1">
+                많은 국가에서는 여름철에 시계를 1시간 앞당기는 서머타임을 실시합니다. 
+                미국과 유럽은 3월~11월, 호주와 뉴질랜드는 반대 시기에 실시합니다. 
+                한국과 일본은 서머타임을 실시하지 않습니다.
+              </p>
+            </li>
+            <li className="p-3 border rounded-lg">
+              <p className="font-semibold text-sm">국제 회의 시간 정하기</p>
+              <p className="text-xs mt-1">
+                여러 시간대의 참가자가 있는 회의는 보통 UTC를 기준으로 시간을 정합니다. 
+                아시아-유럽 회의: UTC 08:00~10:00 / 아시아-미국 회의: UTC 17:00~19:00
+              </p>
+            </li>
+            <li className="p-3 border rounded-lg">
+              <p className="font-semibold text-sm">국제선 비행기 시간 계산</p>
+              <p className="text-xs mt-1">
+                출발지와 도착지의 시간대 차이를 고려해야 합니다. 
+                예: 서울(UTC+9) → 뉴욕(UTC-5): 14시간 차이 / 
+                서울 → 도쿄(UTC+9): 시간대 동일
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    ),
+  };
+
+  return (
+    <CalculatorsLayout
+      title="시간대 변환기"
+      description="전 세계 주요 시간대 간의 시간을 변환합니다."
+      inputSection={inputSection}
+      resultSection={resultSection}
+      infoSection={infoSection}
+    />
+  );
+}

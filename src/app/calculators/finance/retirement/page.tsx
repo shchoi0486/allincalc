@@ -201,7 +201,7 @@ const RetirementCalculator: NextPage = () => {
         <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-blue-500">
           <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400">1. DB vs DC, 내게 유리한 퇴직연금은?</h3>
           <p className="mt-2">회사의 퇴직연금제도를 파악하는 것이 첫걸음입니다. <strong>안정성을 중시한다면 DB(확정급여형), 투자 수익을 기대한다면 DC(확정기여형)</strong>가 유리할 수 있습니다.</p>
-          <ul class="list-disc list-inside mt-3 space-y-2 text-sm">
+          <ul className="list-disc list-inside mt-3 space-y-2 text-sm">
             <li><strong>DB (Defined Benefit):</strong> 퇴직 시점의 평균임금과 근속연수에 따라 정해진 금액을 받는 방식. 회사가 적립금을 운용하며, 임금 상승률이 높은 대기업이나 공공기관 근로자에게 유리합니다. 안정적이지만, 투자 수익의 기회는 없습니다.</li>
             <li><strong>DC (Defined Contribution):</strong> 회사가 매년 연간 임금 총액의 1/12 이상을 근로자의 계좌에 넣어주면, 근로자가 직접 운용(투자)하는 방식. 투자 성과에 따라 퇴직금이 달라집니다. 투자에 자신 있고, 임금 상승률보다 높은 수익을 기대하는 경우 유리합니다.</li>
           </ul>
@@ -210,7 +210,7 @@ const RetirementCalculator: NextPage = () => {
         <div className="p-5 rounded-lg bg-gray-50 dark:bg-gray-800 border-l-4 border-green-500">
           <h3 className="font-bold text-lg text-green-600 dark:text-green-400">2. IRP 계좌: 세금은 줄이고, 노후 자금은 늘리는 마법의 통장</h3>
           <p className="mt-2">퇴직금을 수령할 때, 개인형 퇴직연금(IRP) 계좌로 이전하면 <strong>퇴직소득세를 당장 내지 않고, 연금 수령 시점까지 과세를 이연</strong>할 수 있습니다. 이는 매우 강력한 절세 혜택입니다.</p>
-          <ul class="list-disc list-inside mt-3 space-y-2 text-sm">
+          <ul className="list-disc list-inside mt-3 space-y-2 text-sm">
             <li><strong>과세이연 효과:</strong> 세금을 떼지 않은 원금 전체를 재투자하여 더 높은 수익을 기대할 수 있습니다. (일명 '세금으로 투자하기')</li>
             <li><strong>저율과세:</strong> 연금으로 수령 시, 기존 퇴직소득세율(약 6~45%)의 70%에 해당하는 낮은 연금소득세율(3.3%~5.5%)을 적용받습니다.</li>
             <li><strong>세액공제:</strong> IRP 계좌에 추가로 납입하는 금액에 대해서는 연간 최대 900만원까지 세액공제 혜택(13.2% 또는 16.5%)을 받을 수 있습니다.</li>

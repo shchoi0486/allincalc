@@ -288,9 +288,9 @@ const InsuranceCalculator: NextPage = () => {
           <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-3">4. 산재보험 - 일터의 안전을 지키는 최후의 보루</h3>
           <p className="mb-3">출퇴근을 포함한 모든 업무상 재해(부상, 질병, 사망 등)에 대해 근로자를 보호합니다. 치료비, 휴업급여, 장해급여 등을 지급합니다.</p>
           <p className="font-mono p-4 bg-white dark:bg-gray-900 rounded-md text-sm">보험료 = 보수총액 × 업종별 보험료율</p>
-          <div class="mt-3 text-sm">
+          <div className="mt-3 text-sm">
             <p><strong>근로자 부담: 0% (전액 사업주 부담)</strong></p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">※ 요율은 업종의 위험도에 따라 매우 다양하며, 매년 정부가 고시합니다. (예: 사무직 0.7%, 제조업 1.5%, 건설업 3.6% 등)</p>
+            <p className="text-xs text-muted-foreground mt-1">※ 요율은 업종의 위험도에 따라 매우 다양하며, 매년 정부가 고시합니다. (예: 사무직 0.7%, 제조업 1.5%, 건설업 3.6% 등)</p>
           </div>
         </div>
       </div>

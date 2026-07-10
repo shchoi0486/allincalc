@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const FooterSection: React.FC = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900 py-12 md:py-16 lg:py-10 mt-20">
+    <footer className="bg-card py-12 md:py-16 lg:py-10 mt-20 border-t border-border">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12">
           {/* 왼쪽 섹션 - 로고 및 소셜 미디어 */}
@@ -20,26 +20,26 @@ const FooterSection: React.FC = () => {
           <div className="lg:w-7/10 grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="hidden sm:block"></div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">프레스</h3>
+              <h3 className="text-lg font-semibold text-card-foreground mb-4">프레스</h3>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">편집 정책</Link></li>
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">파트너십</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">편집 정책</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">파트너십</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">AllinCalc 소개</h3>
+              <h3 className="text-lg font-semibold text-card-foreground mb-4">AllinCalc 소개</h3>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">소개</Link></li>
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">자료실</Link></li>
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">제휴</Link></li>
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">문의하기</Link></li>
-                <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">블로그</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">소개</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">자료실</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">제휴</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">문의하기</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-foreground">블로그</Link></li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400">
+        <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground">
           &copy; {new Date().getFullYear()} AllinCalc. All rights reserved.
         </div>
       </div>
