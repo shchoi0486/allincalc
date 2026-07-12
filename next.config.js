@@ -18,8 +18,6 @@ const nextConfig = {
     NEXT_PUBLIC_UPSTASH_REDIS_REST_URL: process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_URL,
     NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN: process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN,
   },
-  output: 'standalone',
-
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
