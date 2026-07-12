@@ -3,6 +3,7 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
+import { usePathname } from "next/navigation"
 
 import { cn } from "@/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -10,6 +11,51 @@ import { buttonVariants } from "@/components/ui/button"
 type CalendarProps = React.ComponentProps<typeof DayPicker>
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+  const pathname = usePathname()
+  const isKo = pathname?.startsWith('/ko') ?? false
+
+  const koLocale = {
+    localize: {
+      month: (n: number) => [
+        '1월', '2월', '3월', '4월', '5월', '6월',
+        '7월', '8월', '9월', '10월', '11월', '12월'
+      ][n],
+      day: (n: number) => ['일', '월', '화', '수', '목', '금', '토'][n],
+      ordinalNumber: (n: number) => `${n}번째`,
+      era: (n: number) => ['기원전', '서기'][n],
+      quarter: (n: number) => `${n + 1}분기`,
+      dayPeriod: (period: string) => period === 'am' ? '오전' : '오후',
+    },
+    formatLong: {
+      date: () => 'yyyy년 MM월 dd일',
+      time: () => 'HH시 mm분',
+      dateTime: () => 'yyyy년 MM월 dd일 HH시 mm분',
+    },
+  }
+
+  const enLocale = {
+    localize: {
+      month: (n: number) => [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ][n],
+      day: (n: number) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][n],
+      ordinalNumber: (n: number) => {
+        const s = ['th', 'st', 'nd', 'rd']
+        const v = n % 100
+        return `${n}${s[(v - 20) % 10] || s[v] || s[0]}`
+      },
+      era: (n: number) => ['BC', 'AD'][n],
+      quarter: (n: number) => `Q${n + 1}`,
+      dayPeriod: (period: string) => period === 'am' ? 'AM' : 'PM',
+    },
+    formatLong: {
+      date: () => 'MMM d, yyyy',
+      time: () => 'hh:mm a',
+      dateTime: () => 'MMM d, yyyy hh:mm a',
+    },
+  }
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -51,24 +97,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           return <ChevronRight className="h-4 w-4" />
         },
       }}
-      locale={{
-        localize: {
-          month: (n) => [
-            '1월', '2월', '3월', '4월', '5월', '6월',
-            '7월', '8월', '9월', '10월', '11월', '12월'
-          ][n],
-          day: (n) => ['일', '월', '화', '수', '목', '금', '토'][n],
-          ordinalNumber: (n) => `${n}번째`,
-          era: (n) => ['기원전', '서기'][n],
-          quarter: (n) => `${n + 1}분기`,
-          dayPeriod: (period) => period === 'am' ? '오전' : '오후',
-        },
-        formatLong: {
-          date: () => 'yyyy년 MM월 dd일',
-          time: () => 'HH시 mm분',
-          dateTime: () => 'yyyy년 MM월 dd일 HH시 mm분',
-        }
-      }}
+      locale={(isKo ? koLocale : enLocale) as CalendarProps['locale']}
       {...props}
     />
   )

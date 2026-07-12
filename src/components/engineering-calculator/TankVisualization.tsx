@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface TankVisualizationProps {
   tankType: string;
@@ -32,8 +33,8 @@ const TANK_TYPE_IMAGES = {
   'frustum': '/tank type/frustum-tank-volume.webp',
 } as const;
 
-// Tank 타입별 한글 이름
-const TANK_TYPE_NAMES = {
+// Tank 타입별 이름 (한글/영문)
+const TANK_TYPE_NAMES_KO = {
   'vertical-cylinder': '수직 원통형',
   'horizontal-cylinder': '수평 원통형',
   'rectangular-prism': '직육면체',
@@ -45,6 +46,46 @@ const TANK_TYPE_NAMES = {
   'cone-top': '원뿔 상단형',
   'frustum': '절두체 (깔때기형)',
 } as const;
+
+const TANK_TYPE_NAMES_EN = {
+  'vertical-cylinder': 'Vertical Cylinder',
+  'horizontal-cylinder': 'Horizontal Cylinder',
+  'rectangular-prism': 'Rectangular Prism',
+  'vertical-capsule': 'Vertical Capsule',
+  'horizontal-capsule': 'Horizontal Capsule',
+  'vertical-elliptical': 'Vertical Elliptical',
+  'horizontal-elliptical': 'Horizontal Elliptical',
+  'cone-bottom': 'Cone Bottom',
+  'cone-top': 'Cone Top',
+  'frustum': 'Frustum (Truncated Cone)',
+} as const;
+
+// Tank 타입별 특징 설명 (한글/영문)
+const TANK_TYPE_DESC_KO: Record<string, string> = {
+  'vertical-cylinder': '수직으로 설치되는 원통형 탱크',
+  'horizontal-cylinder': '수평으로 설치되는 원통형 탱크',
+  'rectangular-prism': '직육면체 형태의 저장 탱크',
+  'vertical-capsule': '양 끝이 반구형인 수직 캡슐 탱크',
+  'horizontal-capsule': '양 끝이 반구형인 수평 캡슐 탱크',
+  'vertical-elliptical': '타원형 헤드를 가진 수직 탱크',
+  'horizontal-elliptical': '타원형 헤드를 가진 수평 탱크',
+  'cone-bottom': '바닥이 원뿔 형태인 탱크',
+  'cone-top': '상단이 원뿔 형태인 탱크',
+  'frustum': '절두체(깔때기) 형태의 탱크',
+};
+
+const TANK_TYPE_DESC_EN: Record<string, string> = {
+  'vertical-cylinder': 'A cylindrical tank installed vertically',
+  'horizontal-cylinder': 'A cylindrical tank installed horizontally',
+  'rectangular-prism': 'A rectangular box-shaped storage tank',
+  'vertical-capsule': 'A vertical capsule tank with hemispherical ends',
+  'horizontal-capsule': 'A horizontal capsule tank with hemispherical ends',
+  'vertical-elliptical': 'A vertical tank with elliptical heads',
+  'horizontal-elliptical': 'A horizontal tank with elliptical heads',
+  'cone-bottom': 'A tank with a conical bottom',
+  'cone-top': 'A tank with a conical top',
+  'frustum': 'A frustum (funnel) shaped tank',
+};
 
 export default function TankVisualization({
   tankType,
@@ -60,6 +101,8 @@ export default function TankVisualization({
   coneHeight,
   unit = 'm'
 }: TankVisualizationProps) {
+  const { locale } = useI18n();
+  const isKo = locale === 'ko';
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -71,52 +114,68 @@ export default function TankVisualization({
 
   // 현재 Tank 타입에 해당하는 이미지 경로
   const currentImage = TANK_TYPE_IMAGES[tankType as keyof typeof TANK_TYPE_IMAGES];
-  const currentName = TANK_TYPE_NAMES[tankType as keyof typeof TANK_TYPE_NAMES];
+  const currentName = isKo
+    ? TANK_TYPE_NAMES_KO[tankType as keyof typeof TANK_TYPE_NAMES_KO]
+    : TANK_TYPE_NAMES_EN[tankType as keyof typeof TANK_TYPE_NAMES_EN];
+  const currentDesc = isKo ? TANK_TYPE_DESC_KO[tankType] : TANK_TYPE_DESC_EN[tankType];
 
   // 치수 정보 생성
+  const L = {
+    diameter: isKo ? '직경' : 'Diameter',
+    height: isKo ? '높이' : 'Height',
+    length: isKo ? '길이' : 'Length',
+    width: isKo ? '폭' : 'Width',
+    topDiameter: isKo ? '상단 직경' : 'Top Diameter',
+    bottomDiameter: isKo ? '하단 직경' : 'Bottom Diameter',
+    cylinderHeight: isKo ? '원통 높이' : 'Cylinder Height',
+    coneHeight: isKo ? '원뿔 높이' : 'Cone Height',
+    topRadius: isKo ? '상단 반지름' : 'Top Radius',
+    bottomRadius: isKo ? '하단 반지름' : 'Bottom Radius',
+  };
+
   const getDimensionInfo = () => {
     const dimensions: string[] = [];
     
     switch (tankType) {
       case 'vertical-cylinder':
       case 'horizontal-cylinder':
-        if (diameter) dimensions.push(`직경: ${diameter}${unit}`);
-        if (height) dimensions.push(`높이: ${height}${unit}`);
-        if (length) dimensions.push(`길이: ${length}${unit}`);
+        if (diameter) dimensions.push(`${L.diameter}: ${diameter}${unit}`);
+        if (height) dimensions.push(`${L.height}: ${height}${unit}`);
+        if (length) dimensions.push(`${L.length}: ${length}${unit}`);
         break;
       
       case 'rectangular-prism':
-        if (length) dimensions.push(`길이: ${length}${unit}`);
-        if (width) dimensions.push(`폭: ${width}${unit}`);
-        if (height) dimensions.push(`높이: ${height}${unit}`);
+        if (length) dimensions.push(`${L.length}: ${length}${unit}`);
+        if (width) dimensions.push(`${L.width}: ${width}${unit}`);
+        if (height) dimensions.push(`${L.height}: ${height}${unit}`);
         break;
       
       case 'vertical-capsule':
       case 'horizontal-capsule':
       case 'vertical-elliptical':
       case 'horizontal-elliptical':
-        if (diameter) dimensions.push(`직경: ${diameter}${unit}`);
-        if (height) dimensions.push(`높이: ${height}${unit}`);
-        if (length) dimensions.push(`길이: ${length}${unit}`);
+        if (diameter) dimensions.push(`${L.diameter}: ${diameter}${unit}`);
+        if (height) dimensions.push(`${L.height}: ${height}${unit}`);
+        if (length) dimensions.push(`${L.length}: ${length}${unit}`);
         break;
       
       case 'cone-bottom':
       case 'cone-top':
-        if (topDiameter) dimensions.push(`상단 직경: ${topDiameter}${unit}`);
-        if (bottomDiameter) dimensions.push(`하단 직경: ${bottomDiameter}${unit}`);
-        if (cylinderHeight) dimensions.push(`원통 높이: ${cylinderHeight}${unit}`);
-        if (coneHeight) dimensions.push(`원뿔 높이: ${coneHeight}${unit}`);
+        if (topDiameter) dimensions.push(`${L.topDiameter}: ${topDiameter}${unit}`);
+        if (bottomDiameter) dimensions.push(`${L.bottomDiameter}: ${bottomDiameter}${unit}`);
+        if (cylinderHeight) dimensions.push(`${L.cylinderHeight}: ${cylinderHeight}${unit}`);
+        if (coneHeight) dimensions.push(`${L.coneHeight}: ${coneHeight}${unit}`);
         break;
       
       case 'frustum':
-        if (radius1) dimensions.push(`상단 반지름: ${radius1}${unit}`);
-        if (radius2) dimensions.push(`하단 반지름: ${radius2}${unit}`);
-        if (height) dimensions.push(`높이: ${height}${unit}`);
+        if (radius1) dimensions.push(`${L.topRadius}: ${radius1}${unit}`);
+        if (radius2) dimensions.push(`${L.bottomRadius}: ${radius2}${unit}`);
+        if (height) dimensions.push(`${L.height}: ${height}${unit}`);
         break;
       
       default:
-        if (diameter) dimensions.push(`직경: ${diameter}${unit}`);
-        if (height) dimensions.push(`높이: ${height}${unit}`);
+        if (diameter) dimensions.push(`${L.diameter}: ${diameter}${unit}`);
+        if (height) dimensions.push(`${L.height}: ${height}${unit}`);
     }
     
     return dimensions;
@@ -131,10 +190,10 @@ export default function TankVisualization({
         <div className="text-center p-8">
           <div className="text-6xl mb-4">🛢️</div>
           <h3 className="text-lg font-semibold text-gray-700 mb-2">
-            {currentName || 'Tank 시각화'}
+            {currentName || (isKo ? 'Tank 시각화' : 'Tank Visualization')}
           </h3>
           <p className="text-sm text-gray-500">
-            이미지를 불러올 수 없습니다
+            {isKo ? '이미지를 불러올 수 없습니다' : 'Image could not be loaded'}
           </p>
         </div>
       </div>
@@ -148,7 +207,7 @@ export default function TankVisualization({
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-            <p className="text-sm text-gray-600">이미지 로딩 중...</p>
+            <p className="text-sm text-gray-600">{isKo ? '이미지 로딩 중...' : 'Loading image...'}</p>
           </div>
         </div>
       )}
@@ -162,7 +221,7 @@ export default function TankVisualization({
               {currentName}
             </h3>
             <p className="text-sm text-gray-500">
-              이미지를 불러올 수 없습니다
+              {isKo ? '이미지를 불러올 수 없습니다' : 'Image could not be loaded'}
             </p>
           </div>
         </div>
@@ -197,8 +256,8 @@ export default function TankVisualization({
         {/* 치수 정보 오버레이 */}
         {imageLoaded && dimensionInfo.length > 0 && (
           <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg max-w-xs">
-            <h4 className="font-semibold text-gray-800 mb-2 text-sm">
-              📏 치수 정보
+              <h4 className="font-semibold text-gray-800 mb-2 text-sm">
+              {isKo ? '📏 치수 정보' : '📏 Dimension Info'}
             </h4>
             <div className="space-y-1">
               {dimensionInfo.map((dimension, index) => (
@@ -216,18 +275,9 @@ export default function TankVisualization({
       {/* 추가 정보 패널 (선택적) */}
       <div className="absolute top-1/2 left-2 transform -translate-y-1/2 opacity-0 hover:opacity-100 transition-opacity duration-300">
         <div className="bg-gray-800/80 text-white p-2 rounded-lg text-xs max-w-48">
-          <p className="font-semibold mb-1">Tank 타입 특징:</p>
+          <p className="font-semibold mb-1">{isKo ? 'Tank 타입 특징:' : 'Tank Type Features:'}</p>
           <p className="text-gray-300">
-            {tankType === 'vertical-cylinder' && '수직으로 설치되는 원통형 탱크'}
-            {tankType === 'horizontal-cylinder' && '수평으로 설치되는 원통형 탱크'}
-            {tankType === 'rectangular-prism' && '직육면체 형태의 저장 탱크'}
-            {tankType === 'vertical-capsule' && '양 끝이 반구형인 수직 캡슐 탱크'}
-            {tankType === 'horizontal-capsule' && '양 끝이 반구형인 수평 캡슐 탱크'}
-            {tankType === 'vertical-elliptical' && '타원형 헤드를 가진 수직 탱크'}
-            {tankType === 'horizontal-elliptical' && '타원형 헤드를 가진 수평 탱크'}
-            {tankType === 'cone-bottom' && '바닥이 원뿔 형태인 탱크'}
-            {tankType === 'cone-top' && '상단이 원뿔 형태인 탱크'}
-            {tankType === 'frustum' && '절두체(깔때기) 형태의 탱크'}
+            {currentDesc}
           </p>
         </div>
       </div>

@@ -4,18 +4,17 @@ import { useState, useEffect, useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { UNIT_DEFINITIONS, convert } from '@/utils/unitConversion';
+import { UNIT_DEFINITIONS, convert, DEFAULT_UNITS_BY_LOCALE } from '@/utils/unitConversion';
+import { useI18n } from '@/i18n/I18nProvider';
+import { usePathname } from 'next/navigation';
 
 const group1 = ['length', 'area', 'volume', 'temperature'];
 const group2 = ['flow', 'pressure', 'energy', 'mass', 'enthalpy'];
 
-const unitCategories = {
-  group1: group1.map(id => ({ id, name: UNIT_DEFINITIONS[id]?.name || id })),
-  group2: group2.map(id => ({ id, name: UNIT_DEFINITIONS[id]?.name || id })),
-};
-
 const NewUnitConverter = ({ category }: { category: string }) => {
   const categoryData = UNIT_DEFINITIONS[category];
+  const pathname = usePathname();
+  const isKo = pathname.startsWith('/ko');
   
   const units = useMemo(() => {
     if (!categoryData) return [];
@@ -28,11 +27,13 @@ const NewUnitConverter = ({ category }: { category: string }) => {
 
   useEffect(() => {
     if (categoryData && units.length > 0) {
-      setFromUnit(units[0]);
+      const locale = isKo ? 'ko' : 'en';
+      const defaultUnit = DEFAULT_UNITS_BY_LOCALE[locale]?.[category];
+      setFromUnit(defaultUnit && units.includes(defaultUnit) ? defaultUnit : units[0]);
     } else {
-      setFromUnit(''); // units가 비어있으면 fromUnit을 빈 문자열로 초기화
+      setFromUnit('');
     }
-  }, [units, categoryData]);
+  }, [units, categoryData, isKo, category]);
 
   useEffect(() => {
     if (!categoryData || !fromUnit || !units.includes(fromUnit)) {
@@ -51,7 +52,7 @@ const NewUnitConverter = ({ category }: { category: string }) => {
     }
   }, [fromValue, fromUnit, category, units, categoryData]);
 
-  if (!categoryData) return <p>정의되지 않은 단위 카테고리입니다.</p>;
+  if (!categoryData) return <p>Unknown unit category.</p>;
 
   return (
     <div>
@@ -86,12 +87,23 @@ const NewUnitConverter = ({ category }: { category: string }) => {
 };
 
 const CombinedUnitConverter = () => {
+  const { dict } = useI18n();
+
+  const getUnitCategoryName = (id: string) => {
+    return dict.common.unitCategories[id as keyof typeof dict.common.unitCategories] || UNIT_DEFINITIONS[id]?.name || id;
+  };
+
+  const unitCategories = {
+    group1: group1.map(id => ({ id, name: getUnitCategoryName(id) })),
+    group2: group2.map(id => ({ id, name: getUnitCategoryName(id) })),
+  };
+
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm h-full flex flex-col">
       <Tabs defaultValue="basic" className="w-full h-full flex flex-col">
         <TabsList className="grid w-full grid-cols-2 h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
-          <TabsTrigger value="basic" className="inline-flex items-center justify-center whitespace-nowrap  px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-sm">기본 단위</TabsTrigger>
-          <TabsTrigger value="engineering" className="inline-flex items-center justify-center whitespace-nowrap  px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-sm">공학 단위</TabsTrigger>
+          <TabsTrigger value="basic" className="inline-flex items-center justify-center whitespace-nowrap  px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-sm">{dict.common.basicUnits}</TabsTrigger>
+          <TabsTrigger value="engineering" className="inline-flex items-center justify-center whitespace-nowrap  px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-sm">{dict.common.engineeringUnits}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="basic" className="flex-grow">

@@ -2,7 +2,8 @@
 
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import { ko } from 'date-fns/locale'
+import { ko, enUS } from 'date-fns/locale'
+import { usePathname } from 'next/navigation'
 import { cn } from '../../utils/cn';
 import { CalendarIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -20,17 +21,21 @@ interface CustomDatePickerProps {
 export function CustomDatePicker({
   date,
   setDate,
-  placeholder = "날짜 선택",
+  placeholder,
   className
 }: CustomDatePickerProps) {
+  const pathname = usePathname()
+  const isKo = pathname?.startsWith('/ko') ?? false
+  const dateFormatStr = isKo ? 'yyyy년 MM월 dd일' : 'MMM d, yyyy'
+  const placeholderText = placeholder ?? (isKo ? '날짜 선택' : 'Select date')
   return (
     <div className={cn("w-full", className)}>
       <DatePicker
         selected={date}
         onChange={(date: Date | null) => setDate(date || undefined)}
-        locale={ko}
-        dateFormat="yyyy년 MM월 dd일"
-        placeholderText={placeholder}
+        locale={isKo ? ko : enUS}
+        dateFormat={dateFormatStr}
+        placeholderText={placeholderText}
         className={cn(
           "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
           "file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground",
@@ -49,10 +54,14 @@ export function CustomDatePicker({
 export function CustomDatePickerWithPopover({
   date,
   setDate,
-  placeholder = "날짜 선택",
+  placeholder,
   className
 }: CustomDatePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false)
+  const pathname = usePathname()
+  const isKo = pathname?.startsWith('/ko') ?? false
+  const dateFormatStr = isKo ? 'yyyy년 MM월 dd일' : 'MMM d, yyyy'
+  const placeholderText = placeholder ?? (isKo ? '날짜 선택' : 'Select date')
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -66,7 +75,7 @@ export function CustomDatePickerWithPopover({
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, 'yyyy년 MM월 dd일') : <span>{placeholder}</span>}
+          {date ? format(date, dateFormatStr, { locale: isKo ? ko : enUS }) : <span>{placeholderText}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -76,7 +85,7 @@ export function CustomDatePickerWithPopover({
             setDate(date || undefined)
             setIsOpen(false)
           }}
-          locale={ko}
+          locale={isKo ? ko : enUS}
           inline
           renderCustomHeader={({
             date,
@@ -97,7 +106,7 @@ export function CustomDatePickerWithPopover({
               </button>
               <div className="flex items-center">
                 <select
-                  aria-label="년도 선택"
+                  aria-label={isKo ? '년도 선택' : 'Select year'}
                   value={date.getFullYear()}
                   onChange={({ target: { value } }) => changeYear(Number(value))}
                   className="mx-1 p-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -109,14 +118,14 @@ export function CustomDatePickerWithPopover({
                   ))}
                 </select>
                 <select
-                  aria-label="월 선택"
+                  aria-label={isKo ? '월 선택' : 'Select month'}
                   value={date.getMonth()}
                   onChange={({ target: { value } }) => changeMonth(Number(value))}
                   className="mx-1 p-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   {Array.from({ length: 12 }, (_, i) => i).map((month) => (
                     <option key={month} value={month}>
-                      {ko.localize?.month(month as any, { width: 'wide' })}
+                      {(isKo ? ko : enUS).localize?.month(month as any, { width: 'wide' })}
                     </option>
                   ))}
                 </select>

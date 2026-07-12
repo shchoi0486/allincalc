@@ -166,23 +166,27 @@
   }
 }
 
-/* General Table Styles - 모든 테이블 요소에 적용 */
+/* General Table base - 모든 테이블은 border-collapse 로 통일(겹침/두께 불일치 방지) */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-table, th, td {
+/* 콘텐츠 영역(계산기 설명 등)의 표만 셀 테두리를 부여.
+   계산기 결과표/차트표는 각 컴포넌트가 테두리를 직접 관리하므로 전역 셀 테두리는 주지 않음. */
+.accordion-content-optimized table,
+.accordion-content-optimized th,
+.accordion-content-optimized td {
   border: 1px solid var(--border);
 }
 
-th {
+.accordion-content-optimized th {
   background-color: var(--muted);
   font-weight: 600;
   padding: 8px 12px;
 }
 
-td {
+.accordion-content-optimized td {
   padding: 8px 12px;
 }
 

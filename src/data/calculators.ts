@@ -186,12 +186,106 @@ export const calculatorCategories = [
     href: '/calculators/engineering',
     subcategories: [
       {
+        id: 'mechanical',
+        name: '기계 공학',
+        calculators: [
+          { id: 'free-fall', name: '자유 낙하 계산기', href: '/calculators/engineering/free-fall' },
+          { id: 'beam-deflection', name: '빔 처짐 계산기', href: '/calculators/engineering/beam-deflection' },
+          { id: 'spring-rate', name: '스프링 상수 계산기', href: '/calculators/engineering/spring-rate' },
+          { id: 'gear-ratio', name: '기어비 계산기', href: '/calculators/engineering/gear-ratio' },
+          { id: 'bearing-life', name: '베어링 수명 (L10) 계산기', href: '/calculators/engineering/bearing-life' },
+          { id: 'torque-power', name: '토크 및 동력 계산기', href: '/calculators/engineering/torque-power' },
+          { id: 'centrifuge', name: '원심 분리기 (RCF) 계산기', href: '/calculators/engineering/centrifuge' },
+        ],
+      },
+      {
+        id: 'civil-structural',
+        name: '토목 및 구조 공학',
+        calculators: [
+          { id: 'asce7-wind-load', name: 'ASCE 7 풍하중 계산기', href: '/calculators/engineering/asce7-wind-load' },
+          { id: 'stress-strain', name: '응력 및 변형률 계산기', href: '/calculators/engineering/stress-strain' },
+          { id: 'euler-buckling', name: '오일러 좌굴 하중 계산기', href: '/calculators/engineering/euler-buckling' },
+          { id: 'mannings-equation', name: '매닝의 방정식 (개수로 유동)', href: '/calculators/engineering/mannings-equation' },
+          { id: 'hydraulic-jump', name: '수력 도약 계산기', href: '/calculators/engineering/hydraulic-jump' },
+        ],
+      },
+      {
         id: 'fluid-mechanics',
         name: '유체 역학',
         calculators: [
           { id: 'npsh', name: 'NPSH 계산기', href: '/calculators/engineering/npsh' },
           { id: 'pump-power', name: '펌프 동력 계산기', href: '/calculators/engineering/pump-power' },
+          { id: 'pump-affinity', name: '펌프 상사법칙 계산기', href: '/calculators/engineering/pump-affinity' },
+          { id: 'specific-speed', name: '펌프 비속도 (Ns) 계산기', href: '/calculators/engineering/specific-speed' },
           { id: 'tank-volume', name: '탱크 용량 계산기', href: '/calculators/engineering/tank' },
+          { id: 'pipe-friction', name: '파이프 마찰 손실 계산기', href: '/calculators/engineering/pipe-friction' },
+          { id: 'reynolds-number', name: '레이놀즈 수 계산기', href: '/calculators/engineering/reynolds-number' },
+          { id: 'bernoulli', name: '베르누이 방정식 계산기', href: '/calculators/engineering/bernoulli' },
+          { id: 'water-hammer', name: '수격 현상 (Water Hammer) 계산기', href: '/calculators/engineering/water-hammer' },
+          { id: 'orifice-flow', name: '오리피스 유량 계산기', href: '/calculators/engineering/orifice-flow' },
+          { id: 'cyclone-efficiency', name: '사이클론 분리기 효율 계산기', href: '/calculators/engineering/cyclone-efficiency' },
+          { id: 'iso-2533-atmosphere', name: 'ISO 2533 표준 대기 계산기', href: '/calculators/engineering/iso-2533-atmosphere' },
+        ],
+      },
+      {
+        id: 'piping',
+        name: '배관 및 압력용기',
+        calculators: [
+          { id: 'iso-1127-pipe', name: 'ISO 1127 스텐레스 배관 계산기', href: '/calculators/engineering/iso-1127-pipe' },
+          { id: 'din-10220-pipe', name: 'DIN EN 10220 강관 파열 압력 계산기', href: '/calculators/engineering/din-10220-pipe' },
+          { id: 'asme-b313', name: 'ASME B31.3 배관 두께/압력 계산기', href: '/calculators/engineering/asme-b313' },
+          { id: 'barlows-formula', name: '바를로 공식 계산기', href: '/calculators/engineering/barlows-formula' },
+          { id: 'asme-section-viii', name: 'ASME Sec VIII 압력용기 계산기', href: '/calculators/engineering/asme-section-viii' },
+          { id: 'api-650-tank', name: 'API 650 탱크 두께 계산기', href: '/calculators/engineering/api-650-tank' },
+        ],
+      },
+      {
+        id: 'thermodynamics',
+        name: '열역학',
+        icon: Flame,
+        calculators: [
+          { id: 'heat-transfer', name: '열전도 계산기', href: '/calculators/engineering/heat-transfer' },
+          { id: 'radiation-heat', name: '복사 열전달 계산기', href: '/calculators/engineering/radiation-heat' },
+          { id: 'carnot-efficiency', name: '카르노 효율 계산기', href: '/calculators/engineering/carnot-efficiency' },
+          { id: 'u-value', name: '열관류율 (U-Value) 계산기', href: '/calculators/engineering/u-value' },
+          { id: 'lmtd', name: '대수평균온도차 (LMTD) 계산기', href: '/calculators/engineering/lmtd' },
+          { id: 'tube-pressure-drop', name: '열교환기 튜브 압력 강하 계산기', href: '/calculators/engineering/tube-pressure-drop' },
+        ],
+      },
+      {
+        id: 'acoustics',
+        name: '음향 및 진동',
+        calculators: [
+          { id: 'sound-pressure', name: '음압 레벨 (SPL) 거리 계산기', href: '/calculators/engineering/sound-pressure' },
+        ],
+      },
+      {
+        id: 'hvac',
+        name: '공기조화 (HVAC)',
+        icon: Wind,
+        calculators: [
+          { id: 'sensible-heat', name: '현열 부하 계산기', href: '/calculators/engineering/sensible-heat' },
+          { id: 'psychrometric', name: '사이크로메트릭 (공기선도) 계산기', href: '/calculators/engineering/psychrometric' },
+          { id: 'cooling-tower', name: '쿨링타워 (냉각탑) 설계 계산기', href: '/calculators/engineering/cooling-tower' },
+          { id: 'duct-friction', name: '공기 덕트 마찰 손실 계산기', href: '/calculators/engineering/duct-friction' },
+        ],
+      },
+      {
+        id: 'electrical',
+        name: '전기 공학',
+        calculators: [
+          { id: 'ohms-law', name: '옴의 법칙 계산기', href: '/calculators/engineering/ohms-law' },
+          { id: 'voltage-drop', name: '전압 강하 계산기', href: '/calculators/engineering/voltage-drop' },
+          { id: 'rc-circuit', name: 'RC 회로 시정수 계산기', href: '/calculators/engineering/rc-circuit' },
+          { id: 'ac-power', name: '교류 전력 계산기', href: '/calculators/engineering/ac-power' },
+        ],
+      },
+      {
+        id: 'chemical',
+        name: '화학 공학',
+        calculators: [
+          { id: 'ideal-gas', name: '이상기체 상태방정식 계산기', href: '/calculators/engineering/ideal-gas' },
+          { id: 'api-gravity', name: 'API 비중 계산기', href: '/calculators/engineering/api-gravity' },
         ],
       },
       {
@@ -199,9 +293,9 @@ export const calculatorCategories = [
         name: '재질',
         icon: Beaker,
         calculators: [
-          { id: 'materials', name: '재질 데이터베이스', href: '/calculators/engineering/material-property' },
           { id: 'comparison', name: '재질 물성 비교', href: '/calculators/engineering/material-comparison' },
           { id: 'corrosion-compatibility', name: '부식성 호환성 비교', href: '/calculators/engineering/corrosion-compatibility' },
+          { id: 'thermal-expansion', name: '열팽창 계산기', href: '/calculators/engineering/thermal-expansion' },
         ],
       },
     ],
@@ -217,8 +311,6 @@ export const calculatorCategories = [
         name: '텍스트 도구',
         calculators: [
           { id: 'text-summarizer', name: '텍스트 요약 도구', href: '/calculators/ai-tools/text-summarizer' },
-          { id: 'grammar-checker', name: '맞춤법 검사기', href: '/calculators/ai-tools/grammar-checker' },
-          { id: 'text-translator', name: '번역 도구', href: '/calculators/ai-tools/text-translator' },
           { id: 'lorem-ipsum-generator', name: '로렘 Ipsum 생성기', href: '/calculators/ai-tools/lorem-ipsum-generator' },
         ],
       },
@@ -226,7 +318,6 @@ export const calculatorCategories = [
         id: 'image-tools',
         name: '이미지 도구',
         calculators: [
-          { id: 'image-generator', name: '이미지 생성기', href: '/calculators/ai-tools/image-generator' },
           { id: 'image-resizer', name: '이미지 리사이저', href: '/calculators/ai-tools/image-resizer' },
           { id: 'image-converter', name: '이미지 변환', href: '/calculators/ai-tools/image-converter' },
         ],
@@ -339,6 +430,20 @@ export const calculators = {
       name: '목재 계산기',
       description: '보드 피트, 선형 피트 등 목재 수량을 계산합니다.',
       href: '/lumber-calculator',
+    },
+    {
+      id: 'pipe-friction',
+      name: '파이프 마찰 손실 계산기',
+      description: 'Darcy-Weisbach 공식을 사용하여 배관 내 유체의 마찰 손실 수두를 계산합니다.',
+      href: '/calculators/engineering/pipe-friction',
+      icon: '🚰',
+    },
+    {
+      id: 'beam-deflection',
+      name: '빔 처짐 계산기',
+      description: '외팔보(Cantilever)의 하중에 따른 처짐량과 굽힘 모멘트를 계산합니다.',
+      href: '/calculators/engineering/beam-deflection',
+      icon: '🏗️',
     },
   ],
   chemistry: [

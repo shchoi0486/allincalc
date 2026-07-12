@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import Layout from "@/components/layout/Layout";
 import { Toaster } from 'sonner';
 import Script from "next/script";
+import { isLocale, defaultLocale } from "@/i18n/config";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -26,8 +28,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const localeCookie = cookies().get("locale")?.value;
+  const htmlLang = localeCookie && isLocale(localeCookie) ? localeCookie : defaultLocale;
+
   return (
-    <html lang="en" suppressHydrationWarning className="overflow-y-scroll">
+    <html lang={htmlLang} suppressHydrationWarning className="overflow-y-scroll">
       <head>
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
           <Script

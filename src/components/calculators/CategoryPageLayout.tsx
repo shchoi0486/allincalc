@@ -9,6 +9,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { ArrowRight, Briefcase, Landmark, PiggyBank, Building, HandCoins, FileText, Calculator as CalculatorIcon } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface Calculator {
   id: string;
@@ -41,12 +42,23 @@ const ICONS: { [key: string]: React.ElementType } = {
 
 const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { dict, locale } = useI18n();
+
+  const getSubcategoryName = (id: string, fallbackName: string) => {
+    const translated = dict.subcategoryNames[id as keyof typeof dict.subcategoryNames];
+    return translated || fallbackName;
+  };
+
+  const getCalculatorName = (id: string, fallbackName: string) => {
+    const translated = dict.calculatorNames[id as keyof typeof dict.calculatorNames];
+    return translated || fallbackName;
+  };
 
   const filteredSubcategories = category.subcategories
     .map(subcategory => ({
       ...subcategory,
       calculators: subcategory.calculators.filter(calculator =>
-        calculator.name.toLowerCase().includes(searchTerm.toLowerCase())
+        getCalculatorName(calculator.id, calculator.name).toLowerCase().includes(searchTerm.toLowerCase())
       ),
     }))
     .filter(subcategory => subcategory.calculators.length > 0);
@@ -56,7 +68,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-foreground leading-tight">
-            {category.name} 계산기
+            {category.name} {dict.categories.titleSuffix}
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
             {category.description}
@@ -66,7 +78,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
         <div className="mb-10 max-w-lg mx-auto">
           <Input
             type="text"
-            placeholder="계산기 검색..."
+            placeholder={dict.categories.searchPlaceholder}
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             className="w-full px-4 py-3 text-lg rounded-full shadow-sm"
@@ -83,7 +95,9 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
                     <div className="bg-primary/10 p-2 rounded-full">
                       <Icon className="w-5 h-5 text-primary" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-card-foreground">{subcategory.name}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-card-foreground">
+                      {getSubcategoryName(subcategory.id, subcategory.name)}
+                    </CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="p-3">
@@ -95,7 +109,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
                             <div className="flex items-center space-x-3">
                               <CalculatorIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
                               <span className="text-base font-medium text-muted-foreground group-hover:text-foreground">
-                                {calculator.name}
+                                {getCalculatorName(calculator.id, calculator.name)}
                               </span>
                             </div>
                             <ArrowRight className="w-5 h-5 text-muted-foreground transform transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary" />

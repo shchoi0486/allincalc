@@ -7,7 +7,15 @@
  * @param isoWeek - ISO 주간 형식 문자열 (예: "2023-W48")
  * @returns 한국어 형식 문자열 (예: "23년12월1주")
  */
-export const formatWeekLabel = (isoWeek: string): string => {
+type DateLocale = 'en' | 'ko';
+
+const SHORT_MONTHS_EN = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
+export const formatWeekLabel = (isoWeek: string, locale: DateLocale = 'en'): string => {
+  const isKo = locale === 'ko';
   if (!isoWeek || !isoWeek.includes('-W')) {
     return isoWeek; // ISO 주간 형식이 아니면 원본 반환
   }
@@ -64,7 +72,9 @@ export const formatWeekLabel = (isoWeek: string): string => {
       
       const lastWeekOfPrevMonth = Math.floor((lastMondayOfPrevMonth.getTime() - firstMondayOfPrevMonth.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
       
-      return `${prevYear}년${prevMonth}월${lastWeekOfPrevMonth}주`;
+      return isKo
+        ? `${prevYear}년${prevMonth}월${lastWeekOfPrevMonth}주`
+        : `${SHORT_MONTHS_EN[prevMonth - 1]} W${lastWeekOfPrevMonth} '${prevYear}`;
     }
     
     // 해당 월을 넘어가는 경우 처리 (다음 달의 첫 번째 주)
@@ -72,10 +82,14 @@ export const formatWeekLabel = (isoWeek: string): string => {
     if (targetWeekMonday.getTime() > lastDayOfMonth.getTime()) {
       const nextMonth = month === 12 ? 1 : month + 1;
       const nextYear = month === 12 ? parseInt(shortYear) + 1 : shortYear;
-      return `${nextYear}년${nextMonth}월1주`;
+      return isKo
+        ? `${nextYear}년${nextMonth}월1주`
+        : `${SHORT_MONTHS_EN[nextMonth - 1]} W1 '${nextYear}`;
     }
     
-    return `${shortYear}년${month}월${weekOfMonth}주`;
+    return isKo
+      ? `${shortYear}년${month}월${weekOfMonth}주`
+      : `${SHORT_MONTHS_EN[month - 1]} W${weekOfMonth} '${shortYear}`;
   } catch (error) {
     console.warn('주간 라벨 포맷팅 오류:', error);
     return isoWeek; // 오류 발생 시 원본 반환
@@ -88,9 +102,10 @@ export const formatWeekLabel = (isoWeek: string): string => {
  * @param interval - 기간 타입 ('weekly', 'monthly', 'yearly')
  * @returns 포맷된 라벨 문자열
  */
-export const formatXAxisLabel = (value: string, interval: string): string => {
+export const formatXAxisLabel = (value: string, interval: string, locale: DateLocale = 'en'): string => {
+  const isKo = locale === 'ko';
   if (interval === 'weekly') {
-    return formatWeekLabel(value);
+    return formatWeekLabel(value, locale);
   }
   
   // 월간: '25년 1월' 형태로 변경
@@ -98,14 +113,14 @@ export const formatXAxisLabel = (value: string, interval: string): string => {
     const date = new Date(value);
     const year = date.getFullYear().toString().slice(-2);
     const month = date.getMonth() + 1;
-    return `${year}년 ${month}월`;
+    return isKo ? `${year}년 ${month}월` : `${SHORT_MONTHS_EN[month - 1]} '${year}`;
   }
   
   // 연간: '25년' 형태로 변경
   if (interval === 'yearly') {
     const date = new Date(value);
     const year = date.getFullYear().toString().slice(-2);
-    return `${year}년`;
+    return isKo ? `${year}년` : `'${year}`;
   }
 
   return value;

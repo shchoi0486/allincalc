@@ -221,6 +221,22 @@ export type UnitSystem = 'imperial' | 'si';
 /**
  * 현재 단위 시스템에 따라 물성값을 변환
  */
+
+// 로케일별 기본 단위 매핑 (EN 사용자에게 영미 단위를 기본으로 제공)
+export const DEFAULT_UNITS_BY_LOCALE: Record<string, Record<string, string>> = {
+  ko: {}, // SI 단위가 이미 UNIT_DEFINITIONS의 첫 번째이므로 기본
+  en: {
+    length: 'ft',
+    area: 'ft²',
+    volume: 'gal (US)',
+    temperature: '°F',
+    mass: 'lb',
+    pressure: 'psi',
+    flow: 'gpm (US)',
+    energy: 'kcal/h', // 공학용 에너지(열량)는 kcal/h이 익숙
+  },
+};
+
 export const UNIT_DEFINITIONS: { [key: string]: any } = {
   energy: {
     name: '열에너지',

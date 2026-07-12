@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,21 @@ const unitConversions = {
 };
 
 const PumpPowerCalculator = () => {
+  const pathname = usePathname();
+  const isKo = pathname?.startsWith('/ko') ?? false;
+  const t = {
+    title: isKo ? '펌프 동력 계산기' : 'Pump Power Calculator',
+    flowRate: isKo ? '유량' : 'Flow Rate',
+    flowRatePlaceholder: isKo ? '유량 입력' : 'Enter flow rate',
+    head: isKo ? '양정' : 'Head',
+    headPlaceholder: isKo ? '양정 입력' : 'Enter head',
+    fluidDensity: isKo ? '유체 밀도' : 'Fluid Density',
+    fluidDensityPlaceholder: isKo ? '유체 밀도 입력' : 'Enter fluid density',
+    pumpEfficiency: isKo ? '펌프 효율 (%)' : 'Pump Efficiency (%)',
+    pumpEfficiencyPlaceholder: isKo ? '펌프 효율 입력 (예: 70)' : 'Enter pump efficiency (e.g., 70)',
+    unit: isKo ? '단위' : 'Unit',
+    result: isKo ? '계산 결과' : 'Calculation Result',
+  };
   const [flowRate, setFlowRate] = useState<number | ''>(10);
   const [head, setHead] = useState<number | ''>(10);
   const [fluidDensity, setFluidDensity] = useState<number | ''>(1000);
@@ -69,23 +85,23 @@ const PumpPowerCalculator = () => {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">펌프 동력 계산기</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">{t.title}</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="flowRate">유량</Label>
+            <Label htmlFor="flowRate">{t.flowRate}</Label>
             <div className="flex">
               <Input
                 id="flowRate"
                 type="number"
                 value={flowRate}
                 onChange={(e) => setFlowRate(parseFloat(e.target.value) || '')}
-                placeholder="유량 입력"
+                placeholder={t.flowRatePlaceholder}
               />
               <Select value={flowRateUnit} onValueChange={(value) => setFlowRateUnit(value as keyof typeof unitConversions.flow)}>
                 <SelectTrigger className="w-[100px]">
-                  <SelectValue placeholder="단위" />
+                  <SelectValue placeholder={t.unit} />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.keys(unitConversions.flow).map((unit) => (
@@ -99,18 +115,18 @@ const PumpPowerCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="head">양정</Label>
+            <Label htmlFor="head">{t.head}</Label>
             <div className="flex">
               <Input
                 id="head"
                 type="number"
                 value={head}
                 onChange={(e) => setHead(parseFloat(e.target.value) || '')}
-                placeholder="양정 입력"
+                placeholder={t.headPlaceholder}
               />
               <Select value={headUnit} onValueChange={(value) => setHeadUnit(value as keyof typeof unitConversions.head)}>
                 <SelectTrigger className="w-[100px]">
-                  <SelectValue placeholder="단위" />
+                  <SelectValue placeholder={t.unit} />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.keys(unitConversions.head).map((unit) => (
@@ -124,18 +140,18 @@ const PumpPowerCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="fluidDensity">유체 밀도</Label>
+            <Label htmlFor="fluidDensity">{t.fluidDensity}</Label>
             <div className="flex">
               <Input
                 id="fluidDensity"
                 type="number"
                 value={fluidDensity}
                 onChange={(e) => setFluidDensity(parseFloat(e.target.value) || '')}
-                placeholder="유체 밀도 입력"
+                placeholder={t.fluidDensityPlaceholder}
               />
               <Select value={densityUnit} onValueChange={(value) => setDensityUnit(value as keyof typeof unitConversions.density)}>
                 <SelectTrigger className="w-[100px]">
-                  <SelectValue placeholder="단위" />
+                  <SelectValue placeholder={t.unit} />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.keys(unitConversions.density).map((unit) => (
@@ -149,13 +165,13 @@ const PumpPowerCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="pumpEfficiency">펌프 효율 (%)</Label>
+            <Label htmlFor="pumpEfficiency">{t.pumpEfficiency}</Label>
             <Input
               id="pumpEfficiency"
               type="number"
               value={pumpEfficiency}
               onChange={(e) => setPumpEfficiency(parseFloat(e.target.value) || '')}
-              placeholder="펌프 효율 입력 (예: 70)"
+              placeholder={t.pumpEfficiencyPlaceholder}
               min="0"
               max="100"
             />
@@ -165,7 +181,7 @@ const PumpPowerCalculator = () => {
         {calculatedPower !== null && (
           <Card className="bg-gray-100 dark:bg-gray-700">
             <CardContent className="p-4">
-              <h3 className="text-lg font-semibold mb-2">계산 결과</h3>
+              <h3 className="text-lg font-semibold mb-2">{t.result}</h3>
               <p className="text-2xl font-bold text-green-600 dark:text-green-400">
                 {calculatedPower.toFixed(2)} kW
               </p>

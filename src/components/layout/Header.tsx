@@ -4,11 +4,18 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   MagnifyingGlassIcon,
-  BellIcon,
-  UserIcon,
 } from '@heroicons/react/24/outline';
 import { calculatorCategories } from '@/data/calculators';
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { en } from '@/i18n/dictionaries/en';
+import { ko } from '@/i18n/dictionaries/ko';
+import { defaultLocale, type Locale } from '@/i18n/config';
+import LanguageSwitcher from './LanguageSwitcher';
+
+function getLocaleFromPath(pathname?: string): Locale {
+  const seg = pathname?.split('/')[1];
+  return seg === 'ko' || seg === 'en' ? (seg as Locale) : defaultLocale;
+}
 
 // Flatten calculators for search
 const allCalculators = calculatorCategories.flatMap(category =>
@@ -32,13 +39,22 @@ const orderedCategoryNames = [
   'others',
 ];
 
-const navigation = orderedCategoryNames.map(name => {
-    const category = calculatorCategories.find(c => c.id === name);
-    return category ? { name: category.name, href: category.href, icon: category.icon } : null;
-  }).filter(Boolean as any);
-
 const Header: React.FC = () => {
   const pathname = usePathname();
+  const locale = getLocaleFromPath(pathname);
+  const dict = locale === 'ko' ? ko : en;
+  const localePrefix = `/${locale}`;
+
+  const navigation = orderedCategoryNames.map(name => {
+    const category = calculatorCategories.find(c => c.id === name);
+    if (!category) return null;
+    const navKey = (name === 'ai-tools' ? 'aiTools' : name) as keyof typeof dict.nav;
+    return {
+      name: dict.nav[navKey] ?? category.name,
+      href: category.href,
+    };
+  }).filter(Boolean) as { name: string; href: string }[];
+
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<typeof allCalculators>([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -85,7 +101,7 @@ const Header: React.FC = () => {
       {/* Top row: Logo, Search, Icons */}
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3">
+        <Link href={localePrefix} className="flex items-center space-x-3">
           <Image src="/logo/allincalc5.png" alt="AllinCalc Logo" width={60} height={18} />
           <h1 className="text-2xl font-bold text-foreground">All-in-Calc</h1>
         </Link>
@@ -94,7 +110,7 @@ const Header: React.FC = () => {
           {/* Search */}
           <div className="relative w-full max-w-lg" ref={searchRef}>
             <label htmlFor="search" className="sr-only">
-              Search
+              {dict.common.searchPlaceholder}
             </label>
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -107,7 +123,7 @@ const Header: React.FC = () => {
                 id="search"
                 name="search"
                 className="block w-full rounded-md border-0 bg-muted py-2.5 pl-10 pr-3 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                placeholder="Search for any calculator..."
+                placeholder={dict.common.searchPlaceholder}
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -121,7 +137,7 @@ const Header: React.FC = () => {
                     {searchResults.map((calc) => (
                       <li key={calc.id}>
                         <Link
-                          href={calc.href}
+                          href={`${localePrefix}${calc.href}`}
                           className="block px-4 py-2 text-sm hover:bg-muted"
                           onClick={handleResultClick}
                         >
@@ -132,7 +148,7 @@ const Header: React.FC = () => {
                     ))}
                   </ul>
                 ) : (
-                  searchQuery && <p className="p-4 text-sm text-muted-foreground">No results found.</p>
+                  searchQuery && <p className="p-4 text-sm text-muted-foreground">{dict.common.searchPlaceholder}</p>
                 )}
               </div>
             )}
@@ -141,38 +157,23 @@ const Header: React.FC = () => {
           {/* Right Icons */}
           <div className="flex items-center space-x-2">
             <ThemeToggle />
-            <button
-              type="button"
-              className="p-2 rounded-full text-muted-foreground hover:text-foreground focus:outline-none"
-            >
-              <span className="sr-only">View notifications</span>
-              <BellIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="flex items-center rounded-full text-sm focus:outline-none"
-              id="user-menu-button"
-            >
-              <span className="sr-only">Open user menu</span>
-              <UserIcon className="h-8 w-8 rounded-full text-muted-foreground" />
-            </button>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto flex items-center justify-center space-x-8 py-3">
+        <nav className="container mx-auto flex items-center justify-center gap-1 py-2.5">
           {navigation.map((item) => {
-            if (!item) return null;
-            const isActive = pathname?.startsWith(item.href);
+            const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (
               <Link
                 key={item.name}
-                href={item.href}
-                className={`text-base font-medium transition-colors px-3 py-1 rounded-md ${
+                href={`${localePrefix}${item.href}`}
+                className={`relative text-sm font-semibold tracking-tight px-4 py-2 rounded-lg transition-all ${
                   isActive
-                    ? 'bg-primary text-primary-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
