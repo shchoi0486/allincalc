@@ -9,6 +9,12 @@ import { en } from '@/i18n/dictionaries/en';
 import { ko } from '@/i18n/dictionaries/ko';
 import { isLocale, type Locale } from '@/i18n/config';
 
+import { locales } from '@/i18n/config';
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 export default function Home({ params }: { params: { locale: string } }) {
   const locale = isLocale(params.locale) ? (params.locale as Locale) : 'en';
   const dict = locale === 'ko' ? ko : en;
