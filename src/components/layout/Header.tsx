@@ -106,9 +106,9 @@ const Header: React.FC = () => {
           <h1 className="text-2xl font-bold text-foreground">All-in-Calc</h1>
         </Link>
 
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex min-w-0 items-center justify-end gap-2 sm:gap-4">
           {/* Search */}
-          <div className="relative w-full max-w-lg" ref={searchRef}>
+          <div className="relative w-full max-w-[140px] sm:max-w-md lg:max-w-lg" ref={searchRef}>
             <label htmlFor="search" className="sr-only">
               {dict.common.searchPlaceholder}
             </label>
@@ -164,14 +164,14 @@ const Header: React.FC = () => {
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 py-2.5">
+        <nav className="container mx-auto grid grid-cols-2 sm:grid-cols-4 gap-x-2 gap-y-0.5 py-2.5 justify-items-center">
           {navigation.map((item) => {
             const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (
               <Link
                 key={item.name}
                 href={`${localePrefix}${item.href}`}
-                className={`relative shrink-0 whitespace-nowrap text-sm font-semibold tracking-tight px-3 sm:px-4 py-2 rounded-lg transition-all ${
+                className={`w-full text-center text-sm font-semibold tracking-tight px-3 py-2 rounded-lg transition-all ${
                   isActive
                     ? 'bg-primary text-primary-foreground shadow-sm'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
