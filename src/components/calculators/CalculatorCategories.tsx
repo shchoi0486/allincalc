@@ -62,10 +62,10 @@ export default function CalculatorCategories() {
                   <Link
                     href={calculator.href}
                     key={calculator.id}
-                    className={`flex items-center gap-2 p-2 border rounded-md transition-colors bg-white dark:bg-gray-950 ${style.border} hover:bg-gray-50 dark:hover:bg-gray-900`}
+                    className={`flex items-start gap-2 p-2 border rounded-md transition-colors bg-white dark:bg-gray-950 ${style.border} hover:bg-gray-50 dark:hover:bg-gray-900 min-w-0`}
                   >
-                    <category.icon className={`w-4 h-4 ${style.color} shrink-0`} />
-                    <span className="text-sm font-normal text-gray-800 dark:text-gray-200 truncate" title={getCalculatorName(calculator.id, calculator.name)}>
+                    <category.icon className={`w-4 h-4 ${style.color} shrink-0 mt-0.5`} />
+                    <span className="text-sm font-normal text-gray-800 dark:text-gray-200 break-words line-clamp-2" title={getCalculatorName(calculator.id, calculator.name)}>
                       {getCalculatorName(calculator.id, calculator.name)}
                     </span>
                   </Link>
