@@ -24,7 +24,7 @@ export default function Home({ params }: { params: { locale: string } }) {
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <section className="text-center">
           {/* 애드센스/쿠팡 광고 삽입 영역 */}
-          <div className="ad-placeholder my-8 p-6 border border-dashed rounded-lg">
+          <div className="ad-placeholder my-3 p-6 border border-dashed rounded-lg">
             <p className="text-gray-500">{dict.home.adPlaceholder}</p>
           </div>
           <div className="mt-8 mx-auto">
