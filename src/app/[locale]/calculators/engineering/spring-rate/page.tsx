@@ -33,7 +33,7 @@ export default function SpringRatePage() {
           <h4 className="font-bold text-base mb-2">{L('왜 필요한가', 'Why it matters')}</h4>
           <ul className="list-disc pl-5 space-y-1 text-sm">
             <li>{L('밸브 스프링, 서스펜션, 클러치 등 기계 부품의 강성 설계', 'Sizing stiffness for valve springs, suspensions, clutches and other machine parts')}</li>
-            <li>{L('목표 하중-변위 선도(force-deflection)得到满足하기 위한 권수·지름 결정', 'Choosing coil count and diameters to meet a target force–deflection curve')}</li>
+            <li>{L('목표 하중-변위 선도(force-deflection)를 만족하기 위한 권수·지름 결정', 'Choosing coil count and diameters to meet a target force–deflection curve')}</li>
             <li>{L('피로 수명과 응력 산정의 전단계 입력', 'Feeding the pre-step input for stress and fatigue-life calculations')}</li>
           </ul>
         </div>

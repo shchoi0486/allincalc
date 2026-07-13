@@ -266,7 +266,7 @@ const MeetingNotes = () => {
         <TermGlossary items={[
           { term: L('마크다운(Markdown)', 'Markdown'), desc: L('일반 텍스트에 가벼운 서식 문법(# 제목, - 목록, | 표 등)을 적용하는 마크업 언어입니다. GitHub, Notion, Obsidian 등에서 바로 렌더링됩니다.', 'A lightweight markup language that applies simple formatting syntax to plain text (# heading, - list, | table, etc.). Renders directly in GitHub, Notion, Obsidian, and more.') },
           { term: L('액션 아이템', 'Action Item'), desc: L('회의에서 결정된 후속 작업을 뜻합니다. 보통 작업 내용, 담당자, 마감일이 함께 관리되어 이행 여부를 추적합니다.', 'Follow-up tasks decided in a meeting. Usually tracked with task, assignee, and deadline to monitor completion.') },
-          { term: L('안건', 'Agenda'), desc: L('회의에서 논의할 주제 또는议题입니다. 안건별로 발표자, 논의 내용, 결정 사항을 정리하여 회의록을 구성합니다.', 'A topic or issue to discuss in a meeting. Each agenda item is organized with presenter, discussion, and decision to compose the minutes.') },
+          { term: L('안건', 'Agenda'), desc: L('회의에서 논의할 주제 또는 안건입니다. 안건별로 발표자, 논의 내용, 결정 사항을 정리하여 회의록을 구성합니다.', 'A topic or issue to discuss in a meeting. Each agenda item is organized with presenter, discussion, and decision to compose the minutes.') },
         ]} />
       </div>
     ),

@@ -1,8 +1,33 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useI18n } from '@/i18n/I18nProvider';
+import UnitSystemToggle from '@/components/calculators/UnitSystemToggle';
+
+// Conversion to SI base
+const LENGTH_TO_M: Record<string, number> = {
+  mm: 0.001,
+  cm: 0.01,
+  m: 1,
+  in: 0.0254,
+  ft: 0.3048,
+};
+const PRESSURE_TO_PA: Record<string, number> = {
+  Pa: 1,
+  kPa: 1000,
+  bar: 100000,
+  psi: 6894.76,
+  MPa: 1e6,
+};
+const DENSITY_TO_KGM3: Record<string, number> = {
+  'kg/m³': 1,
+  'lb/ft³': 16.0185,
+};
+
+const LENGTH_UNITS = ['mm', 'cm', 'm', 'in', 'ft'];
+const PRESSURE_UNITS = ['Pa', 'kPa', 'bar', 'psi', 'MPa'];
+const DENSITY_UNITS = ['kg/m³', 'lb/ft³'];
 
 const OrificeFlowCalculator = () => {
   const { dict, unitSystem, locale } = useI18n();
@@ -17,37 +42,59 @@ const OrificeFlowCalculator = () => {
   const [density, setDensity] = useState<number>(isImperial ? 62.4 : 1000); // lb/ft3 or kg/m3
   const [cd, setCd] = useState<number>(0.61);
 
+  // Per-input unit selection
+  const [pipeDiameterUnit, setPipeDiameterUnit] = useState(isImperial ? 'in' : 'm');
+  const [orificeDiameterUnit, setOrificeDiameterUnit] = useState(isImperial ? 'in' : 'm');
+  const [pressureDropUnit, setPressureDropUnit] = useState(isImperial ? 'psi' : 'Pa');
+  const [densityUnit, setDensityUnit] = useState(isImperial ? 'lb/ft³' : 'kg/m³');
+
   const [beta, setBeta] = useState<number>(0);
   const [area, setArea] = useState<number>(0);
   const [velocity, setVelocity] = useState<number>(0);
   const [flowRate, setFlowRate] = useState<number>(0);
+  const [playing, setPlaying] = useState<boolean>(true);
+
+  // Reset defaults + units when global unit system changes
+  useEffect(() => {
+    if (isImperial) {
+      setPipeDiameter(4);
+      setOrificeDiameter(2);
+      setPressureDrop(5);
+      setDensity(62.4);
+      setPipeDiameterUnit('in');
+      setOrificeDiameterUnit('in');
+      setPressureDropUnit('psi');
+      setDensityUnit('lb/ft³');
+    } else {
+      setPipeDiameter(0.1);
+      setOrificeDiameter(0.05);
+      setPressureDrop(50000);
+      setDensity(1000);
+      setPipeDiameterUnit('m');
+      setOrificeDiameterUnit('m');
+      setPressureDropUnit('Pa');
+      setDensityUnit('kg/m³');
+    }
+  }, [isImperial]);
 
   const handleCalculate = useCallback(() => {
     if (pipeDiameter > 0 && orificeDiameter > 0 && pressureDrop > 0 && density > 0 && cd > 0) {
-      // Conversions to standard SI for calculation if needed, or calculate directly
-      // Let's convert to SI internally for calculation, then convert back
-      let D = pipeDiameter;
-      let d = orificeDiameter;
-      let dP = pressureDrop;
-      let rho = density;
-
-      if (isImperial) {
-        D = pipeDiameter * 0.0254; // in to m
-        d = orificeDiameter * 0.0254; // in to m
-        dP = pressureDrop * 6894.76; // psi to Pa
-        rho = density * 16.0185; // lb/ft3 to kg/m3
-      }
+      // Convert each input to its SI base via the unit maps
+      const D = pipeDiameter * (LENGTH_TO_M[pipeDiameterUnit] ?? 1); // m
+      const d = orificeDiameter * (LENGTH_TO_M[orificeDiameterUnit] ?? 1); // m
+      const dP = pressureDrop * (PRESSURE_TO_PA[pressureDropUnit] ?? 1); // Pa
+      const rho = density * (DENSITY_TO_KGM3[densityUnit] ?? 1); // kg/m3
 
       const calcBeta = d / D;
       const calcArea = (Math.PI * Math.pow(d, 2)) / 4;
-      
+
       if (calcBeta < 1) {
         const denom = Math.sqrt(1 - Math.pow(calcBeta, 4));
         const velocityOrifice = cd * Math.sqrt((2 * dP) / rho) / denom;
         const q = calcArea * velocityOrifice; // m3/s
 
         setBeta(calcBeta);
-        
+
         if (isImperial) {
           setArea(calcArea * 1550.0031); // m2 to in2
           setVelocity(velocityOrifice * 3.28084); // m/s to ft/s
@@ -69,14 +116,15 @@ const OrificeFlowCalculator = () => {
       setVelocity(0);
       setFlowRate(0);
     }
-  }, [pipeDiameter, orificeDiameter, pressureDrop, density, cd, isImperial]);
+    setPlaying(true);
+  }, [pipeDiameter, orificeDiameter, pressureDrop, density, cd, pipeDiameterUnit, orificeDiameterUnit, pressureDropUnit, densityUnit, isImperial]);
 
-  const lengthUnit = isImperial ? 'in' : 'm';
-  const pressureUnit = isImperial ? 'psi' : 'Pa';
-  const densityUnit = isImperial ? 'lb/ft³' : 'kg/m³';
   const areaUnit = isImperial ? 'in²' : 'm²';
   const velUnit = isImperial ? 'ft/s' : 'm/s';
   const flowUnit = isImperial ? 'US gpm' : 'm³/h';
+
+  const unitSelectClass =
+    'w-20 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-600 dark:text-gray-300 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500';
 
   return (
     <div className="space-y-6">
@@ -84,38 +132,49 @@ const OrificeFlowCalculator = () => {
         {/* Inputs */}
         <Card>
           <CardContent className="p-4 space-y-4">
-            <h3 className="font-semibold mb-4 text-lg border-b pb-2">Inputs</h3>
-            
+            <div className="flex items-center justify-between mb-4 border-b pb-2">
+              <h3 className="font-semibold text-lg">Inputs</h3>
+              <UnitSystemToggle className="shrink-0" />
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>{t?.inputs?.pipeDiameter || 'Pipe Diameter (D)'}</Label>
-                <div className="flex gap-2">
-                  <Input type="number" value={pipeDiameter} onChange={(e) => setPipeDiameter(Number(e.target.value))} min={0.001} className="min-w-0" />
-                  <span className="flex items-center justify-center bg-muted px-2 rounded-md border shrink-0 w-12 text-sm">{lengthUnit}</span>
+                <div className="flex min-w-0">
+                  <Input type="number" value={pipeDiameter} onChange={(e) => setPipeDiameter(Number(e.target.value))} min={0.001} className="min-w-0 flex-1 rounded-r-none" />
+                  <select aria-label={t?.inputs?.pipeDiameter || 'Pipe Diameter (D)'} value={pipeDiameterUnit} onChange={(e) => setPipeDiameterUnit(e.target.value)} className={unitSelectClass}>
+                    {LENGTH_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                  </select>
                 </div>
               </div>
               <div className="space-y-2">
                 <Label>{t?.inputs?.orificeDiameter || 'Orifice Diameter (d)'}</Label>
-                <div className="flex gap-2">
-                  <Input type="number" value={orificeDiameter} onChange={(e) => setOrificeDiameter(Number(e.target.value))} min={0.001} className="min-w-0" />
-                  <span className="flex items-center justify-center bg-muted px-2 rounded-md border shrink-0 w-12 text-sm">{lengthUnit}</span>
+                <div className="flex min-w-0">
+                  <Input type="number" value={orificeDiameter} onChange={(e) => setOrificeDiameter(Number(e.target.value))} min={0.001} className="min-w-0 flex-1 rounded-r-none" />
+                  <select aria-label={t?.inputs?.orificeDiameter || 'Orifice Diameter (d)'} value={orificeDiameterUnit} onChange={(e) => setOrificeDiameterUnit(e.target.value)} className={unitSelectClass}>
+                    {LENGTH_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                  </select>
                 </div>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>{t?.inputs?.pressureDrop || 'Pressure Drop (ΔP)'}</Label>
-              <div className="flex gap-2">
-                <Input type="number" value={pressureDrop} onChange={(e) => setPressureDrop(Number(e.target.value))} min={0} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{pressureUnit}</span>
+              <div className="flex min-w-0">
+                <Input type="number" value={pressureDrop} onChange={(e) => setPressureDrop(Number(e.target.value))} min={0} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label={t?.inputs?.pressureDrop || 'Pressure Drop (ΔP)'} value={pressureDropUnit} onChange={(e) => setPressureDropUnit(e.target.value)} className={unitSelectClass}>
+                  {PRESSURE_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                </select>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>{t?.inputs?.density || 'Fluid Density (ρ)'}</Label>
-              <div className="flex gap-2">
-                <Input type="number" value={density} onChange={(e) => setDensity(Number(e.target.value))} min={0.1} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{densityUnit}</span>
+              <div className="flex min-w-0">
+                <Input type="number" value={density} onChange={(e) => setDensity(Number(e.target.value))} min={0.1} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label={t?.inputs?.density || 'Fluid Density (ρ)'} value={densityUnit} onChange={(e) => setDensityUnit(e.target.value)} className={unitSelectClass}>
+                  {DENSITY_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                </select>
               </div>
             </div>
 
@@ -140,7 +199,7 @@ const OrificeFlowCalculator = () => {
           <Card>
             <CardContent className="p-4 space-y-4 bg-primary/5">
               <h3 className="font-semibold mb-4 text-lg border-b border-primary/20 pb-2">Results</h3>
-              
+
               <div className="grid gap-3">
                 <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-primary/20 shadow-sm flex justify-between items-center">
                   <span className="text-sm font-medium text-muted-foreground">{t?.results?.betaRatio || 'Beta Ratio (β)'}</span>
@@ -180,14 +239,27 @@ const OrificeFlowCalculator = () => {
           {/* Visualization */}
           <Card>
             <CardContent className="p-4">
-              <h3 className="font-semibold mb-4 text-sm text-muted-foreground">
-                {t?.visualization?.title || 'Orifice Flow Diagram'}
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-sm text-muted-foreground">
+                  {t?.visualization?.title || 'Orifice Flow Diagram'}
+                </h3>
+                {flowRate > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setPlaying((p) => !p)}
+                    aria-label={playing ? 'Pause animation' : 'Play animation'}
+                    className="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-600 text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    {playing ? '⏸ ' + (locale === 'ko' ? '일시정지' : 'Pause') : '▶ ' + (locale === 'ko' ? '재생' : 'Play')}
+                  </button>
+                )}
+              </div>
               <div className="relative h-48 w-full bg-white dark:bg-gray-900 rounded-lg border p-4 flex items-center justify-center overflow-hidden">
                 <svg viewBox="0 0 400 150" className="w-full h-full">
+                  <style>{'@keyframes flow { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }'}</style>
                   {/* Pipe */}
                   <rect x="20" y="30" width="360" height="90" fill="#e2e8f0" stroke="#64748b" strokeWidth="2" opacity="0.5" />
-                  
+
                   {/* Orifice Plate */}
                   <rect x="195" y="10" width="10" height="130" fill="#475569" />
                   <rect x="195" y="55" width="10" height="40" fill="#e2e8f0" /> {/* Hole */}
@@ -195,17 +267,9 @@ const OrificeFlowCalculator = () => {
                   {/* Flow Lines */}
                   {flowRate > 0 && (
                     <g className="opacity-70">
-                      <path d="M 20 50 C 100 50, 150 50, 195 65 C 240 80, 280 50, 380 50" fill="none" stroke="#3b82f6" strokeWidth="2">
-                        <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1s" repeatCount="indefinite" />
-                        <animate attributeName="stroke-dasharray" values="10,10" dur="1s" repeatCount="indefinite" />
-                      </path>
-                      <path d="M 20 75 L 380 75" fill="none" stroke="#3b82f6" strokeWidth="3" strokeDasharray="15,10">
-                        <animate attributeName="stroke-dashoffset" from="25" to="0" dur="0.8s" repeatCount="indefinite" />
-                      </path>
-                      <path d="M 20 100 C 100 100, 150 100, 195 85 C 240 70, 280 100, 380 100" fill="none" stroke="#3b82f6" strokeWidth="2">
-                        <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1s" repeatCount="indefinite" />
-                        <animate attributeName="stroke-dasharray" values="10,10" dur="1s" repeatCount="indefinite" />
-                      </path>
+                      <path d="M 20 50 C 100 50, 150 50, 195 65 C 240 80, 280 50, 380 50" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="10,10" style={{ animation: playing ? 'flow 1s linear infinite' : 'none' }} />
+                      <path d="M 20 75 L 380 75" fill="none" stroke="#3b82f6" strokeWidth="3" strokeDasharray="15,10" style={{ animation: playing ? 'flow 0.8s linear infinite' : 'none' }} />
+                      <path d="M 20 100 C 100 100, 150 100, 195 85 C 240 70, 280 100, 380 100" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="10,10" style={{ animation: playing ? 'flow 1s linear infinite' : 'none' }} />
                     </g>
                   )}
 
@@ -222,7 +286,7 @@ const OrificeFlowCalculator = () => {
 
                   <text x="100" y="25" fill="#3b82f6" fontSize="12" textAnchor="middle" fontWeight="bold">P₁</text>
                   <text x="300" y="25" fill="#3b82f6" fontSize="12" textAnchor="middle" fontWeight="bold">P₂</text>
-                  
+
                 </svg>
               </div>
             </CardContent>

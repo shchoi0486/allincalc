@@ -56,12 +56,12 @@ const NewUnitConverter = ({ category }: { category: string }) => {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4 relative">
+      <div className="flex items-center gap-2 mb-4 relative flex-wrap sm:flex-nowrap">
         <select 
           aria-label="Select unit to convert from"
           value={fromUnit} 
           onChange={(e) => setFromUnit(e.target.value)}
-          className="w-[100px] border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400/50"
+          className="w-full sm:w-[120px] border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400/50"
         >
           {units.map(unit => (
             <option key={unit} value={unit}>{unit}</option>
@@ -71,7 +71,7 @@ const NewUnitConverter = ({ category }: { category: string }) => {
           type="number" 
               value={fromValue} 
               onChange={(e) => setFromValue(e.target.value)}
-              className="text-right text-xs w-[150px]"
+              className="text-right text-xs w-full sm:w-[150px]"
         />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -108,7 +108,7 @@ const CombinedUnitConverter = () => {
 
         <TabsContent value="basic" className="flex-grow">
           <Tabs defaultValue={unitCategories.group1[0].id} className="w-full h-full flex flex-col">
-            <TabsList className="inline-flex h-10 items-center justify-start bg-white p-1 text-muted-foreground">
+            <TabsList className="inline-flex h-10 items-center justify-start bg-white p-1 text-muted-foreground flex-wrap">
               {unitCategories.group1.map((category) => (
                 <TabsTrigger key={category.id} value={category.id} className="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 data-[state=active]:bg-white data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500  ">{category.name}</TabsTrigger>
               ))}
@@ -123,7 +123,7 @@ const CombinedUnitConverter = () => {
 
         <TabsContent value="engineering" className="flex-grow">
           <Tabs defaultValue={unitCategories.group2[0].id} className="w-full h-full flex flex-col">
-            <TabsList className="inline-flex h-10 items-center justify-start bg-white p-1 text-muted-foreground">
+            <TabsList className="inline-flex h-10 items-center justify-start bg-white p-1 text-muted-foreground flex-wrap">
               {unitCategories.group2.map((category) => (
                 <TabsTrigger key={category.id} value={category.id} className="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-gray-800 data-[state=active]:bg-white data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500  ">{category.name}</TabsTrigger>
               ))}

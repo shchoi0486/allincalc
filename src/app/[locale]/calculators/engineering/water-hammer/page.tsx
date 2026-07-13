@@ -74,7 +74,7 @@ export default function WaterHammerPage() {
           <h4 className="font-bold text-base mb-2">{L('임계 차단 시간', 'Critical closure time')}</h4>
           <p className="text-sm text-muted-foreground italic">
             {L(
-              '* 참고: 수격 현상을 방지하려면 밸브 차단 시간 T_c가 임계 시간 T_cr = 2L/a 보다 길어야 합니다 (L은 배관 길이). 이보다 빠르면 즉시 차단으로 간주되어 전(全) Joukowsky 압력이 발생합니다.',
+              '* 참고: 수격 현상을 방지하려면 밸브 차단 시간 T_c가 임계 시간 T_cr = 2L/a 보다 길어야 합니다 (L은 배관 길이). 이보다 빠르면 즉시 차단으로 간주되어 전체 Joukowsky 압력이 발생합니다.',
               '* Note: to avoid water hammer, the valve closure time T_c should exceed the critical time T_cr = 2L/a (L = pipe length). Faster closure is treated as instantaneous, producing the full Joukowsky pressure.',
             )}
           </p>

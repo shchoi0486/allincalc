@@ -24,7 +24,7 @@ export default function AllCalculators() {
             <Link href={category.href} key={category.name} className="group">
               <Card className="h-full flex flex-col items-center justify-center p-4 md:p-6 rounded-xl border border-border bg-card transition-colors duration-200 hover:border-primary/40">
                 <CardContent className="flex flex-col items-center justify-center space-y-2 md:space-y-3 p-0">
-                  <div className="p-3 rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <div className="hidden sm:block p-3 rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <category.icon className="w-6 h-6 md:w-7 h-7" />
                   </div>
                   <span className="text-base md:text-lg font-bold text-center text-foreground">

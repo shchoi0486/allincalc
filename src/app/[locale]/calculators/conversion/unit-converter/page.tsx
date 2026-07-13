@@ -56,12 +56,12 @@ const NewUnitConverter = ({ category }: { category: string }) => {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4 relative">
+      <div className="flex items-center gap-2 mb-4 relative flex-wrap sm:flex-nowrap">
         <select
           aria-label="Select unit to convert from"
           value={fromUnit}
           onChange={(e) => setFromUnit(e.target.value)}
-          className="w-[100px] border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+          className="w-full sm:w-[120px] border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
         >
           {units.map(unit => (
             <option key={unit} value={unit}>{unit}</option>
@@ -71,7 +71,7 @@ const NewUnitConverter = ({ category }: { category: string }) => {
           type="number"
           value={fromValue}
           onChange={(e) => setFromValue(e.target.value)}
-          className="text-right text-xs w-[200px]"
+          className="text-right text-xs w-full sm:w-[200px]"
         />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">

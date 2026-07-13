@@ -280,7 +280,7 @@ const MortgageCalculator: React.FC = () => {
       {/* 분할상환표 */}
       <div>
         <h3 className="text-base font-semibold text-foreground mb-2">{m.results.amortizationSchedule}</h3>
-        <div className="max-h-[360px] overflow-y-auto rounded-lg border border-border">
+        <div className="max-h-[360px] overflow-auto rounded-lg border border-border">
           <table className="w-full text-xs border-collapse">
             <thead className="sticky top-0 bg-muted">
               <tr className="text-muted-foreground border-b border-border">

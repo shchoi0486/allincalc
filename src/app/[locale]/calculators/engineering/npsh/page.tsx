@@ -39,7 +39,7 @@ export default function NPSHCalculatorPage() {
           <h4 className="font-bold text-base mb-2">{L('왜 필요한가', 'Why it matters')}</h4>
           <ul className="list-disc pl-5 space-y-1 text-sm">
             <li>{L('펌프 고장·수명 단축의 주원인인 캐비테이션을 사전에 방지', 'Preventing cavitation, the leading cause of pump failure and shortened life')}</li>
-            <li>{L('흡입 배관布置와 탱크 높이를 결정할 때 안전 마진 확보', 'Securing a safety margin when laying out the suction piping and setting tank elevation')}</li>
+            <li>{L('흡입 배관 배치와 탱크 높이를 결정할 때 안전 마진 확보', 'Securing a safety margin when laying out the suction piping and setting tank elevation')}</li>
             <li>{L('고온 유체·휘발성 유체(물, 에탄올, 벤젠 등)에서의 증기압 영향을 정량 평가', 'Quantifying vapor-pressure effects for hot or volatile fluids (water, ethanol, benzene, etc.)')}</li>
           </ul>
         </div>

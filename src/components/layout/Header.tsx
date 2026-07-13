@@ -63,11 +63,13 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       if (searchQuery) {
-        const results = allCalculators.filter(calc =>
-          calc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          calc.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          calc.subcategoryName.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const results = allCalculators.filter(calc => {
+          const nameMatch = calc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            calc.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            calc.subcategoryName.toLowerCase().includes(searchQuery.toLowerCase());
+          const localeMatch = !calc.locales || calc.locales.includes(locale);
+          return nameMatch && localeMatch;
+        });
         setSearchResults(results);
       } else {
         setSearchResults([]);
@@ -77,7 +79,7 @@ const Header: React.FC = () => {
     return () => {
       clearTimeout(handler);
     };
-  }, [searchQuery]);
+  }, [searchQuery, locale]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -165,7 +167,7 @@ const Header: React.FC = () => {
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto flex flex-wrap sm:flex-nowrap items-center justify-center gap-3 py-2.5">
+        <nav className="container mx-auto flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-5 py-2.5">
           {navigation.map((item) => {
             const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (

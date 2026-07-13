@@ -1,51 +1,103 @@
-import React, { useState, useCallback } from 'react';
+'use client';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useI18n } from '@/i18n/I18nProvider';
+import UnitSystemToggle from '@/components/calculators/UnitSystemToggle';
 
 const LMTDCalculator = () => {
   const { dict, unitSystem, locale } = useI18n();
   const t = dict?.common?.lmtd;
 
-  const [hotIn, setHotIn] = useState<number>(100);
-  const [hotOut, setHotOut] = useState<number>(60);
-  const [coldIn, setColdIn] = useState<number>(20);
-  const [coldOut, setColdOut] = useState<number>(40);
+  const [hotIn, setHotIn] = useState('100');
+  const [hotInUnit, setHotInUnit] = useState('°C');
+  const [hotOut, setHotOut] = useState('60');
+  const [hotOutUnit, setHotOutUnit] = useState('°C');
+  const [coldIn, setColdIn] = useState('20');
+  const [coldInUnit, setColdInUnit] = useState('°C');
+  const [coldOut, setColdOut] = useState('40');
+  const [coldOutUnit, setColdOutUnit] = useState('°C');
   const [flowType, setFlowType] = useState<string>('counter'); // 'counter' or 'parallel'
 
-  const [deltaT1, setDeltaT1] = useState<number>(0);
-  const [deltaT2, setDeltaT2] = useState<number>(0);
-  const [lmtd, setLmtd] = useState<number>(0);
+  const [deltaT1, setDeltaT1] = useState(0);
+  const [deltaT2, setDeltaT2] = useState(0);
+  const [lmtd, setLmtd] = useState(0);
+
+  const isImperial = unitSystem === 'imperial';
+
+  // Reset defaults + units when global unit system changes
+  useEffect(() => {
+    if (isImperial) {
+      setHotIn('212');
+      setHotInUnit('°F');
+      setHotOut('140');
+      setHotOutUnit('°F');
+      setColdIn('68');
+      setColdInUnit('°F');
+      setColdOut('104');
+      setColdOutUnit('°F');
+    } else {
+      setHotIn('100');
+      setHotInUnit('°C');
+      setHotOut('60');
+      setHotOutUnit('°C');
+      setColdIn('20');
+      setColdInUnit('°C');
+      setColdOut('40');
+      setColdOutUnit('°C');
+    }
+  }, [isImperial]);
+
+  // Convert a temperature value from its unit to °C base
+  const toC = (v: number, unit: string): number => {
+    if (unit === '°F') return (v - 32) * 5 / 9;
+    if (unit === 'K') return v - 273.15;
+    return v; // °C
+  };
+  // Convert a temperature difference (in °C) to a display difference unit
+  const diffFromC = (d: number, unit: string): number => {
+    if (unit === '°F') return d * 9 / 5;
+    return d; // °C and K share magnitude
+  };
+
+  const TEMP_UNITS = ['°C', '°F', 'K'];
+  const tempUnit = isImperial ? '°F' : '°C';
 
   const handleCalculate = useCallback(() => {
+    const ThIn = toC(parseFloat(hotIn), hotInUnit);
+    const ThOut = toC(parseFloat(hotOut), hotOutUnit);
+    const TcIn = toC(parseFloat(coldIn), coldInUnit);
+    const TcOut = toC(parseFloat(coldOut), coldOutUnit);
+
     let dt1 = 0;
     let dt2 = 0;
 
     if (flowType === 'counter') {
-      dt1 = hotIn - coldOut;
-      dt2 = hotOut - coldIn;
+      dt1 = ThIn - TcOut;
+      dt2 = ThOut - TcIn;
     } else {
       // parallel
-      dt1 = hotIn - coldIn;
-      dt2 = hotOut - coldOut;
+      dt1 = ThIn - TcIn;
+      dt2 = ThOut - TcOut;
     }
 
-    setDeltaT1(dt1);
-    setDeltaT2(dt2);
+    setDeltaT1(diffFromC(dt1, tempUnit));
+    setDeltaT2(diffFromC(dt2, tempUnit));
 
     if (dt1 <= 0 || dt2 <= 0) {
       setLmtd(0); // Invalid physically for LMTD calculation
     } else if (Math.abs(dt1 - dt2) < 0.001) {
-      setLmtd(dt1); // When dt1 = dt2
+      setLmtd(diffFromC(dt1, tempUnit)); // When dt1 = dt2
     } else {
       const calcLmtd = (dt1 - dt2) / Math.log(dt1 / dt2);
-      setLmtd(calcLmtd);
+      setLmtd(diffFromC(calcLmtd, tempUnit));
     }
-  }, [hotIn, hotOut, coldIn, coldOut, flowType]);
+  }, [hotIn, hotInUnit, hotOut, hotOutUnit, coldIn, coldInUnit, coldOut, coldOutUnit, flowType, tempUnit]);
 
-  const isImperial = unitSystem === 'imperial';
-  const tempUnit = isImperial ? '°F' : '°C';
+  const unitSelectClass =
+    'w-20 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-600 dark:text-gray-300 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500';
 
   return (
     <div className="space-y-6">
@@ -53,11 +105,14 @@ const LMTDCalculator = () => {
         {/* Inputs */}
         <Card>
           <CardContent className="p-4 space-y-4">
-            <h3 className="font-semibold mb-4 text-lg border-b pb-2">Inputs</h3>
-            
+            <div className="flex justify-between items-center mb-4 border-b pb-2">
+              <h3 className="font-semibold text-lg">Inputs</h3>
+              <UnitSystemToggle className="shrink-0" />
+            </div>
+
             <div className="space-y-2">
               <Label>{t?.inputs?.flowType || 'Flow Configuration'}</Label>
-              <select 
+              <select
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                 value={flowType}
                 onChange={(e) => setFlowType(e.target.value)}
@@ -70,30 +125,66 @@ const LMTDCalculator = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-red-600">{t?.inputs?.hotIn || 'Hot In'}</Label>
-                <div className="flex gap-2">
-                  <Input type="number" value={hotIn} onChange={(e) => setHotIn(Number(e.target.value))} className="min-w-0" />
-                  <span className="flex items-center justify-center bg-muted px-2 rounded-md border shrink-0 w-12 text-sm">{tempUnit}</span>
+                <div className="flex min-w-0">
+                  <Input type="number" value={hotIn} onChange={(e) => setHotIn(e.target.value)} className="min-w-0 flex-1 rounded-r-none" />
+                  <select
+                    aria-label={`${t?.inputs?.hotIn || 'Hot In'} unit`}
+                    value={hotInUnit}
+                    onChange={(e) => setHotInUnit(e.target.value)}
+                    className={unitSelectClass}
+                  >
+                    {TEMP_UNITS.map((u) => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-red-600">{t?.inputs?.hotOut || 'Hot Out'}</Label>
-                <div className="flex gap-2">
-                  <Input type="number" value={hotOut} onChange={(e) => setHotOut(Number(e.target.value))} className="min-w-0" />
-                  <span className="flex items-center justify-center bg-muted px-2 rounded-md border shrink-0 w-12 text-sm">{tempUnit}</span>
+                <div className="flex min-w-0">
+                  <Input type="number" value={hotOut} onChange={(e) => setHotOut(e.target.value)} className="min-w-0 flex-1 rounded-r-none" />
+                  <select
+                    aria-label={`${t?.inputs?.hotOut || 'Hot Out'} unit`}
+                    value={hotOutUnit}
+                    onChange={(e) => setHotOutUnit(e.target.value)}
+                    className={unitSelectClass}
+                  >
+                    {TEMP_UNITS.map((u) => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-blue-600">{t?.inputs?.coldIn || 'Cold In'}</Label>
-                <div className="flex gap-2">
-                  <Input type="number" value={coldIn} onChange={(e) => setColdIn(Number(e.target.value))} className="min-w-0" />
-                  <span className="flex items-center justify-center bg-muted px-2 rounded-md border shrink-0 w-12 text-sm">{tempUnit}</span>
+                <div className="flex min-w-0">
+                  <Input type="number" value={coldIn} onChange={(e) => setColdIn(e.target.value)} className="min-w-0 flex-1 rounded-r-none" />
+                  <select
+                    aria-label={`${t?.inputs?.coldIn || 'Cold In'} unit`}
+                    value={coldInUnit}
+                    onChange={(e) => setColdInUnit(e.target.value)}
+                    className={unitSelectClass}
+                  >
+                    {TEMP_UNITS.map((u) => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-blue-600">{t?.inputs?.coldOut || 'Cold Out'}</Label>
-                <div className="flex gap-2">
-                  <Input type="number" value={coldOut} onChange={(e) => setColdOut(Number(e.target.value))} className="min-w-0" />
-                  <span className="flex items-center justify-center bg-muted px-2 rounded-md border shrink-0 w-12 text-sm">{tempUnit}</span>
+                <div className="flex min-w-0">
+                  <Input type="number" value={coldOut} onChange={(e) => setColdOut(e.target.value)} className="min-w-0 flex-1 rounded-r-none" />
+                  <select
+                    aria-label={`${t?.inputs?.coldOut || 'Cold Out'} unit`}
+                    value={coldOutUnit}
+                    onChange={(e) => setColdOutUnit(e.target.value)}
+                    className={unitSelectClass}
+                  >
+                    {TEMP_UNITS.map((u) => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
@@ -113,7 +204,7 @@ const LMTDCalculator = () => {
           <Card>
             <CardContent className="p-4 space-y-4 bg-primary/5">
               <h3 className="font-semibold mb-4 text-lg border-b border-primary/20 pb-2">Results</h3>
-              
+
               <div className="grid gap-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-primary/20 shadow-sm flex flex-col justify-center items-center">
@@ -157,17 +248,17 @@ const LMTDCalculator = () => {
                   <text x="25" y="100" fill="#64748b" fontSize="12" textAnchor="middle" transform="rotate(-90 25,100)">Temperature</text>
 
                   {(() => {
-                    const minTemp = Math.min(coldIn, coldOut);
-                    const maxTemp = Math.max(hotIn, hotOut);
+                    const minTemp = Math.min(parseFloat(coldIn), parseFloat(coldOut));
+                    const maxTemp = Math.max(parseFloat(hotIn), parseFloat(hotOut));
                     const range = Math.max(maxTemp - minTemp, 1);
-                    
+
                     const getY = (temp: number) => 170 - ((temp - minTemp) / range) * 140;
 
-                    const hotStart = getY(hotIn);
-                    const hotEnd = getY(hotOut);
-                    
-                    const coldStart = flowType === 'counter' ? getY(coldOut) : getY(coldIn);
-                    const coldEnd = flowType === 'counter' ? getY(coldIn) : getY(coldOut);
+                    const hotStart = getY(parseFloat(hotIn));
+                    const hotEnd = getY(parseFloat(hotOut));
+
+                    const coldStart = flowType === 'counter' ? getY(parseFloat(coldOut)) : getY(parseFloat(coldIn));
+                    const coldEnd = flowType === 'counter' ? getY(parseFloat(coldIn)) : getY(parseFloat(coldOut));
 
                     return (
                       <>
@@ -182,32 +273,32 @@ const LMTDCalculator = () => {
                         <path d={`M 50 ${coldStart} C 150 ${coldStart * 0.7 + coldEnd * 0.3}, 250 ${coldStart * 0.3 + coldEnd * 0.7}, 350 ${coldEnd}`} fill="none" stroke="#3b82f6" strokeWidth="3" />
                         <circle cx="50" cy={coldStart} r="4" fill="#3b82f6" />
                         <circle cx="350" cy={coldEnd} r="4" fill="#3b82f6" />
-                        
+
                         {flowType === 'counter' ? (
                           <>
                             <text x="50" y={coldStart + 15} fill="#3b82f6" fontSize="12" textAnchor="middle">Tc,out</text>
                             <text x="350" y={coldEnd + 15} fill="#3b82f6" fontSize="12" textAnchor="middle">Tc,in</text>
                             {/* Arrows */}
                             <polygon points="200,180 190,175 190,185" fill="#94a3b8" /> {/* X-axis arrow */}
-                            <polygon points="190,180 200,175 200,185" fill="#3b82f6" transform={`translate(0, ${getY((coldIn+coldOut)/2) - 180})`} /> {/* Cold flow arrow left */}
-                            <polygon points="200,180 190,175 190,185" fill="#ef4444" transform={`translate(0, ${getY((hotIn+hotOut)/2) - 180})`} /> {/* Hot flow arrow right */}
+                            <polygon points="190,180 200,175 200,185" fill="#3b82f6" transform={`translate(0, ${(getY((parseFloat(coldIn) + parseFloat(coldOut)) / 2) - 180)})`} /> {/* Cold flow arrow left */}
+                            <polygon points="200,180 190,175 190,185" fill="#ef4444" transform={`translate(0, ${(getY((parseFloat(hotIn) + parseFloat(hotOut)) / 2) - 180)})`} /> {/* Hot flow arrow right */}
                           </>
                         ) : (
                           <>
                             <text x="50" y={coldStart + 15} fill="#3b82f6" fontSize="12" textAnchor="middle">Tc,in</text>
                             <text x="350" y={coldEnd + 15} fill="#3b82f6" fontSize="12" textAnchor="middle">Tc,out</text>
                             {/* Arrows */}
-                            <polygon points="200,180 190,175 190,185" fill="#3b82f6" transform={`translate(0, ${getY((coldIn+coldOut)/2) - 180})`} /> {/* Cold flow arrow right */}
-                            <polygon points="200,180 190,175 190,185" fill="#ef4444" transform={`translate(0, ${getY((hotIn+hotOut)/2) - 180})`} /> {/* Hot flow arrow right */}
+                            <polygon points="200,180 190,175 190,185" fill="#3b82f6" transform={`translate(0, ${(getY((parseFloat(coldIn) + parseFloat(coldOut)) / 2) - 180)})`} /> {/* Cold flow arrow right */}
+                            <polygon points="200,180 190,175 190,185" fill="#ef4444" transform={`translate(0, ${(getY((parseFloat(hotIn) + parseFloat(hotOut)) / 2) - 180)})`} /> {/* Hot flow arrow right */}
                           </>
                         )}
-                        
+
                         {/* Delta T lines */}
                         <line x1="60" y1={hotStart} x2="60" y2={coldStart} stroke="#10b981" strokeWidth="1" strokeDasharray="4" />
-                        <text x="70" y={(hotStart + coldStart)/2} fill="#10b981" fontSize="10">ΔT₁</text>
+                        <text x="70" y={(hotStart + coldStart) / 2} fill="#10b981" fontSize="10">ΔT₁</text>
 
                         <line x1="340" y1={hotEnd} x2="340" y2={coldEnd} stroke="#10b981" strokeWidth="1" strokeDasharray="4" />
-                        <text x="330" y={(hotEnd + coldEnd)/2} fill="#10b981" fontSize="10" textAnchor="end">ΔT₂</text>
+                        <text x="330" y={(hotEnd + coldEnd) / 2} fill="#10b981" fontSize="10" textAnchor="end">ΔT₂</text>
                       </>
                     );
                   })()}

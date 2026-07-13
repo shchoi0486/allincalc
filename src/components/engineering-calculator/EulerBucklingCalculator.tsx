@@ -1,36 +1,98 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useI18n } from '@/i18n/I18nProvider';
+import UnitSystemToggle from '@/components/calculators/UnitSystemToggle';
+
+const MODULUS_TO_PA: Record<string, number> = {
+  GPa: 1e9,
+  MPa: 1e6,
+  psi: 6894.7572932,
+};
+
+const INERTIA_TO_M4: Record<string, number> = {
+  'mm⁴': 1e-12,
+  'cm⁴': 1e-8,
+  'm⁴': 1,
+  'in⁴': Math.pow(0.0254, 4),
+  'ft⁴': Math.pow(0.3048, 4),
+};
+
+const LENGTH_TO_M: Record<string, number> = {
+  mm: 0.001,
+  cm: 0.01,
+  m: 1,
+  in: 0.0254,
+  ft: 0.3048,
+};
+
+const LOAD_TO_N: Record<string, number> = {
+  N: 1,
+  lbf: 4.44822,
+};
+
+const MODULUS_UNITS = ['GPa', 'psi', 'MPa'];
+const INERTIA_UNITS = ['mm⁴', 'cm⁴', 'm⁴', 'in⁴', 'ft⁴'];
+const LENGTH_UNITS = ['mm', 'cm', 'm', 'in', 'ft'];
 
 const EulerBucklingCalculator = () => {
   const { dict, unitSystem, locale } = useI18n();
   const t = dict?.common?.eulerBuckling;
 
-  const [elasticModulus, setElasticModulus] = useState<number>(200e9); // Pa
-  const [inertia, setInertia] = useState<number>(0.00005); // m^4
-  const [length, setLength] = useState<number>(5); // m
+  const isImperial = unitSystem === 'imperial';
+
+  const [elasticModulus, setElasticModulus] = useState<string>('200'); // GPa
+  const [inertia, setInertia] = useState<string>('0.00005'); // m^4
+  const [length, setLength] = useState<string>('5'); // m
   const [kFactor, setKFactor] = useState<number>(1); // Pinned-Pinned
+
+  const [elasticModulusUnit, setElasticModulusUnit] = useState<string>('GPa');
+  const [inertiaUnit, setInertiaUnit] = useState<string>('m⁴');
+  const [lengthUnit, setLengthUnit] = useState<string>('m');
 
   const [criticalLoad, setCriticalLoad] = useState<number>(0);
 
+  useEffect(() => {
+    if (isImperial) {
+      setElasticModulus('29007538');
+      setInertia('120.12');
+      setLength('196.85');
+      setElasticModulusUnit('psi');
+      setInertiaUnit('in⁴');
+      setLengthUnit('in');
+    } else {
+      setElasticModulus('200');
+      setInertia('0.00005');
+      setLength('5');
+      setElasticModulusUnit('GPa');
+      setInertiaUnit('m⁴');
+      setLengthUnit('m');
+    }
+  }, [isImperial]);
+
   const handleCalculate = useCallback(() => {
-    if (length > 0 && kFactor > 0) {
+    const E = parseFloat(elasticModulus);
+    const I = parseFloat(inertia);
+    const L = parseFloat(length);
+
+    if (!isNaN(E) && !isNaN(I) && !isNaN(L) && L > 0 && kFactor > 0) {
       // P_cr = (pi^2 * E * I) / (K * L)^2
-      const effectiveLength = kFactor * length;
-      const load = (Math.PI * Math.PI * elasticModulus * inertia) / (effectiveLength * effectiveLength);
+      const E_Pa = E * (MODULUS_TO_PA[elasticModulusUnit] ?? 1);
+      const I_m4 = I * (INERTIA_TO_M4[inertiaUnit] ?? 1);
+      const L_m = L * (LENGTH_TO_M[lengthUnit] ?? 1);
+      const effectiveLength = kFactor * L_m;
+      const load = (Math.PI * Math.PI * E_Pa * I_m4) / (effectiveLength * effectiveLength);
       setCriticalLoad(load);
     } else {
       setCriticalLoad(0);
     }
-  }, [elasticModulus, inertia, length, kFactor]);
+  }, [elasticModulus, inertia, length, kFactor, elasticModulusUnit, inertiaUnit, lengthUnit]);
 
-  const isImperial = unitSystem === 'imperial';
-  const modulusUnit = isImperial ? 'psi' : 'Pa';
-  const inertiaUnit = isImperial ? 'in⁴' : 'm⁴';
-  const lengthUnit = isImperial ? 'in' : 'm';
   const loadUnit = isImperial ? 'lbf' : 'N';
+
+  const unitSelectClass =
+    'w-20 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-600 dark:text-gray-300 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500';
 
   return (
     <div className="space-y-6">
@@ -38,35 +100,50 @@ const EulerBucklingCalculator = () => {
         {/* Inputs */}
         <Card>
           <CardContent className="p-4 space-y-4">
-            <h3 className="font-semibold mb-4 text-lg border-b pb-2">Inputs</h3>
-            
+            <div className="flex justify-between items-center mb-4 border-b pb-2">
+              <h3 className="font-semibold text-lg">Inputs</h3>
+              <UnitSystemToggle className="shrink-0" />
+            </div>
+
             <div className="space-y-2">
               <Label>{t?.inputs?.elasticModulus || "Young's Modulus (E)"}</Label>
               <div className="flex gap-2">
-                <Input type="number" value={elasticModulus} onChange={(e) => setElasticModulus(Number(e.target.value))} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{modulusUnit}</span>
+                <Input type="number" value={elasticModulus} onChange={(e) => setElasticModulus(e.target.value)} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label={`${t?.inputs?.elasticModulus || "Young's Modulus (E)"} unit`} value={elasticModulusUnit} onChange={(e) => setElasticModulusUnit(e.target.value)} className={unitSelectClass}>
+                  {MODULUS_UNITS.map((u) => (
+                    <option key={u} value={u}>{u}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>{t?.inputs?.inertia || 'Area Moment of Inertia (I)'}</Label>
               <div className="flex gap-2">
-                <Input type="number" value={inertia} onChange={(e) => setInertia(Number(e.target.value))} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{inertiaUnit}</span>
+                <Input type="number" value={inertia} onChange={(e) => setInertia(e.target.value)} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label={`${t?.inputs?.inertia || 'Area Moment of Inertia (I)'} unit`} value={inertiaUnit} onChange={(e) => setInertiaUnit(e.target.value)} className={unitSelectClass}>
+                  {INERTIA_UNITS.map((u) => (
+                    <option key={u} value={u}>{u}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>{t?.inputs?.length || 'Unsupported Length (L)'}</Label>
               <div className="flex gap-2">
-                <Input type="number" value={length} onChange={(e) => setLength(Number(e.target.value))} min={0.1} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{lengthUnit}</span>
+                <Input type="number" value={length} onChange={(e) => setLength(e.target.value)} min={0.1} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label={`${t?.inputs?.length || 'Unsupported Length (L)'} unit`} value={lengthUnit} onChange={(e) => setLengthUnit(e.target.value)} className={unitSelectClass}>
+                  {LENGTH_UNITS.map((u) => (
+                    <option key={u} value={u}>{u}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>{t?.inputs?.kFactor || 'Effective Length Factor (K)'}</Label>
-              <select 
+              <select
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                 value={kFactor}
                 onChange={(e) => setKFactor(Number(e.target.value))}
@@ -87,13 +164,13 @@ const EulerBucklingCalculator = () => {
           <Card>
             <CardContent className="p-4 space-y-4 bg-primary/5">
               <h3 className="font-semibold mb-4 text-lg border-b border-primary/20 pb-2">Results</h3>
-              
+
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-primary/20 shadow-sm flex flex-col justify-center items-center">
                 <span className="text-sm font-medium text-muted-foreground mb-2">
                   {t?.results?.criticalLoad || 'Critical Buckling Load (P_cr)'}
                 </span>
                 <span className="text-3xl font-bold text-primary">
-                  {criticalLoad.toExponential(3)} <span className="text-xl font-normal text-muted-foreground ml-1">{loadUnit}</span>
+                  {(isImperial ? criticalLoad / 4.44822 : criticalLoad).toExponential(3)} <span className="text-xl font-normal text-muted-foreground ml-1">{loadUnit}</span>
                 </span>
               </div>
             </CardContent>
@@ -114,7 +191,7 @@ const EulerBucklingCalculator = () => {
 
                   {/* Column Original */}
                   <line x1="100" y1="40" x2="100" y2="160" stroke="#cbd5e1" strokeWidth="6" strokeDasharray="4" />
-                  
+
                   {/* Column Buckled (Simplified Bezier Curve based on K) */}
                   {kFactor === 1.0 && <path d="M 100 40 Q 150 100 100 160" fill="none" stroke="#3b82f6" strokeWidth="6" />}
                   {kFactor === 0.5 && <path d="M 100 40 C 100 80, 150 80, 150 100 C 150 120, 100 120, 100 160" fill="none" stroke="#3b82f6" strokeWidth="6" />}

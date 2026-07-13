@@ -7,7 +7,7 @@ import { locales, localeNames, defaultLocale, type Locale } from '@/i18n/config'
 import { useI18n } from '@/i18n/I18nProvider';
 
 export default function LanguageSwitcher() {
-  const { setLocale } = useI18n();
+  const { dict, setLocale } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
   const seg = pathname.split('/')[1];
@@ -43,7 +43,7 @@ export default function LanguageSwitcher() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="p-2 rounded-full text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="언어 선택"
+        aria-label={dict.common.selectLanguage}
       >
         <Globe className="h-6 w-6" />
       </button>

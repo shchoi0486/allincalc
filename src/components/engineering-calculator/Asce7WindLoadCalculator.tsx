@@ -1,8 +1,26 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useI18n } from '@/i18n/I18nProvider';
+import UnitSystemToggle from '@/components/calculators/UnitSystemToggle';
+
+const LENGTH_TO_FT: Record<string, number> = {
+  mm: 0.0032808399,
+  cm: 0.032808399,
+  m: 3.2808399,
+  in: 0.0833333333,
+  ft: 1,
+};
+const VELOCITY_TO_MPH: Record<string, number> = {
+  'm/s': 2.23694,
+  mph: 1,
+  'km/h': 0.621371,
+  'ft/s': 0.681818,
+};
+
+const LENGTH_UNITS = ['mm', 'cm', 'm', 'in', 'ft'];
+const VELOCITY_UNITS = ['m/s', 'km/h', 'mph', 'ft/s'];
 
 const Asce7WindLoadCalculator = () => {
   const { dict, unitSystem, locale } = useI18n();
@@ -10,19 +28,39 @@ const Asce7WindLoadCalculator = () => {
 
   const isImperial = unitSystem === 'imperial';
 
-  const [windSpeed, setWindSpeed] = useState<number>(isImperial ? 115 : 51.4); // mph or m/s
+  const [windSpeed, setWindSpeed] = useState<string>(isImperial ? '115' : '51.4'); // mph or m/s
+  const [windSpeedUnit, setWindSpeedUnit] = useState<string>(isImperial ? 'mph' : 'm/s');
   const [exposure, setExposure] = useState<string>('B'); // B, C, D
-  const [height, setHeight] = useState<number>(isImperial ? 30 : 9.1); // ft or m
+  const [height, setHeight] = useState<string>(isImperial ? '30' : '9.1'); // ft or m
+  const [heightUnit, setHeightUnit] = useState<string>(isImperial ? 'ft' : 'm');
   const [topographic, setTopographic] = useState<number>(1.0); // K_zt
   const [directionality, setDirectionality] = useState<number>(0.85); // K_d
 
   const [velocityPressure, setVelocityPressure] = useState<number>(0);
   const [exposureCoeff, setExposureCoeff] = useState<number>(0);
 
+  useEffect(() => {
+    if (isImperial) {
+      setWindSpeed('115');
+      setWindSpeedUnit('mph');
+      setHeight('30');
+      setHeightUnit('ft');
+    } else {
+      setWindSpeed('51.4');
+      setWindSpeedUnit('m/s');
+      setHeight('9.1');
+      setHeightUnit('m');
+    }
+  }, [isImperial]);
+
+  const pressureUnit = isImperial ? 'psf' : 'Pa';
+
   const handleCalculate = useCallback(() => {
-    if (windSpeed > 0 && height > 0 && topographic > 0 && directionality > 0) {
-      let z_ft = isImperial ? height : height * 3.28084;
-      let v_mph = isImperial ? windSpeed : windSpeed * 2.23694;
+    const V = parseFloat(windSpeed);
+    const Z = parseFloat(height);
+    if (V > 0 && Z > 0 && topographic > 0 && directionality > 0) {
+      const v_mph = V * (VELOCITY_TO_MPH[windSpeedUnit] ?? 1);
+      let z_ft = Z * (LENGTH_TO_FT[heightUnit] ?? 1);
 
       if (z_ft < 15) z_ft = 15; // Minimum height for Kz calculation is 15 ft
 
@@ -53,11 +91,10 @@ const Asce7WindLoadCalculator = () => {
       setVelocityPressure(0);
       setExposureCoeff(0);
     }
-  }, [windSpeed, exposure, height, topographic, directionality, isImperial]);
+  }, [windSpeed, windSpeedUnit, exposure, height, heightUnit, topographic, directionality, isImperial]);
 
-  const windUnit = isImperial ? 'mph' : 'm/s';
-  const heightUnit = isImperial ? 'ft' : 'm';
-  const pressureUnit = isImperial ? 'psf' : 'Pa';
+  const unitSelectClass =
+    'w-20 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-600 dark:text-gray-300 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500';
 
   return (
     <div className="space-y-6">
@@ -65,20 +102,25 @@ const Asce7WindLoadCalculator = () => {
         {/* Inputs */}
         <Card>
           <CardContent className="p-4 space-y-4">
-            <h3 className="font-semibold mb-4 text-lg border-b pb-2">Inputs</h3>
-            
+            <div className="flex items-center justify-between mb-4 border-b pb-2">
+              <h3 className="font-semibold text-lg">Inputs</h3>
+              <UnitSystemToggle className="shrink-0" />
+            </div>
+
             <div className="space-y-2">
               <Label>{t?.inputs?.windSpeed || 'Basic Wind Speed (V)'}</Label>
-              <div className="flex gap-2">
-                <Input type="number" value={windSpeed} onChange={(e) => setWindSpeed(Number(e.target.value))} min={1} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{windUnit}</span>
+              <div className="flex min-w-0">
+                <Input type="number" value={windSpeed} onChange={(e) => setWindSpeed(e.target.value)} min={1} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label="Basic Wind Speed (V) unit" value={windSpeedUnit} onChange={(e) => setWindSpeedUnit(e.target.value)} className={unitSelectClass}>
+                  {VELOCITY_UNITS.map((u) => (<option key={u} value={u}>{u}</option>))}
+                </select>
               </div>
             </div>
 
             <div className="space-y-2">
               <Label>{t?.inputs?.exposure || 'Exposure Category'}</Label>
               <div className="flex gap-2">
-                <select 
+                <select
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   value={exposure}
                   onChange={(e) => setExposure(e.target.value)}
@@ -92,9 +134,11 @@ const Asce7WindLoadCalculator = () => {
 
             <div className="space-y-2">
               <Label>{t?.inputs?.height || 'Mean Roof Height (z)'}</Label>
-              <div className="flex gap-2">
-                <Input type="number" value={height} onChange={(e) => setHeight(Number(e.target.value))} min={1} className="min-w-0" />
-                <span className="flex items-center justify-center bg-muted px-3 rounded-md border shrink-0 w-16 text-sm">{heightUnit}</span>
+              <div className="flex min-w-0">
+                <Input type="number" value={height} onChange={(e) => setHeight(e.target.value)} min={1} className="min-w-0 flex-1 rounded-r-none" />
+                <select aria-label="Mean Roof Height (z) unit" value={heightUnit} onChange={(e) => setHeightUnit(e.target.value)} className={unitSelectClass}>
+                  {LENGTH_UNITS.map((u) => (<option key={u} value={u}>{u}</option>))}
+                </select>
               </div>
             </div>
 
@@ -117,7 +161,7 @@ const Asce7WindLoadCalculator = () => {
           <Card>
             <CardContent className="p-4 space-y-4 bg-primary/5">
               <h3 className="font-semibold mb-4 text-lg border-b border-primary/20 pb-2">Results</h3>
-              
+
               <div className="grid gap-3">
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-blue-200 shadow-sm flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-900/20">
                   <span className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-1">
@@ -148,25 +192,25 @@ const Asce7WindLoadCalculator = () => {
                 <svg viewBox="0 0 300 200" className="w-full h-full">
                   {/* Ground */}
                   <line x1="10" y1="180" x2="290" y2="180" stroke="#64748b" strokeWidth="4" />
-                  
+
                   {/* Building */}
                   <rect x="180" y="60" width="60" height="120" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="2" />
                   <text x="210" y="120" fill="#475569" fontSize="12" textAnchor="middle" transform="rotate(-90 210,120)">z = {height} {heightUnit}</text>
-                  
+
                   {/* Wind Profile Curve */}
                   <path d="M 50 180 Q 90 120 140 60" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4" />
-                  
+
                   {/* Wind Arrows */}
                   <g stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)">
                     <line x1="50" y1="160" x2="175" y2="160" />
                     <line x1="80" y1="120" x2="175" y2="120" />
                     <line x1="120" y1="80" x2="175" y2="80" />
                   </g>
-                  
+
                   {/* Labels */}
                   <text x="110" y="50" fill="#2563eb" fontSize="12" fontWeight="bold">q_z = {velocityPressure.toFixed(1)} {pressureUnit}</text>
-                  <text x="60" y="110" fill="#3b82f6" fontSize="10">V = {windSpeed} {windUnit}</text>
-                  
+                  <text x="60" y="110" fill="#3b82f6" fontSize="10">V = {windSpeed} {windSpeedUnit}</text>
+
                   <defs>
                     <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                       <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" />

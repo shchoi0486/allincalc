@@ -169,7 +169,7 @@ const DateDifferenceCalculator: React.FC = () => {
           </p>
         </div>
         <div>
-          <h3 class="font-semibold text-lg mb-2">3. 초일산입(初日算入) 처리</h3>
+          <h3 class="font-semibold text-lg mb-2">3. 초일산입 처리</h3>
           <p class="mb-2 text-muted-foreground">
             민법 원칙에 따라 기간 계산 시 첫날을 포함하지 않는 것이 일반적이지만,
             계약이나 상황에 따라 첫날을 포함해야 할 경우가 있습니다.
@@ -265,7 +265,7 @@ const DateDifferenceCalculator: React.FC = () => {
           </p>
         </div>
         <div>
-          <h3 class="font-semibold text-lg mb-2">3. First-day inclusion (初日算入)</h3>
+          <h3 class="font-semibold text-lg mb-2">3. First-day inclusion</h3>
           <p class="mb-2 text-muted-foreground">
             By civil-law principle, the first day is generally not included when calculating a period, but
             there are cases where the first day must be included by contract or situation.

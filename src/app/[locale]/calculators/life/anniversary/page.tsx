@@ -214,7 +214,7 @@ const AnniversaryCalculator = () => {
         <div className="p-4 rounded-lg border-l-4 border-primary bg-muted">
           <h3 className="font-semibold text-lg mb-2 text-foreground">💡 기념일을 더 특별하게 만드는 팁</h3>
           <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-            <li><strong>주년(週年) 기념일:</strong> 1000일, 2000일 같은 '일' 단위 기념일은 색다른 특별함을 선사합니다.</li>
+            <li><strong>주년 기념일:</strong> 1000일, 2000일 같은 '일' 단위 기념일은 색다른 특별함을 선사합니다.</li>
             <li><strong>포토북 제작:</strong> 함께한 시간의 사진을 모아 포토북을 만들면 시각적으로 되돌아보는 큰 감동을 줍니다.</li>
             <li><strong>타임캡슐:</strong> 기념일에 서로의 편지나 의미 있는 물건을 함께 넣어보세요.</li>
             <li><strong>음력 기념일:</strong> 부모님 생신 등 음력 기념일은 포털 사이트의 '음력 변환기'를 활용하여 양력으로 변환 후 입력하세요.</li>

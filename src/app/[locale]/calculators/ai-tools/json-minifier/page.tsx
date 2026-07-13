@@ -89,7 +89,7 @@ const JsonMinifier = () => {
     calculationFormula: (
       <div className="space-y-4">
         <p className="font-semibold">Before (formatted):</p>
-        <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg font-mono text-xs whitespace-pre">
+        <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg font-mono text-xs whitespace-pre overflow-x-auto">
 {`{
   "name": "John",
   "age": 30,

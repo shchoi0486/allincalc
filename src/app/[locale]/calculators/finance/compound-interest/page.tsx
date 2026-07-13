@@ -207,7 +207,7 @@ const MonthlyCompoundSavingsCalculator: NextPage = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={(value) => value.toLocaleString()} />
-              <RechartsTooltip formatter={(value: number) => `${value.toLocaleString()}{isKo ? '원' : ' KRW'}`} />
+              <RechartsTooltip formatter={(value: number) => `${value.toLocaleString()}${isKo ? '원' : ' KRW'}`} />
               <Legend wrapperStyle={{ position: 'relative' }} />
               <Line type="monotone" dataKey="principal" name={t.chartKeys.principal} stroke="#8884d8" activeDot={{ r: 8 }} />
               <Line type="monotone" dataKey="totalWithInterest" name={t.chartKeys.totalWithInterest} stroke="#82ca9d" activeDot={{ r: 8 }} />

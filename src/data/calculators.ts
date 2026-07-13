@@ -1,4 +1,6 @@
-import { BarChart, Waves, Factory, Droplets, Beaker, Atom, Dna, Leaf, Brain, TestTube, Calculator as CalculatorIcon, Anchor, Wind, Sun, Cloud, Zap, Flame, DraftingCompass, Ruler, Square, Triangle, Circle, Sigma, Percent, Divide, Plus, Minus, Gamepad2, MoreHorizontal, Sparkles, Bot, FileText, Image, Wand2, Languages, Code, Mic, QrCode, Lock, Palette, GitCompare, Keyboard, Timer, Coins, Dice5, Calendar, Wifi, FileJson, FileCode, FileText as FileTextIcon, FileType, Hash, Mail, Type, Notebook, Globe, Shield, Binary, Link2, Search, Minimize2, Maximize2, ArrowLeftRight } from 'lucide-react';
+import { BarChart, Waves, Factory, Droplets, Beaker, Atom, Dna, Leaf, Brain, TestTube, Calculator as CalculatorIcon, Anchor, Wind, Sun, Cloud, Zap, Flame, DraftingCompass, Ruler, Square, Triangle, Circle, Sigma, Percent, Divide, Plus, Minus, Gamepad2, MoreHorizontal, Sparkles, Bot, FileText, Image, Wand2, Languages, Code, Mic, QrCode, Lock, Palette, GitCompare, Keyboard, Timer, Coins, Dice5, Calendar, Wifi, FileJson, FileCode, FileText as FileTextIcon, FileType, Hash, Mail, Type, Notebook, Globe, Shield, Binary, Link2, Search, Minimize2, Maximize2, ArrowLeftRight, Car, TrendingUp, Receipt, Clock, GraduationCap, Building2, Truck, HeartPulse, Scale, Activity } from 'lucide-react';
+
+export type Locale = 'en' | 'ko';
 
 export const calculatorCategories = [
   {
@@ -14,12 +16,15 @@ export const calculatorCategories = [
           { id: 'loan-interest', name: '대출 이자 계산기', href: '/calculators/finance/loan-interest' },
           { id: 'early-repayment-fee', name: '중도상환수수료 계산기', href: '/calculators/finance/early-repayment-fee' },
           { id: 'dti', name: 'DTI 계산기', href: '/calculators/finance/dti' },
+          { id: 'dsr-calculator', name: 'DSR 계산기', href: '/calculators/finance/dsr-calculator', locales: ['ko'] },
           { id: 'installment-interest', name: '할부이자 계산기', href: '/calculators/finance/installment-interest' },
           { id: 'compound-interest', name: '복리 계산기', href: '/calculators/finance/compound-interest' },
           { id: 'installment-savings-monthly-compound-interest', name: '적립식 월 복리 계산기', href: '/calculators/finance/installment-savings-monthly-compound-interest' },
           { id: 'principal-equal-amortization', name: '원금 균등상환 계산기', href: '/calculators/finance/principal-equal-amortization' },
           { id: 'principal-and-interest-equal-repayment', name: '원리금 균등상환 계산기', href: '/calculators/finance/principal-and-interest-equal-repayment' },
+          { id: 'amortization-schedule', name: '상환 스케줄 계산기', href: '/calculators/finance/amortization-schedule' },
           { id: 'credit-card-installment-fee', name: '신용카드 할부 수수료 계산기', href: '/calculators/finance/credit-card-installment-fee' },
+          { id: 'auto-loan-calculator', name: '자동차 대출 계산기', href: '/calculators/finance/auto-loan-calculator', locales: ['en'] },
         ],
       },
       {
@@ -28,6 +33,8 @@ export const calculatorCategories = [
         calculators: [
           { id: 'mortgage-calculator', name: '주택담보대출 계산기', href: '/calculators/finance/mortgage-calculator' },
           { id: 'property-tax-calculator', name: '부동산세 계산기', href: '/calculators/finance/property-tax-calculator' },
+          { id: 'jeonse-deposit-calculator', name: '전세보증금 대출 한도', href: '/calculators/finance/jeonse-deposit-calculator', locales: ['ko'] },
+          { id: 'charter-loan-calculator', name: '전세자금대출 계산기', href: '/calculators/finance/charter-loan-calculator', locales: ['ko'] },
         ],
       },
       {
@@ -45,6 +52,9 @@ export const calculatorCategories = [
           { id: 'insurance', name: '4대보험 계산기', href: '/calculators/finance/insurance' },
           { id: 'retirement', name: '퇴직금 계산기', href: '/calculators/finance/retirement' },
           { id: 'annual-leave', name: '연차 계산기', href: '/calculators/finance/annual-leave' },
+          { id: 'net-salary-calculator', name: '실수령액 계산기', href: '/calculators/finance/net-salary-calculator', locales: ['ko'] },
+          { id: 'salary-calculator', name: '연봉 변환 계산기', href: '/calculators/finance/salary-calculator', locales: ['ko'] },
+          { id: 'income-tax-calculator', name: '소득세 계산기', href: '/calculators/finance/income-tax-calculator', locales: ['ko'] },
         ],
       },
       {
@@ -62,6 +72,14 @@ export const calculatorCategories = [
           { id: 'deposit-interest', name: '정기예금 이자 계산기', href: '/calculators/finance/deposit-interest' },
           { id: 'regular-installment-savings', name: '정기적금 계산기', href: '/calculators/finance/regular-installment-savings' },
           { id: 'free-installment-savings', name: '자유적금 계산기', href: '/calculators/finance/free-installment-savings' },
+        ],
+      },
+      {
+        id: 'economic-indicators',
+        name: '경제 지표',
+        calculators: [
+          { id: 'inflation-calculator', name: '물가상승률 계산기', href: '/calculators/finance/inflation-calculator' },
+          { id: 'interest-rate-calculator', name: '이자율 변환 계산기', href: '/calculators/finance/interest-rate-calculator' },
         ],
       },
     ],
@@ -85,6 +103,8 @@ export const calculatorCategories = [
           { id: 'volume-converter', name: '부피 변환', href: '/calculators/conversion/volume-converter' },
           { id: 'energy-converter', name: '에너지 변환', href: '/calculators/conversion/energy-converter' },
           { id: 'power-converter', name: '전력 변환', href: '/calculators/conversion/power-converter' },
+          { id: 'korean-shoe-size-converter', name: '한국 신발 사이즈 변환', href: '/calculators/conversion/korean-shoe-size-converter', locales: ['ko'] },
+          { id: 'korean-clothing-size-converter', name: '한국 의류 사이즈 변환', href: '/calculators/conversion/korean-clothing-size-converter', locales: ['ko'] },
         ],
       },
       {
@@ -110,6 +130,11 @@ export const calculatorCategories = [
           { id: 'bmi-calculator', name: 'BMI 계산기', href: '/calculators/life/bmi-calculator' },
           { id: 'bmr-calculator', name: '기초대사량 계산기', href: '/calculators/life/bmr-calculator' },
           { id: 'weight-loss-calculator', name: '체중 감량 계산기', href: '/calculators/life/weight-loss' },
+          { id: 'calorie-calculator', name: '칼로리 계산기', href: '/calculators/life/calorie-calculator' },
+          { id: 'body-fat-calculator', name: '체지방율 계산기', href: '/calculators/life/body-fat-calculator' },
+          { id: 'ideal-weight-calculator', name: '이상체중 계산기', href: '/calculators/life/ideal-weight-calculator' },
+          { id: 'pace-calculator', name: '페이스 계산기', href: '/calculators/life/pace-calculator' },
+          { id: 'due-date-calculator', name: '출산 예정일 계산기', href: '/calculators/life/due-date-calculator' },
         ],
       },
       {
@@ -121,6 +146,8 @@ export const calculatorCategories = [
           { id: 'date-difference-calculator', name: '날짜 차이 계산기', href: '/calculators/life/date-difference' },
           { id: 'countdown-timer', name: '카운트다운 타이머', href: '/calculators/life/countdown-timer' },
           { id: 'holiday-calendar', name: '휴일 캘린더', href: '/calculators/life/holiday-calendar' },
+          { id: 'time-calculator', name: '시간 덧셈/뺄셈', href: '/calculators/life/time-calculator' },
+          { id: 'hours-calculator', name: '근무시간 계산기', href: '/calculators/life/hours-calculator', locales: ['ko'] },
         ],
       },
       {
@@ -128,6 +155,7 @@ export const calculatorCategories = [
         name: '쇼핑 계산기',
         calculators: [
           { id: 'discount-calculator', name: '할인율 계산기', href: '/calculators/life/discount-calculator' },
+          { id: 'sales-tax-calculator', name: '부가세 포함 가격 계산기', href: '/calculators/life/sales-tax-calculator', locales: ['ko'] },
         ],
       },
       {
@@ -136,6 +164,7 @@ export const calculatorCategories = [
         icon: Anchor,
         calculators: [
           { id: 'cbm-calculator', name: 'CBM 계산기', href: '/calculators/life/logistics/cbm-calculator' },
+          { id: 'moving-cost-calculator', name: '이사 비용 계산기', href: '/calculators/life/moving-cost-calculator', locales: ['ko'] },
         ],
       },
       {
@@ -150,6 +179,15 @@ export const calculatorCategories = [
           { id: 'coin-flip', name: '동전 던지기', href: '/calculators/life/coin-flip' },
           { id: 'virtual-dice', name: '가상 주사위', href: '/calculators/life/virtual-dice' },
           { id: 'notepad', name: '메모장', href: '/calculators/life/notepad' },
+        ],
+      },
+      {
+        id: 'education',
+        name: '교육',
+        icon: GraduationCap,
+        calculators: [
+          { id: 'gpa-calculator', name: 'GPA 계산기 (한국 4.5)', href: '/calculators/life/gpa-calculator', locales: ['ko'] },
+          { id: 'concrete-calculator', name: '콘크리트 양 계산기', href: '/calculators/life/concrete-calculator' },
         ],
       },
     ],
@@ -175,6 +213,18 @@ export const calculatorCategories = [
         name: '화학 계산기',
         calculators: [
           { id: 'molarity-calculator', name: '몰농도 계산기', href: '/calculators/science/molarity-calculator' },
+          { id: 'molar-mass-calculator', name: '몰 질량 계산기', href: '/calculators/science/molar-mass-calculator' },
+          { id: 'solution-dilution-calculator', name: '용액 희석 계산기', href: '/calculators/science/solution-dilution-calculator' },
+        ],
+      },
+      {
+        id: 'math',
+        name: '수학 계산기',
+        calculators: [
+          { id: 'percentage-calculator', name: '퍼센트 계산기', href: '/calculators/science/percentage-calculator' },
+          { id: 'fraction-calculator', name: '분수 계산기', href: '/calculators/science/fraction-calculator' },
+          { id: 'triangle-calculator', name: '삼각형 계산기', href: '/calculators/science/triangle-calculator' },
+          { id: 'standard-deviation-calculator', name: '표준편차 계산기', href: '/calculators/science/standard-deviation-calculator' },
         ],
       },
     ],
@@ -203,10 +253,12 @@ export const calculatorCategories = [
         name: '토목 및 구조 공학',
         calculators: [
           { id: 'asce7-wind-load', name: 'ASCE 7 풍하중 계산기', href: '/calculators/engineering/asce7-wind-load' },
+          { id: 'korean-wind-load', name: '한국 풍하중 계산기 (KDS)', href: '/calculators/engineering/korean-wind-load', locales: ['ko'] },
           { id: 'stress-strain', name: '응력 및 변형률 계산기', href: '/calculators/engineering/stress-strain' },
           { id: 'euler-buckling', name: '오일러 좌굴 하중 계산기', href: '/calculators/engineering/euler-buckling' },
           { id: 'mannings-equation', name: '매닝의 방정식 (개수로 유동)', href: '/calculators/engineering/mannings-equation' },
           { id: 'hydraulic-jump', name: '수력 도약 계산기', href: '/calculators/engineering/hydraulic-jump' },
+          { id: 'moment-of-inertia', name: '단면 2차 모멘트 계산기', href: '/calculators/engineering/moment-of-inertia' },
         ],
       },
       {
@@ -225,6 +277,10 @@ export const calculatorCategories = [
           { id: 'orifice-flow', name: '오리피스 유량 계산기', href: '/calculators/engineering/orifice-flow' },
           { id: 'cyclone-efficiency', name: '사이클론 분리기 효율 계산기', href: '/calculators/engineering/cyclone-efficiency' },
           { id: 'iso-2533-atmosphere', name: 'ISO 2533 표준 대기 계산기', href: '/calculators/engineering/iso-2533-atmosphere' },
+          { id: 'pressure-converter', name: '압력 단위 변환기', href: '/calculators/engineering/pressure-converter' },
+          { id: 'flow-rate-converter', name: '유량 단위 변환기', href: '/calculators/engineering/flow-rate-converter' },
+          { id: 'water-density', name: '물 밀도 계산기 (온도 의존)', href: '/calculators/engineering/water-density' },
+          { id: 'specific-gravity', name: '비중 계산기', href: '/calculators/engineering/specific-gravity' },
         ],
       },
       {
@@ -237,6 +293,7 @@ export const calculatorCategories = [
           { id: 'barlows-formula', name: '바를로 공식 계산기', href: '/calculators/engineering/barlows-formula' },
           { id: 'asme-section-viii', name: 'ASME Sec VIII 압력용기 계산기', href: '/calculators/engineering/asme-section-viii' },
           { id: 'api-650-tank', name: 'API 650 탱크 두께 계산기', href: '/calculators/engineering/api-650-tank' },
+          { id: 'pipe-sizing', name: '배관 사이즈 계산기', href: '/calculators/engineering/pipe-sizing' },
         ],
       },
       {
@@ -250,6 +307,9 @@ export const calculatorCategories = [
           { id: 'u-value', name: '열관류율 (U-Value) 계산기', href: '/calculators/engineering/u-value' },
           { id: 'lmtd', name: '대수평균온도차 (LMTD) 계산기', href: '/calculators/engineering/lmtd' },
           { id: 'tube-pressure-drop', name: '열교환기 튜브 압력 강하 계산기', href: '/calculators/engineering/tube-pressure-drop' },
+          { id: 'heat-capacity', name: '열용량 계산기', href: '/calculators/engineering/heat-capacity' },
+          { id: 'dew-point', name: '이슬점 계산기', href: '/calculators/engineering/dew-point' },
+          { id: 'convection-heat-transfer', name: '대류 열전달 계수 계산기', href: '/calculators/engineering/convection-heat-transfer' },
         ],
       },
       {
@@ -278,6 +338,7 @@ export const calculatorCategories = [
           { id: 'voltage-drop', name: '전압 강하 계산기', href: '/calculators/engineering/voltage-drop' },
           { id: 'rc-circuit', name: 'RC 회로 시정수 계산기', href: '/calculators/engineering/rc-circuit' },
           { id: 'ac-power', name: '교류 전력 계산기', href: '/calculators/engineering/ac-power' },
+          { id: 'wire-gauge', name: '와이어 게이지 (AWG) 계산기', href: '/calculators/engineering/wire-gauge' },
         ],
       },
       {
@@ -386,6 +447,7 @@ export const calculatorCategories = [
         calculators: [
           { id: 'internet-speed-test', name: '인터넷 속도 테스트', href: '/calculators/others/internet-speed-test' },
           { id: 'ip-lookup', name: 'IP 주소 조회', href: '/calculators/others/ip-lookup' },
+          { id: 'subnet-calculator', name: '서브넷 계산기', href: '/calculators/others/subnet-calculator' },
         ],
       },
     ],

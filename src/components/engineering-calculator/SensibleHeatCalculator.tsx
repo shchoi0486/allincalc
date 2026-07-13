@@ -5,43 +5,70 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
+import UnitSystemToggle from '@/components/calculators/UnitSystemToggle';
+
 export default function SensibleHeatCalculator() {
-  const { dict } = useI18n();
+  const { dict, unitSystem, locale } = useI18n();
   const t = dict?.common?.sensibleHeat;
 
-  // Unit system state
-  const [isImperial, setIsImperial] = useState(false);
+  // Unit system state (global)
+  const isImperial = unitSystem === 'imperial';
 
   // Inputs
-  const [massFlow, setMassFlow] = useState('1.5'); // m (kg/s or lb/s)
-  const [specificHeat, setSpecificHeat] = useState('1.006'); // Cp (kJ/kgK or BTU/lbF) - default Air
+  const [massFlow, setMassFlow] = useState('1.5'); // kg/s or lb/s
+  const [specificHeat, setSpecificHeat] = useState('1.006'); // Cp
   const [t1, setT1] = useState('20'); // Initial Temp
   const [t2, setT2] = useState('35'); // Final Temp
 
+  // Per-input unit selection
+  const [massFlowUnit, setMassFlowUnit] = useState<string>('kg/s');
+  const [specificHeatUnit, setSpecificHeatUnit] = useState<string>('kJ/(kg·K)');
+  const [t1Unit, setT1Unit] = useState<string>('°C');
+  const [t2Unit, setT2Unit] = useState<string>('°C');
+
   // Results
   const [heatLoad, setHeatLoad] = useState<number | null>(null);
+  const [playing, setPlaying] = useState<boolean>(true);
 
-  // Unit Labels
-  const units = {
-    massFlow: isImperial ? 'lb/s' : 'kg/s',
-    specificHeat: isImperial ? 'BTU/(lb·°F)' : 'kJ/(kg·K)',
-    temp: isImperial ? '°F' : '°C',
-    heatLoad: isImperial ? 'BTU/s' : 'kW',
+  // Conversion maps (to SI base)
+  const MASSFLOW_TO_KGS: Record<string, number> = {
+    'kg/s': 1,
+    'lb/s': 0.45359237,
+  };
+  const CPSPEC_TO_KJ: Record<string, number> = {
+    'kJ/(kg·K)': 1,
+    'BTU/(lb·°F)': 4.1868,
+  };
+  // Absolute temperature -> Celsius (offset based)
+  const TEMP_TO_C: Record<string, (v: number) => number> = {
+    '°C': (v) => v,
+    '°F': (v) => (v - 32) * 5 / 9,
+    'K': (v) => v - 273.15,
   };
 
-  // Convert default values when switching units
+  const MASSFLOW_UNITS = ['kg/s', 'lb/s'];
+  const CPSPEC_UNITS = ['kJ/(kg·K)', 'BTU/(lb·°F)'];
+  const TEMP_UNITS = ['°C', '°F', 'K'];
+
   useEffect(() => {
     if (isImperial) {
       setMassFlow('3.3'); // ~1.5 kg/s in lb/s
       setSpecificHeat('0.24'); // Cp for air in BTU/lbF
       setT1('68'); // 20C
       setT2('95'); // 35C
+      setMassFlowUnit('lb/s');
+      setSpecificHeatUnit('BTU/(lb·°F)');
+      setT1Unit('°F');
+      setT2Unit('°F');
     } else {
       setMassFlow('1.5');
       setSpecificHeat('1.006');
       setT1('20');
       setT2('35');
+      setMassFlowUnit('kg/s');
+      setSpecificHeatUnit('kJ/(kg·K)');
+      setT1Unit('°C');
+      setT2Unit('°C');
     }
   }, [isImperial]);
 
@@ -56,99 +83,137 @@ export default function SensibleHeatCalculator() {
       return;
     }
 
-    const deltaT = T_final - T_initial; // can be negative if cooling
+    // Convert to SI base
+    const m_kg_s = m * (MASSFLOW_TO_KGS[massFlowUnit] ?? 1);
+    const Cp_kJ = Cp * (CPSPEC_TO_KJ[specificHeatUnit] ?? 1);
+    const T1_C = (TEMP_TO_C[t1Unit] ?? ((v: number) => v))(T_initial);
+    const T2_C = (TEMP_TO_C[t2Unit] ?? ((v: number) => v))(T_final);
+    const deltaT = T2_C - T1_C; // can be negative if cooling
 
-    // Q = m * Cp * deltaT
-    // Metric: kg/s * kJ/(kgK) * K = kJ/s = kW
-    // Imperial: lb/s * BTU/(lbF) * F = BTU/s
-    const Q = m * Cp * deltaT;
-    setHeatLoad(Q);
+    // Q = m * Cp * deltaT  (SI: kg/s * kJ/(kgK) * K = kW)
+    const Q_kW = m_kg_s * Cp_kJ * deltaT;
+    // Display in kW (metric) or BTU/s (imperial)
+    setHeatLoad(isImperial ? Q_kW * 0.947817 : Q_kW);
+    setPlaying(true);
   };
+
+  const heatLoadUnit = isImperial ? 'BTU/s' : 'kW';
+
+  const unitSelectClass =
+    'w-20 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-600 dark:text-gray-300 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500';
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-    {/* Left: Input */}
+      {/* Left: Input */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col flex-1">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6 gap-3">
           <h3 className="text-xl font-semibold flex items-center shrink-0">
             ❄️ {t?.title || 'Sensible Heat Calculator'}
           </h3>
+          <UnitSystemToggle className="shrink-0" />
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col flex-1">
 
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
           {t?.description || 'Calculate the sensible heat load required for heating or cooling.'}
         </p>
 
-                <div className="flex justify-end mb-6">
-          <div className="flex items-center space-x-2 shrink-0 bg-gray-100 dark:bg-gray-700 p-1.5 rounded-full">
-            <Label htmlFor="unit-toggle" className={`text-xs font-semibold cursor-pointer px-3 py-1 rounded-full transition-colors ${!isImperial ? `bg-white dark:bg-gray-600 shadow-sm text-blue-600 dark:text-blue-400` : `text-gray-500 dark:text-gray-400`}`}>
-              {dict?.common?.unitSystemMetric || `Metric`}
-            </Label>
-            <Switch
-              id="unit-toggle"
-              checked={isImperial}
-              onCheckedChange={setIsImperial}
-              className="hidden"
+        {/* Mass Flow */}
+        <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+          <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
+            {t?.inputs?.massFlow || 'Mass Flow (ṁ)'}
+          </Label>
+          <div className="sm:w-1/2 flex min-w-0">
+            <Input
+              type="number"
+              value={massFlow}
+              onChange={(e) => setMassFlow(e.target.value)}
+              className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
             />
-            <Label htmlFor="unit-toggle" className={`text-xs font-semibold cursor-pointer px-3 py-1 rounded-full transition-colors ${isImperial ? `bg-white dark:bg-gray-600 shadow-sm text-blue-600 dark:text-blue-400` : `text-gray-500 dark:text-gray-400`}`}>
-              {dict?.common?.unitSystemImperial || `Imperial`}
-            </Label>
+            <select
+              aria-label={`${t?.inputs?.massFlow || 'Mass Flow (ṁ)'} unit`}
+              value={massFlowUnit}
+              onChange={(e) => setMassFlowUnit(e.target.value)}
+              className={unitSelectClass}
+            >
+              {MASSFLOW_UNITS.map((u) => (
+                <option key={u} value={u}>{u}</option>
+              ))}
+            </select>
           </div>
         </div>
 
-          {/* Specific Heat */}
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
-              {t?.inputs?.specificHeat || 'Specific Heat (C_p)'}
-            </Label>
-            <div className="sm:w-1/2 flex min-w-0">
-              <Input
-                type="number"
-                value={specificHeat}
-                onChange={(e) => setSpecificHeat(e.target.value)}
-                className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
-              />
-              <span className="w-20 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-500 flex items-center justify-center text-[10px] font-semibold">
-                {units.specificHeat}
-              </span>
-            </div>
+        {/* Specific Heat */}
+        <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+          <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
+            {t?.inputs?.specificHeat || 'Specific Heat (C_p)'}
+          </Label>
+          <div className="sm:w-1/2 flex min-w-0">
+            <Input
+              type="number"
+              value={specificHeat}
+              onChange={(e) => setSpecificHeat(e.target.value)}
+              className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
+            />
+            <select
+              aria-label={`${t?.inputs?.specificHeat || 'Specific Heat (C_p)'} unit`}
+              value={specificHeatUnit}
+              onChange={(e) => setSpecificHeatUnit(e.target.value)}
+              className={unitSelectClass}
+            >
+              {CPSPEC_UNITS.map((u) => (
+                <option key={u} value={u}>{u}</option>
+              ))}
+            </select>
           </div>
+        </div>
 
-          {/* Initial Temp */}
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
-              {t?.inputs?.t1 || 'Initial Temp (T₁)'}
-            </Label>
-            <div className="sm:w-1/2 flex min-w-0">
-              <Input
-                type="number"
-                value={t1}
-                onChange={(e) => setT1(e.target.value)}
-                className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
-              />
-              <span className="w-16 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-500 flex items-center justify-center text-xs font-semibold">
-                {units.temp}
-              </span>
-            </div>
+        {/* Initial Temp */}
+        <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+          <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
+            {t?.inputs?.t1 || 'Initial Temp (T₁)'}
+          </Label>
+          <div className="sm:w-1/2 flex min-w-0">
+            <Input
+              type="number"
+              value={t1}
+              onChange={(e) => setT1(e.target.value)}
+              className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
+            />
+            <select
+              aria-label={`${t?.inputs?.t1 || 'Initial Temp (T₁)'} unit`}
+              value={t1Unit}
+              onChange={(e) => setT1Unit(e.target.value)}
+              className={unitSelectClass}
+            >
+              {TEMP_UNITS.map((u) => (
+                <option key={u} value={u}>{u}</option>
+              ))}
+            </select>
           </div>
+        </div>
 
-          {/* Final Temp */}
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
-              {t?.inputs?.t2 || 'Final Temp (T₂)'}
-            </Label>
-            <div className="sm:w-1/2 flex min-w-0">
-              <Input
-                type="number"
-                value={t2}
-                onChange={(e) => setT2(e.target.value)}
-                className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
-              />
-              <span className="w-16 shrink-0 px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-y border-r border-gray-300 dark:border-gray-600 rounded-r-md text-gray-500 flex items-center justify-center text-xs font-semibold">
-                {units.temp}
-              </span>
-            </div>
+        {/* Final Temp */}
+        <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+          <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-0 sm:w-1/2 sm:pr-2">
+            {t?.inputs?.t2 || 'Final Temp (T₂)'}
+          </Label>
+          <div className="sm:w-1/2 flex min-w-0">
+            <Input
+              type="number"
+              value={t2}
+              onChange={(e) => setT2(e.target.value)}
+              className="flex-1 min-w-0 rounded-r-none focus-visible:ring-1"
+            />
+            <select
+              aria-label={`${t?.inputs?.t2 || 'Final Temp (T₂)'} unit`}
+              value={t2Unit}
+              onChange={(e) => setT2Unit(e.target.value)}
+              className={unitSelectClass}
+            >
+              {TEMP_UNITS.map((u) => (
+                <option key={u} value={u}>{u}</option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -165,30 +230,42 @@ export default function SensibleHeatCalculator() {
           <h3 className="text-xl font-semibold mb-6 flex items-center shrink-0">
             ✅ {dict?.common?.result || 'Calculation Result'}
           </h3>
-          
+
           <div className={`p-6 rounded-lg border flex flex-col items-center justify-center mb-6 ${heatLoad !== null && heatLoad < 0 ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800' : 'bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-800'}`}>
             <span className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-              {t?.results?.heatLoad || 'Sensible Heat Load (Q)'} 
+              {t?.results?.heatLoad || 'Sensible Heat Load (Q)'}
               {heatLoad !== null && (heatLoad < 0 ? ' (Cooling)' : ' (Heating)')}
             </span>
             <span className={`text-4xl font-bold ${heatLoad !== null && heatLoad < 0 ? 'text-blue-600 dark:text-blue-400' : 'text-red-600 dark:text-red-400'}`}>
               {heatLoad !== null ? Math.abs(heatLoad).toFixed(2) : '-'}
               <span className="text-lg font-normal ml-1">
-                {units.heatLoad}
+                {heatLoadUnit}
               </span>
             </span>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold mb-4 text-gray-700 dark:text-gray-300">
-              {t?.visualization?.title || 'Heating/Cooling Process'}
-            </h4>
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                {t?.visualization?.title || 'Heating/Cooling Process'}
+              </h4>
+              {heatLoad !== null && (
+                <button
+                  type="button"
+                  onClick={() => setPlaying((p) => !p)}
+                  aria-label={playing ? 'Pause animation' : 'Play animation'}
+                  className="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-600 text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  {playing ? '⏸ ' + (locale === 'ko' ? '일시정지' : 'Pause') : '▶ ' + (locale === 'ko' ? '재생' : 'Play')}
+                </button>
+              )}
+            </div>
             {/* Process Diagram */}
             <div className="relative w-full h-32 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden flex items-center px-4 justify-between">
-              
+
               <div className="flex flex-col items-center z-10">
                 <div className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-300 flex items-center justify-center shadow-md">
-                  <span className="font-bold text-sm">{t1}°</span>
+                  <span className="font-bold text-sm">{t1}{t1Unit}</span>
                 </div>
                 <span className="text-xs mt-1 text-gray-500">T₁</span>
               </div>
@@ -198,15 +275,15 @@ export default function SensibleHeatCalculator() {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full h-2 bg-gray-300 dark:bg-gray-500 rounded"></div>
                 </div>
-                
+
                 {heatLoad !== null && heatLoad > 0 && (
-                  <div className="w-16 h-16 bg-red-100 dark:bg-red-900/40 border-2 border-red-400 rounded flex items-center justify-center z-10 animate-pulse">
+                  <div className={"w-16 h-16 bg-red-100 dark:bg-red-900/40 border-2 border-red-400 rounded flex items-center justify-center z-10" + (playing ? " animate-pulse" : "")}>
                     <span className="text-xl">🔥</span>
                   </div>
                 )}
-                
+
                 {heatLoad !== null && heatLoad < 0 && (
-                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/40 border-2 border-blue-400 rounded flex items-center justify-center z-10 animate-pulse">
+                  <div className={"w-16 h-16 bg-blue-100 dark:bg-blue-900/40 border-2 border-blue-400 rounded flex items-center justify-center z-10" + (playing ? " animate-pulse" : "")}>
                     <span className="text-xl">❄️</span>
                   </div>
                 )}
@@ -220,11 +297,11 @@ export default function SensibleHeatCalculator() {
 
               <div className="flex flex-col items-center z-10">
                 <div className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-300 flex items-center justify-center shadow-md">
-                  <span className="font-bold text-sm">{t2}°</span>
+                  <span className="font-bold text-sm">{t2}{t2Unit}</span>
                 </div>
                 <span className="text-xs mt-1 text-gray-500">T₂</span>
               </div>
-              
+
               {/* Flow Direction */}
               <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-xs font-bold text-gray-400 tracking-widest">
                 FLOW ➔
@@ -232,9 +309,6 @@ export default function SensibleHeatCalculator() {
             </div>
           </div>
         </div>
-
-        {}
-        
       </div>
     </div>
   );

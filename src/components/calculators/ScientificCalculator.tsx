@@ -314,7 +314,7 @@ const ScientificCalculator: React.FC = () => {
           value={display}
           className="w-full h-12 text-3xl text-right mb-4 pr-4 bg-gray-100 rounded-md"
         />
-        <div className="grid grid-cols-10 gap-1">
+        <div className="grid grid-cols-5 sm:grid-cols-10 gap-1">
           {buttonLayout.flat().map((button, index) => {
             if (typeof button === 'object') {
               return (

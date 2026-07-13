@@ -29,18 +29,11 @@ export function I18nProvider({
 }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
   const [dict, setDict] = useState<Dictionary>(initialDict);
-  const [currency, setCurrencyState] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('currency') || defaultCurrency(initialLocale);
-    }
-    return defaultCurrency(initialLocale);
-  });
-  const [unitSystem, setUnitSystemState] = useState<UnitSystem>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('unitSystem') as UnitSystem) || getUnitSystem(initialLocale);
-    }
-    return getUnitSystem(initialLocale);
-  });
+  // 초기값은 서버/클라이언트 모두 로케일 기본값으로 동일하게 세팅해야
+  // hydration mismatch(단위계/화폐 텍스트 불일치)가 발생하지 않는다.
+  // 사용자가 저장한 preferences(localStorage)는 마운트 후 적용한다.
+  const [currency, setCurrencyState] = useState<string>(() => defaultCurrency(initialLocale));
+  const [unitSystem, setUnitSystemState] = useState<UnitSystem>(() => getUnitSystem(initialLocale));
 
   // URL의 [locale] 세그먼트가 바뀌면 레이아웃이 새 locale/dict prop을 내려주는데,
   // useState는 초기값만 잡으므로 prop 변경에 상태를 동기화해야 언어 전환이 전체에 반영된다.
@@ -55,6 +48,19 @@ export function I18nProvider({
   useEffect(() => {
     document.cookie = `locale=${locale}; path=/; max-age=31536000; samesite=lax`;
   }, [locale]);
+
+  // 마운트 후 localStorage에 저장된 단위계/화폐 적용 (hydration 이후라 mismatch 없음)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const storedUnit = localStorage.getItem('unitSystem');
+    if (storedUnit === 'metric' || storedUnit === 'imperial') {
+      setUnitSystemState(storedUnit);
+    }
+    const storedCur = localStorage.getItem('currency');
+    if (storedCur) {
+      setCurrencyState(storedCur);
+    }
+  }, []);
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);

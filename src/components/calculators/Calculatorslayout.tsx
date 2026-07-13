@@ -123,7 +123,7 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
               {showUnitToggle && <UnitSystemToggle className="shrink-0" />}
             </div>
           </CardHeader>
-          <CardContent className="p-3 space-y-4 overflow-hidden">
+          <CardContent className="p-3 space-y-4 overflow-hidden break-words">
             {inputSection}
           </CardContent>
         </Card>
@@ -131,7 +131,7 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
           <CardHeader className="border-b">
             <CardTitle>{dict.calculatorLayout.result}</CardTitle>
           </CardHeader>
-          <CardContent className="p-3 space-y-4 overflow-hidden">
+          <CardContent className="p-3 space-y-4 overflow-hidden break-words">
             {resultSection}
           </CardContent>
         </Card>

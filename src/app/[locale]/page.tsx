@@ -21,21 +21,15 @@ export default function Home({ params }: { params: { locale: string } }) {
 
   return (
     <>
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <section className="text-center">
           {/* 애드센스/쿠팡 광고 삽입 영역 */}
           <div className="ad-placeholder my-3 p-6 border border-dashed rounded-lg">
             <p className="text-gray-500">{dict.home.adPlaceholder}</p>
           </div>
-          <div className="mt-8 mx-auto">
+          <div className="mt-4 mx-auto">
             <CalculatorSearch />
           </div>
-        </section>
-
-        <section className="text-center mt-12">
-          <p className="mt-4 text-lg text-gray-500 dark:text-gray-600 sm:text-xl">
-            {dict.home.subtitle}
-          </p>
         </section>
 
         <AllCalculators />

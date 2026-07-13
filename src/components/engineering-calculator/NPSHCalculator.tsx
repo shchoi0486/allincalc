@@ -158,7 +158,8 @@ const ANTOINE_DATABASE: Record<string, AntoineCoefficients> = {
 };
 
 export default function NPSHCalculator({ dict }: { dict?: any }) {
-  const { unitSystem } = useI18n();
+  const { unitSystem, locale } = useI18n();
+  const isKo = locale === 'ko';
   const headUnit = unitSystem === 'imperial' ? 'ft' : 'm';
   const headFactor = unitSystem === 'imperial' ? 3.28084 : 1;
   const lengthUnitDefault = unitSystem === 'imperial' ? 'ft' : 'm';
@@ -409,7 +410,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                 </label>
                 <div className="sm:w-1/2">
                   <select
-                    aria-label="Tank Position"
+                    aria-label={isKo ? '탱크 위치' : 'Tank Position'}
                     value={tankPosition}
                     onChange={(e) => setTankPosition(e.target.value as 'above' | 'below')}
                     className="w-full px-2 py-0.5 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white text-sm"
@@ -427,7 +428,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                 </label>
                 <div className="sm:w-1/2">
                   <select
-                    aria-label="Tank Type"
+                    aria-label={isKo ? '탱크 형태' : 'Tank Type'}
                     value={tankType}
                     onChange={(e) => setTankType(e.target.value as 'open' | 'closed')}
                     className="w-full px-2 py-0.5 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white text-sm"
@@ -445,7 +446,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                 </label>
                 <div className="sm:w-1/2">
                   <select
-                    aria-label="Fluid Selection"
+                    aria-label={isKo ? '유체 선택' : 'Fluid Selection'}
                     value={selectedFluid}
                     onChange={(e) => setSelectedFluid(e.target.value)}
                     className="w-full px-2 py-0.5 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white text-sm"
@@ -475,7 +476,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="101325"
                     />
                     <select
-                      aria-label="Atmospheric Pressure Unit"
+                      aria-label={isKo ? '대기압 단위' : 'Atmospheric Pressure Unit'}
                       value={atmosphericPressureUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -519,7 +520,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="0"
                     />
                     <select
-                      aria-label="Surface Pressure Unit"
+                      aria-label={isKo ? '표면압 단위' : 'Surface Pressure Unit'}
                       value={surfacePressureUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -565,7 +566,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="2337"
                     />
                     <select
-                      aria-label="Vapor Pressure Unit"
+                      aria-label={isKo ? '증기압 단위' : 'Vapor Pressure Unit'}
                       value={vaporPressureUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -601,7 +602,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="1000"
                     />
                     <select
-                      aria-label="Liquid Density Unit"
+                      aria-label={isKo ? '액체 밀도 단위' : 'Liquid Density Unit'}
                       value={liquidDensityUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -634,7 +635,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="20"
                     />
                     <select
-                      aria-label="Temperature Unit"
+                      aria-label={isKo ? '온도 단위' : 'Temperature Unit'}
                       value={temperatureUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -667,7 +668,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="5"
                     />
                     <select
-                      aria-label="Distance Unit"
+                      aria-label={isKo ? '거리 단위' : 'Distance Unit'}
                       value={distanceUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -701,7 +702,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder="0.5"
                     />
                     <select
-                      aria-label="Friction Loss Unit"
+                      aria-label={isKo ? '마찰 손실 단위' : 'Friction Loss Unit'}
                       value={frictionLossUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
@@ -735,7 +736,7 @@ export default function NPSHCalculator({ dict }: { dict?: any }) {
                       placeholder={dict?.inputs?.npshrPlaceholder || "Pump datasheet value"}
                     />
                     <select
-                      aria-label="NPSHR Unit"
+                      aria-label={isKo ? 'NPSHR 단위' : 'NPSHR Unit'}
                       value={npshrUnit}
                       onChange={(e) => {
                         const nextUnit = e.target.value;
