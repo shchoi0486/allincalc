@@ -109,7 +109,7 @@ const Header: React.FC = () => {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           {/* Search */}
-          <div className="relative w-full max-w-lg hidden sm:block" ref={searchRef} data-search-container>
+          <div className="relative w-full max-w-xl hidden sm:block" ref={searchRef} data-search-container>
             <label htmlFor="search" className="sr-only">
               {dict.common.searchPlaceholder}
             </label>
@@ -165,7 +165,7 @@ const Header: React.FC = () => {
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto flex flex-wrap items-center justify-center gap-1.5 py-2.5">
+        <nav className="container mx-auto flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 py-2.5">
           {navigation.map((item) => {
             const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (
