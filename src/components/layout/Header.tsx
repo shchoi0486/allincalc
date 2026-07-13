@@ -165,14 +165,14 @@ const Header: React.FC = () => {
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 py-2.5">
+        <nav className="container mx-auto flex flex-wrap sm:flex-nowrap items-center justify-center gap-3 py-2.5">
           {navigation.map((item) => {
             const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (
               <Link
                 key={item.name}
                 href={`${localePrefix}${item.href}`}
-                className={`relative shrink-0 whitespace-nowrap text-sm font-semibold tracking-tight px-3 sm:px-4 py-2 rounded-lg transition-all ${
+                className={`relative shrink-0 whitespace-nowrap text-base font-semibold tracking-tight px-3 sm:px-4 py-2 rounded-lg transition-all ${
                   isActive
                     ? 'bg-primary text-primary-foreground shadow-sm'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
