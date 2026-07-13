@@ -9,7 +9,7 @@ export default function CalculatorSearch() {
   const { dict } = useI18n();
 
   return (
-    <section className="container mx-auto py-12 md:py-16 lg:py-16 bg-white dark:bg-gray-900">
+    <section className="container mx-auto py-6 md:py-8 lg:py-8 bg-white dark:bg-gray-900">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center space-y-6 text-center">
           <div className="space-y-2">
