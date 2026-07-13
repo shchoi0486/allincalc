@@ -164,7 +164,7 @@ const Header: React.FC = () => {
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto flex flex-wrap items-center justify-center gap-1.5 py-2.5">
+        <nav className="container mx-auto flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 py-2.5">
           {navigation.map((item) => {
             const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (
