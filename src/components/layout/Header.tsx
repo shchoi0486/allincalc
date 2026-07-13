@@ -81,7 +81,8 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (!(event.target instanceof Element)) return;
+      if (!event.target.closest('[data-search-container]')) {
         setIsSearchFocused(false);
       }
     }
@@ -106,9 +107,9 @@ const Header: React.FC = () => {
           <h1 className="text-2xl font-bold text-foreground">All-in-Calc</h1>
         </Link>
 
-        <div className="flex min-w-0 items-center justify-end gap-2 sm:gap-4">
+        <div className="flex flex-1 items-center justify-end space-x-4">
           {/* Search */}
-          <div className="relative w-full max-w-[140px] sm:max-w-md lg:max-w-lg" ref={searchRef}>
+          <div className="relative w-full max-w-lg hidden sm:block" ref={searchRef} data-search-container>
             <label htmlFor="search" className="sr-only">
               {dict.common.searchPlaceholder}
             </label>
@@ -164,14 +165,14 @@ const Header: React.FC = () => {
 
       {/* Bottom row: Navigation */}
       <div className="border-t">
-        <nav className="container mx-auto grid grid-cols-2 sm:grid-cols-4 gap-x-2 gap-y-0.5 py-2.5 justify-items-center">
+        <nav className="container mx-auto flex flex-wrap items-center justify-center gap-1.5 py-2.5">
           {navigation.map((item) => {
             const isActive = pathname?.startsWith(`${localePrefix}${item.href}`);
             return (
               <Link
                 key={item.name}
                 href={`${localePrefix}${item.href}`}
-                className={`w-full text-center text-sm font-semibold tracking-tight px-3 py-2 rounded-lg transition-all ${
+                className={`relative shrink-0 whitespace-nowrap text-sm font-semibold tracking-tight px-3 sm:px-4 py-2 rounded-lg transition-all ${
                   isActive
                     ? 'bg-primary text-primary-foreground shadow-sm'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -182,6 +183,49 @@ const Header: React.FC = () => {
             );
           })}
         </nav>
+      </div>
+
+      {/* Mobile: Search bar below nav */}
+      <div className="sm:hidden border-t" data-search-container>
+        <div className="container mx-auto px-4 py-2.5">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <MagnifyingGlassIcon className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+            </div>
+            <input
+              id="search-mobile"
+              name="search-mobile"
+              className="block w-full rounded-md border-0 bg-muted py-2.5 pl-10 pr-3 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-inset focus:ring-primary text-sm leading-6"
+              placeholder={dict.common.searchPlaceholder}
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+            />
+          </div>
+          {isSearchFocused && (
+            <div className="absolute mt-1 w-[calc(100%-2rem)] max-h-96 overflow-y-auto rounded-md bg-background border shadow-lg z-50 left-4">
+              {searchResults.length > 0 ? (
+                <ul className="py-1">
+                  {searchResults.map((calc) => (
+                    <li key={calc.id}>
+                      <Link
+                        href={`${localePrefix}${calc.href}`}
+                        className="block px-4 py-2 text-sm hover:bg-muted"
+                        onClick={handleResultClick}
+                      >
+                        <p className="font-semibold text-foreground">{calc.name}</p>
+                        <p className="text-xs text-muted-foreground">{calc.categoryName} &gt; {calc.subcategoryName}</p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                searchQuery && <p className="p-4 text-sm text-muted-foreground">{dict.common.searchPlaceholder}</p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
