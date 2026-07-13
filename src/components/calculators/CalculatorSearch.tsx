@@ -11,8 +11,8 @@ export default function CalculatorSearch() {
   return (
     <section className="container mx-auto py-6 md:py-8 lg:py-8 bg-white dark:bg-gray-900">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center space-y-6 text-center">
-          <div className="space-y-2">
+        <div className="flex flex-col items-center space-y-3 text-center">
+          <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gray-900 dark:text-gray-50">
               {dict.home.title}
             </h1>
